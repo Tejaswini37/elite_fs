@@ -1,0 +1,1109 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>DISJOIN SET AND &amp; UNION</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-default_background {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.highlight-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.block-color-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: undefined; }
+.select-value-color-pink { background-color: rgba(225, 136, 179, 0.27); }
+.select-value-color-purple { background-color: rgba(168, 129, 197, 0.27); }
+.select-value-color-green { background-color: rgba(123, 183, 129, 0.27); }
+.select-value-color-gray { background-color: rgba(84, 72, 49, 0.15); }
+.select-value-color-transparentGray { background-color: undefined; }
+.select-value-color-translucentGray { background-color: undefined; }
+.select-value-color-orange { background-color: rgba(224, 124, 57, 0.27); }
+.select-value-color-brown { background-color: rgba(210, 162, 141, 0.35); }
+.select-value-color-red { background-color: rgba(244, 171, 159, 0.4); }
+.select-value-color-yellow { background-color: rgba(236, 191, 66, 0.39); }
+.select-value-color-blue { background-color: rgba(93, 165, 206, 0.27); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="1ac58fd8-d211-8095-9f40-c3adbdb78905" class="page sans"><header><h1 class="page-title">DISJOIN SET AND &amp; UNION</h1><p class="page-description"></p></header><div class="page-body"><h2 id="1ac58fd8-d211-808a-8a0c-d44f5d8b096c" class="">Program1 (Decipher Code)</h2><p id="1ac58fd8-d211-80cb-8650-c8a2bbc3fbc5" class="">In the world of secret codes and cryptography, you are entrusted with deciphering a hidden message.<br/>You have two encoded keys, key1 and key2, both of equal length. Each character<br/>in key1 is paired with the corresponding character in key2.<br/></p><p id="1ac58fd8-d211-801c-8edc-fc0c0bb7e059" class="">This relationship follows the standard rules of an equivalence cipher:<br/>• Self-Mapping: Every character inherently maps to itself.<br/></p><p id="1ac58fd8-d211-802e-9fe0-d5fbe611c99e" class="">• Mutual Mapping: If a character from key1 maps to one in key2, then that<br/>character in key2 maps back to the one in key1.<br/></p><p id="1ac58fd8-d211-808c-ba8f-d2ec255720ab" class="">• Chain Mapping: If character A maps to B, and B maps to C, then A, B, and C<br/>are all interchangeable in this cipher.<br/></p><p id="1ac58fd8-d211-80df-8325-d92656b7f732" class="">Using this mapping, you must decode a cipherText, by replacing every character<br/>with the smallest equivalent character from its equivalence group.<br/>The result should be the relatively smallest possible decoded message.<br/></p><h2 id="1ac58fd8-d211-8068-bc88-cc780beca603" class="">Input Format:</h2><p id="1ac58fd8-d211-8093-ae76-f176e4602bb3" class="">Three space separated strings, key1 , key2 and cipherText</p><h2 id="1ac58fd8-d211-804e-8497-c67cc5e64495" class="">Output Format:</h2><p id="1ac58fd8-d211-80df-bc9f-e5dca2712d45" class="">Print a string, decoded message which is relatively smallest string of cipherText.</p><p id="1ac58fd8-d211-807a-b0ce-d77c2bc8713c" class="">Example 1:<br/>input=<br/>attitude progress apriori<br/>output=<br/>aaogoog<br/></p><p id="1ac58fd8-d211-8007-8918-c3880029df15" class="">Explanation: The mapping pairs form groups: [a, p], [o, r, t], [g, i], [e, u],<br/>[d, e, s]. By substituting each character in cipherText with the smallest from<br/>its group, you decode the message to &quot;aaogoog&quot;.<br/></p><p id="1ac58fd8-d211-807e-9811-c2008c867045" class="">Constraints:</p><p id="1ac58fd8-d211-80c1-9021-c89e622fc89b" class="">• 1 &lt;= key1.length, key2.length, cipherText.length &lt;= 1000</p><p id="1ac58fd8-d211-8062-a485-c8b052e0166a" class="">• key1.length == key2.length</p><p id="1ac58fd8-d211-80e7-afc1-c821f802bde1" class="">• key1, key2, and cipherText consist solely of lowercase English letters.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1ac58fd8-d211-8082-8a90-cadaf895054c" class="code"><code class="language-Java">//approach-1
+
+import java.util.*;
+
+class Solution {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String s1 = sc.next();
+        String s2 = sc.next();
+        String cipherText = sc.next();
+    
+
+        HashMap&lt;Character, Character&gt; map = new HashMap&lt;&gt;();
+
+        
+        for (char c = &#x27;a&#x27;; c &lt;= &#x27;z&#x27;; c++) {
+            map.put(c, c);
+        }
+
+        for (int i = 0; i &lt; s1.length(); i++) {
+            char a = s1.charAt(i);
+            char b = s2.charAt(i);
+
+           
+            char rootA = map.get(a);
+            char rootB = map.get(b);
+            char smallest = (char) Math.min(rootA, rootB);
+
+            for (char key : map.keySet()) {
+                if (map.get(key) == rootA || map.get(key) == rootB) {
+                    map.put(key, smallest);
+                }
+            }
+        }
+
+        StringBuilder result = new StringBuilder();
+        for (char ch : cipherText.toCharArray()) {
+            result.append(map.get(ch));
+        }
+
+
+        System.out.println(result.toString());
+    }
+}</code></pre><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1ac58fd8-d211-80c4-ab99-e19141f52e7a" class="code"><code class="language-Java">
+//approach-2
+
+import java.util.Scanner;
+
+public class Solution {
+    static int[] parent = new int[26];
+    //no need of rank
+    static int find(int ch) {
+        if (parent[ch] != ch) {
+            parent[ch] = find(parent[ch]); 
+        }
+        return parent[ch];
+    }
+
+    static void union(int a, int b) {
+        int rootA = find(a);
+        int rootB = find(b);
+        if (rootA != rootB) {
+            if (rootA &lt; rootB) {
+                parent[rootB] = rootA;
+            } else {
+                parent[rootA] = rootB;
+            }
+        }
+    }
+
+    public static String decodeMessage(String key1, String key2, String cipherText) {
+        for (int i = 0; i &lt; 26; i++) {
+            parent[i] = i;
+        }
+
+        for (int i = 0; i &lt; key1.length(); i++) {
+            union(key1.charAt(i) - &#x27;a&#x27;, key2.charAt(i) - &#x27;a&#x27;);
+        }
+
+        StringBuilder decoded = new StringBuilder();
+        for (char ch : cipherText.toCharArray()) {
+            decoded.append((char) (find(ch - &#x27;a&#x27;) + &#x27;a&#x27;));
+        }
+
+        return decoded.toString();
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String key1 = scanner.next();
+        String key2 = scanner.next();
+        String cipherText = scanner.next();
+        System.out.println(decodeMessage(key1, key2, cipherText));
+    }
+}</code></pre><h2 id="1ac58fd8-d211-8081-9f08-c4279dff11e4" class="">Program2 (City Regions)</h2><p id="1ac58fd8-d211-8072-b92d-c21a52e8c6eb" class="">There are N cities, and M routes[], each route is a path between two cities.<br/>routes[i] = [city1, city2], there is a travel route between city1 and city2.<br/>Each city is numbered from 0 to N-1.<br/></p><p id="1ac58fd8-d211-8031-8cc3-dcb4026987e6" class="">There are one or more Regions formed among N cities.<br/>A Region is formed in such way that you can travel between any two cities<br/>in the region that are connected directly and indirectly.<br/></p><p id="1ac58fd8-d211-8050-9a94-e32e03ab94ce" class="">Your task is to findout the number of regions formed between N cities.</p><h2 id="1ac58fd8-d211-80e1-b50a-eb64e352f520" class="">Input Format:</h2><p id="1ac58fd8-d211-800a-ad31-fd684c75203e" class="">Line-1: Two space separated integers N and M, number of cities and routes<br/>Next M lines: Two space separated integers city1, city2.<br/></p><h2 id="1ac58fd8-d211-8020-a9e0-dc66d5c6d56d" class="">Output Format:</h2><p id="1ac58fd8-d211-801d-9262-dd908d948796" class="">Print an integer, number of regions formed.</p><h2 id="1ac58fd8-d211-802d-a326-f5df093033bc" class="">Sample Input-1:</h2><p id="1ac58fd8-d211-8036-93a5-facb905696e0" class="">5 4<br/>0 1<br/>0 2<br/>1 2<br/>3 4<br/></p><p id="1ac58fd8-d211-805e-816e-c4f950c47f2c" class="">0 1 1 0 0<br/>1 0 0 0 0<br/>0<br/></p><h2 id="1ac58fd8-d211-80b6-a05f-c4881c7a1374" class="">Sample Output-1:</h2><p id="1ac58fd8-d211-80c6-9e72-e55b878c4711" class="">2</p><h2 id="1ac58fd8-d211-80e8-8a4b-ca05688f0738" class="">Sample Input-2:</h2><p id="1ac58fd8-d211-80bc-8186-c077c6cc7f1d" class="">5 6<br/>0 1<br/>0 2<br/>2 3<br/>1 2<br/>1 4<br/>2 4<br/></p><h2 id="1ac58fd8-d211-80f5-a88e-ddca544a1472" class="">Sample Output-2:</h2><p id="1ac58fd8-d211-80f2-b0d2-ed38f8a9bb74" class="">1</p><p id="1ac58fd8-d211-80f0-a6a7-fb7f12288bda" class="">Note: Look HINT for explanation.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1ac58fd8-d211-80c4-b3f4-d1895e04fe03" class="code"><code class="language-Java">import java.util.*;
+public class Solution {
+    static int[] parent;
+    static int[] rank;
+    static int find(int ch) {
+        if (parent[ch] != ch) {
+            parent[ch] = find(parent[ch]); 
+        }
+        return parent[ch];
+    }
+
+    static void union(int a, int b) {
+        int rootA = find(a);
+        int rootB = find(b);
+        
+            if (rootA &lt; rootB) {
+                parent[rootB] = rootA;
+            } else if(rootA&gt;rootB) {
+                parent[rootA] = rootB;
+            } else{
+                parent[rootB] = rootA;
+                rank[rootA]++;
+            }
+            
+            
+    }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n=sc.nextInt();
+        int m=sc.nextInt();
+        
+        parent = new int[n];
+        rank = new int[n];
+        
+        for(int i=0;i&lt;n;i++)
+        {
+            parent[i]=i;
+            rank[i]=1;
+        }
+        
+        for(int i=0;i&lt;m;i++)
+        {
+            int c1=sc.nextInt();
+            int c2=sc.nextInt();
+            union(c1,c2);
+        }
+        
+        HashSet&lt;Integer&gt; s = new HashSet&lt;&gt;();
+        for(int i=0;i&lt;n;i++)
+        {
+            s.add(find(i));
+        }
+        
+        System.out.println(s.size());
+    
+    }
+}
+</code></pre><h2 id="1ac58fd8-d211-8088-8327-e40818846883" class="">Program3 (Check for Transitivity)</h2><p id="1ac58fd8-d211-808d-a279-fa6e2f0b5594" class="">You are a database integrity engineer working for a global cloud company.<br/>Your team maintains a distributed database network, where each server either:<br/>- Stores equivalent data to another server (serverX == serverY).<br/>- Stores different data from another server (serverX != serverY).<br/></p><p id="1ac58fd8-d211-809f-a92d-e3ec08edb186" class="">The transitive consistency rule must be followed:<br/>- If A == B and B == C, then A == C must be true.<br/>- If A == B and B != C, then A != C must be true.<br/></p><p id="1ac58fd8-d211-809b-a91e-d4be7edbb497" class="">Your task is to analyze the given constraints and determine whether they<br/>follow transitive consistency. If all relations are consistent, return true;<br/>otherwise, return false<br/></p><h2 id="1ac58fd8-d211-8078-a964-d70e66f44c75" class="">Input Format:</h2><p id="1ac58fd8-d211-80ab-b3df-cd7bf6a4d6f0" class="">Space separated strnigs, list of relations</p><h2 id="1ac58fd8-d211-80c8-8783-e1d8c3bfa6e9" class="">Output Format:</h2><p id="1ac58fd8-d211-80fa-b2d5-fc657f543a87" class="">Print a boolean value, whether transitive law is obeyed or not.</p><h2 id="1ac58fd8-d211-80f0-916c-c6a176a45cac" class="">Sample Input-1:</h2><p id="1ac58fd8-d211-80bc-9699-e3b6f6fba1ab" class="">a==b c==d c!=e e==f</p><h2 id="1ac58fd8-d211-805b-965e-dd5dcb7e89f1" class="">Sample Output-1:</h2><p id="1ac58fd8-d211-8012-8559-f0411d610535" class="">true</p><h2 id="1ac58fd8-d211-80af-9ebb-c0e35b81ac82" class="">Sample Input-2:</h2><p id="1ac58fd8-d211-809e-8f96-dcbea82a77fb" class="">a==b b!=c c==a</p><h2 id="1ac58fd8-d211-80b8-b500-d48ac9e79fd7" class="">Sample Output-2:</h2><p id="1ac58fd8-d211-802e-a217-d87ab10ef7d2" class="">false</p><h2 id="1ac58fd8-d211-80a9-acd6-d74fa3b912bb" class="">Explanation:</h2><p id="1ac58fd8-d211-800a-9f90-f3711bacebf7" class="">{a, b} form one equivalence group.<br/>{c} is declared equal to {a} (c == a), which means {a, b, c} should be equivalent.<br/>However, b != c contradicts b == a and c == a.<br/></p><h2 id="1ac58fd8-d211-80d7-9782-fcb32ea61a0c" class="">Sample Input-3:</h2><p id="1ac58fd8-d211-805c-8c17-d7ea6429d2ad" class="">a==b b==c c!=d d!=e f==g g!=d</p><h2 id="1ac58fd8-d211-8083-8574-e248c7e1e526" class="">Sample Output-3:</h2><p id="1ac58fd8-d211-8086-881c-eff50411dcd7" class="">true</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1ac58fd8-d211-8052-a677-c2ed6b73216f" class="code"><code class="language-Java">import java.util.*;
+
+public class Solution {
+    static int[] parent;
+    static int[] rank;
+    static int find(int ch) {
+        if (parent[ch] != ch) {
+            parent[ch] = find(parent[ch]); 
+        }
+        return parent[ch];
+    }
+
+    static void union(int a, int b) {
+        int rootA = find(a);
+        int rootB = find(b);
+        
+        if(rootA==rootB) return;
+        
+            if (rootA &lt; rootB) {
+                parent[rootB] = rootA;
+            } else if(rootA&gt;rootB) {
+                parent[rootA] = rootB;
+            } else {
+                parent[rootB]=rootA;
+                rank[rootA]++;
+            }
+            
+            
+    }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String s[] =  sc.nextLine().split(&quot; &quot;);
+        
+        parent = new int[26];
+        rank = new int[26];
+        for(int i=0;i&lt;26;i++)
+        {
+            parent[i]=i;
+            rank[i]=1;
+        }
+        
+        List&lt;String&gt; arr = new ArrayList&lt;&gt;();
+        for(int i=0;i&lt;s.length;i++)
+        {
+            int c1 = s[i].charAt(0)-&#x27;a&#x27;;
+            int c2 = s[i].charAt(3)-&#x27;a&#x27;;
+            if(s[i].charAt(1)==&#x27;!&#x27;)
+            {
+                arr.add(s[i]);
+            }
+            else
+            union(c1,c2);
+        }
+        
+        for(int i=0;i&lt;arr.size();i++)
+        {
+            int c1 = arr.get(i).charAt(0)-&#x27;a&#x27;;
+            int c2 = arr.get(i).charAt(3)-&#x27;a&#x27;;
+            
+            int p1 = find(c1);
+            int p2 = find(c2);
+            if(p1==p2)
+            {
+                System.out.println(false);
+                return;
+            }
+        }
+        System.out.println(true);
+    }
+}
+
+</code></pre><h2 id="1ad58fd8-d211-8025-a1df-d4399f4c7db6" class="">Program4</h2><p id="1ad58fd8-d211-80f3-9b47-f7995c0d259d" class="">There are N computers in a network, all the computers are connected as tree<br/>structure. And one new connection is added in the Network. The computers in<br/>the network are identified with their IDs, the IDs are numbered between 1 to N.<br/></p><p id="1ad58fd8-d211-80ee-ad3c-de8b5f9a6f45" class="">The connections in the network is given as coonection[i] = [comp-A, comp-B],<br/>there is a connection between comp-A and comp-B.<br/></p><p id="1ad58fd8-d211-809d-b9a2-d9a6eef4c34d" class="">Your task is to remove a connection in the network and print it, so that<br/>all the computers are connected as tree structure. If there are multiple<br/>options to remove, remove the connection that occurs last in the input.<br/></p><h2 id="1ad58fd8-d211-8058-b848-e741f8fb5d6a" class="">Input Format:</h2><p id="1ad58fd8-d211-808a-920c-f5809e1cbfe8" class="">Line-1: Two space separated integers N, number of computers.<br/>Next N lines: Two space separated integers, comp-A &amp; comp-B.<br/></p><h2 id="1ad58fd8-d211-802e-94c6-d664292c5ada" class="">Output Format:</h2><p id="1ad58fd8-d211-80e1-83b1-dab92d5b2dcc" class="">Print the connection which is removed.</p><h2 id="1ad58fd8-d211-80b9-83d5-dcdaeb935d10" class="">Sample Input-1:</h2><p id="1ad58fd8-d211-8011-82e7-d4ec04388be3" class="">6<br/>1 2<br/>3 4<br/>3 6<br/>4 5<br/>5 6<br/>2 3<br/></p><h2 id="1ad58fd8-d211-80c9-bc39-e97456ac8f09" class="">Sample Output-1:</h2><p id="1ad58fd8-d211-80c1-a62c-d55ef65e2263" class="">5 6</p><h2 id="1ad58fd8-d211-80d7-b9ca-d131c6cdfc58" class="">Sample Input-2:</h2><p id="1ad58fd8-d211-80da-82b6-f7c41e28ff7e" class="">4<br/>1 2<br/>2 3<br/>3 4<br/>2 4<br/></p><h2 id="1ad58fd8-d211-8057-bef8-de089d55c1f5" class="">Sample Output-2:</h2><p id="1ad58fd8-d211-80ce-b265-d634ebf3539e" class="">2 4</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1ad58fd8-d211-8045-80cb-ca854cdcfc22" class="code"><code class="language-Java">import java.util.Scanner;
+
+
+public class Solution {
+    static int[] parent ;
+    static int[] rank ;
+    static int find(int ch) {
+        if (parent[ch] != ch) {
+            parent[ch] = find(parent[ch]); 
+        }
+        return parent[ch];
+    }
+
+    static boolean union(int a, int b) {
+        int rootA = find(a);
+        int rootB = find(b);
+        if(rootA==rootB) return true;
+        if (rootA &lt; rootB) {
+            parent[rootB] = rootA;
+        } else if(rootA&gt;rootB) {
+            parent[rootA] = rootB;
+        } else{
+            parent[rootB] = rootA;
+            rank[rootA]++;
+        }
+        return false;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n=sc.nextInt();
+        int arr[][] = new int[n][2];
+        
+        parent=new int[n+1];
+        rank=new int[n];
+        
+        for(int i=0;i&lt;=n;i++) parent[i]=i;
+        
+        for(int i=0;i&lt;n;i++)
+        {
+            arr[i][0]=sc.nextInt();
+            arr[i][1]=sc.nextInt();
+        }
+        int x=0;
+        int y=0;
+        
+        for(int i=0;i&lt;n;i++)
+        {
+            if(union(arr[i][0],arr[i][1])) {x=arr[i][0];y=arr[i][1];} 
+        }
+        
+        System.out.println(&quot;[&quot;+x+&quot;,&quot;+y+&quot;]&quot;);
+        
+    }
+}
+
+</code></pre><h2 id="1ad58fd8-d211-80cb-8061-cc0d1decd764" class="">Program5(All friends)</h2><p id="1ad58fd8-d211-80ec-a0f8-e43bdbf79939" class="">There are N people in a private party. Initially all are strangers to each other,<br/>and the people are identified by unique ID from 0 to N-1.<br/></p><p id="1ad58fd8-d211-8055-84d2-d1d55190ded4" class="">In the party, whenever two persons (person-A and person-B) become friends, they<br/>took a photo. Each of the photo has some information, photos[i]=[T-i, P-j,P-k],<br/>here T-i indicates time of the photo taken, P-j person with ID &#x27;j&#x27;, and<br/>P-k indicates person with ID &#x27;k&#x27;.<br/></p><p id="1ad58fd8-d211-806e-aa74-cedf97dfc0c3" class="">Friendship is symmetric[i.e., If P-j is friend of P-k, then P-k is a friend of P-j].<br/>Additionally, if person-A is &quot;a friend of person-B OR a friend of someone who is<br/>friend of person-B&quot;, then person-A is friend of person-B.<br/></p><p id="1ad58fd8-d211-80ff-b90b-fd9ddde5a0ca" class="">You are given L photos information, Your task is to find the earliest time<br/>for which every person became friend with every other person in the party.<br/>If there is no such earliest time, return -1.<br/></p><h2 id="1ad58fd8-d211-8042-8b16-e7d78f0b508a" class="">Input Format:</h2><p id="1ad58fd8-d211-8020-b048-f65768bc76a8" class="">Line-1: Two space separated integers, N and L.<br/>Next L lines: Three space separated integers, log[i], 0&lt;=i&lt;L.<br/></p><h2 id="1ad58fd8-d211-8048-ac6e-d59bdfad409e" class="">Output Format:</h2><p id="1ad58fd8-d211-806b-a82f-e469376201c9" class="">Print an integer result.</p><h2 id="1ad58fd8-d211-807c-84a5-e81b552352bd" class="">Sample Input-1:</h2><p id="1ad58fd8-d211-80c7-8223-c01c2441b3dc" class="">6 8<br/>5 0 1<br/>7 3 4<br/>12 2 3<br/>21 1 5<br/>34 2 4<br/>37 0 3<br/>42 1 2<br/>93 4 5<br/></p><h2 id="1ad58fd8-d211-8096-9db6-f54f16900844" class="">Sample Output-1:</h2><p id="1ad58fd8-d211-8008-bba2-da6e320ed0f6" class="">37</p><h2 id="1ad58fd8-d211-8011-8493-ef9f5be8e52e" class="">Sample Input-2:</h2><p id="1ad58fd8-d211-80ca-b6cf-d251f97e53ea" class="">7 6<br/>2 0 3<br/>5 1 5<br/>8 2 5<br/>7 3 6<br/>9 4 6<br/>6 4 5<br/></p><h2 id="1ad58fd8-d211-8099-81ed-e3bd5366cf1b" class="">Sample Output-2:</h2><p id="1ad58fd8-d211-800f-8126-eaca4820653c" class="">9</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1ad58fd8-d211-80e0-9e59-f2f8d2b8f89b" class="code"><code class="language-Java">import java.util.*;
+
+public class Solution {
+    static int[] parent ;
+    static int[] rank ;
+    static int find(int ch) {
+        if (parent[ch] != ch) {
+            parent[ch] = find(parent[ch]); 
+        }
+        return parent[ch];
+    }
+    
+    static int time;
+    static void union(int a, int b) {
+        int rootA = find(a);
+        int rootB = find(b);
+        if (rootA &lt; rootB) {
+            parent[rootB] = rootA;
+        } else if(rootA&gt;rootB) {
+            parent[rootA] = rootB;
+        } else{
+            parent[rootB] = rootA;
+            rank[rootA]++;
+        }
+            }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n=sc.nextInt();
+        int m=sc.nextInt();
+        
+        int arr[][] = new int[m][3];
+        
+        parent=new int[n];
+        rank=new int[n];
+        
+        for(int i=0;i&lt;n;i++) parent[i]=i;
+        
+        
+        for(int i=0;i&lt;m;i++)
+        {
+            arr[i][0]=sc.nextInt();
+            arr[i][1]=sc.nextInt();
+            arr[i][2]=sc.nextInt();
+        }
+        
+        Arrays.sort(arr,(a,b)-&gt;(a[0]-b[0]));
+        
+        time=Integer.MAX_VALUE;
+        for(int i=0;i&lt;m;i++)
+        {
+            union(arr[i][1],arr[i][2]);
+	    HashSet&lt;Integer&gt; s = new HashSet&lt;&gt;();
+        
+            for(int i=0;i&lt;parent.length;i++)
+            {
+            	s.add(find(i));
+            }
+            if(s.size()==1) {time=arr[i][0];break;}
+
+        }
+        
+        System.out.println(time==Integer.MAX_VALUE?-1:time);
+        
+    }
+}
+</code></pre><h2 id="1b258fd8-d211-8087-bc48-c3424d8c8db8" class="">Program6</h2><p id="1b258fd8-d211-8045-8d42-eece94078ffc" class="">Budget Padmanabham planned to visit the tourist places. There are N tourist<br/>places in the city. The tourist places are numbered from 1 to N.<br/></p><p id="1b258fd8-d211-8065-985f-f95ff490260a" class="">You are given the routes[] to travel between the tourist places in the city.<br/>where routes[i]=[place-1, place-2, price], A route is a bi-directional route.<br/>You can travel from place-1 to place-2 or place-2 to place-1 with the given price.<br/></p><p id="1b258fd8-d211-8034-be88-eb55af808a7a" class="">Your task is to help Budget Padmanabham to find the cheapest route plan, to<br/>visit all the tourist places in the city. If you are not able to find such plan,<br/>print -1.<br/></p><h2 id="1b258fd8-d211-8069-8ed9-fcd7a1c82506" class="">Input Format:</h2><p id="1b258fd8-d211-80ac-ac47-c4ce4950ada5" class="">Line-1: Two space separated integers N and R,number of places and routes.<br/>Next R lines: Three space separated integers, start, end and price.<br/></p><h2 id="1b258fd8-d211-80f0-aacf-c8f3d70a7ffb" class="">Output Format:</h2><p id="1b258fd8-d211-80e5-8e43-ca4e807e43eb" class="">Print an integer, minimum cost to visit all the tourist places.</p><h2 id="1b258fd8-d211-80b1-9662-c50869792e2d" class="">Sample Input-1:</h2><p id="1b258fd8-d211-8060-9e7e-e971992cb824" class="">4 5<br/>1 2 3<br/>1 3 5<br/>2 3 4<br/>3 4 1<br/>2 4 5<br/></p><h2 id="1b258fd8-d211-80a8-8ada-e7336b78a6f9" class="">Sample Output-1:</h2><p id="1b258fd8-d211-80b7-9c7f-e499fcb7f428" class="">8</p><h2 id="1b258fd8-d211-805e-aa19-e06f24248cdf" class="">Explanation:</h2><p id="1b258fd8-d211-80c5-8dba-ded6c6fc9a38" class="">The cheapest route plan is as follows:<br/>1-2, 2-3, 3-4 and cost is 3 + 4 + 1 = 8<br/></p><h2 id="1b258fd8-d211-80d1-b2a1-cd157cadc8ff" class="">Sample Input-2:</h2><p id="1b258fd8-d211-80ce-9a8b-f63cb83c8ae4" class="">4 3<br/>1 2 3<br/>1 3 5<br/>2 3 4<br/></p><h2 id="1b258fd8-d211-8007-ba71-f5d7323ef1dd" class="">Sample Output-2:</h2><ul id="1b258fd8-d211-8048-88b5-e7c2cf8e0e1f" class="bulleted-list"><li style="list-style-type:disc">1</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b258fd8-d211-8008-b98d-d4bf98c95fbb" class="code"><code class="language-Java">import java.util.*;
+
+class Solution{
+    
+    static int parent[];
+    static int rank[];
+    
+    static int find(int x)
+    {
+        if(parent[x]==x)
+        {
+            return x;
+        }
+        return parent[x]=find(parent[x]);
+    }
+    
+    static void union(int a, int b)
+    {
+        int rA = find(a);
+        int rB = find(b);
+
+        if(rA==rB)
+        {
+            return;
+        }
+        
+        if(rank[rA]&lt;rank[rB])
+        {
+            parent[rA]=rB;
+        }
+        else if(rank[rA]&gt;rank[rB])
+        {
+            parent[rB]=rA;
+        }
+        else{
+            parent[rB]=rA;
+            rank[rA]++;
+        }
+    }
+    public static void main (String[] args) {
+        Scanner sc=new Scanner(System.in);
+        int n=sc.nextInt()+1;
+        int m=sc.nextInt();
+        int arr[][] = new int[m][3];
+        for(int i=0;i&lt;m;i++)
+        {
+            for(int j=0;j&lt;3;j++){
+                arr[i][j]=sc.nextInt();
+            }
+        }
+        
+        Arrays.sort(arr,(a,b)-&gt;a[2]-b[2]);
+        parent = new int[n];
+        rank = new int[n];
+        for(int i=0;i&lt;n;i++) parent[i]=i;
+        for(int i=0;i&lt;n;i++) rank[i]=0;
+    
+        int sum=0;
+        boolean f=false;
+        
+        int c=0;
+        
+        for(int i=0;i&lt;m;i++){
+            int rA = find(arr[i][0]);
+            int rB = find(arr[i][1]);
+            
+            if(rA!=rB){
+                c++;
+                sum+=arr[i][2];
+                union(rA,rB);
+            }
+            if(c==n-1) {f=true;break;}
+            
+        }
+        HashSet&lt;Integer&gt; set = new HashSet&lt;&gt;();
+        for(int i=1;i&lt;n;i++) set.add(parent[i]);
+        System.out.println(set.size()==1?sum:-1);
+        
+        
+        
+    }
+}</code></pre></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

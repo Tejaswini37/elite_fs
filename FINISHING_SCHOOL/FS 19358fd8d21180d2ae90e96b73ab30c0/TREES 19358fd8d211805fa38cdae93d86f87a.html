@@ -1,0 +1,2359 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>TREES</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-default_background {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.highlight-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.block-color-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: undefined; }
+.select-value-color-pink { background-color: rgba(225, 136, 179, 0.27); }
+.select-value-color-purple { background-color: rgba(168, 129, 197, 0.27); }
+.select-value-color-green { background-color: rgba(123, 183, 129, 0.27); }
+.select-value-color-gray { background-color: rgba(84, 72, 49, 0.15); }
+.select-value-color-transparentGray { background-color: undefined; }
+.select-value-color-translucentGray { background-color: undefined; }
+.select-value-color-orange { background-color: rgba(224, 124, 57, 0.27); }
+.select-value-color-brown { background-color: rgba(210, 162, 141, 0.35); }
+.select-value-color-red { background-color: rgba(244, 171, 159, 0.4); }
+.select-value-color-yellow { background-color: rgba(236, 191, 66, 0.39); }
+.select-value-color-blue { background-color: rgba(93, 165, 206, 0.27); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="19358fd8-d211-805f-a38c-dae93d86f87a" class="page sans"><header><h1 class="page-title">TREES</h1><p class="page-description"></p></header><div class="page-body"><h2 id="19358fd8-d211-8006-ab03-f3a3b41e3b02" class="">Program1</h2><p id="19358fd8-d211-8038-b292-c3ac2f13cdc0" class="">You are developing an application for a garden management system where each tree <br/>in the garden is represented as a binary tree structure. The system needs to <br/>allow users to plant new trees in a systematic way, ensuring that each tree is <br/>filled level by level.<br/><br/>A gardener wants to:<br/> - Plant trees based on user input.<br/> - Ensure trees grow in a balanced way by filling nodes level by level.<br/> - Inspect the garden layout by performing an in-order traversal, which helps <br/>   analyze the natural arrangement of trees.<br/><br/>Your task is to implement a program that:<br/>    - Accepts a list of N tree species (as integers).<br/>    - Builds a binary tree using level-order insertion.<br/>    - Displays the in-order traversal of the tree.<br/><br/>Input Format:<br/>-------------<br/>- An integer N representing the number of tree plants.<br/>- A space-separated list of N integers representing tree species.<br/><br/>Output Format:<br/>--------------<br/>A list of integers, in-order traversal of tree.<br/><br/><br/>Sample Input:<br/>-------------<br/>7<br/>1 2 3 4 5 6 7<br/><br/>Sample Output:<br/>--------------<br/>4 2 5 1 6 3 7<br/><br/><br/>Explanation:<br/>------------<br/>The tree looks like this:<br/><br/>        1<br/>       / \<br/>      2   3<br/>     / \  / \<br/>    4   5 6  7<br/>The in order is : 4 2 5 1 6 3 7<br/></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="19358fd8-d211-800f-9d8e-de3955cf01f4" class="code"><code class="language-Java">import java.util.*;
+
+class Tree{
+    int data;
+    Tree left, right;
+    Tree(int data){
+        this.data=data;
+        left=null;
+        right=null;
+    }
+    
+}
+public class Solution{
+    
+    static void buildTree(Tree root, int ele)
+    {
+        if(root==null)
+        {
+            root = new Tree(ele);
+            return;
+        }
+        Queue&lt;Tree&gt; q = new LinkedList&lt;&gt;();
+        q.add(root);
+        while(!q.isEmpty())
+        {
+            root=q.remove();
+            if(root.left==null)
+            {
+                root.left= new Tree(ele);
+                break;
+            }
+            else{
+                q.add(root.left);
+            }
+            if(root.right==null)
+            {
+                root.right= new Tree(ele);
+                break;
+            }
+            else{
+                q.add(root.right);
+            }
+        }
+        
+    }
+    static void inorder(Tree root)
+    {
+        if(root==null) return;
+        inorder(root.left);
+        System.out.print(root.data+&quot; &quot;);
+        inorder(root.right);
+    }
+    public static void main (String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n=sc.nextInt();
+        int arr[] = new int[n];
+        for(int i=0;i&lt;n;i++){
+            arr[i]=sc.nextInt();
+        }
+        Tree root = new Tree(arr[0]);
+        for(int i=1;i&lt;n;i++)
+            buildTree(root,arr[i]);
+        inorder(root);
+        
+    }
+}</code></pre><h2 id="19358fd8-d211-804f-838a-f0e84aa721b0" class="">Program2</h2><p id="19358fd8-d211-8020-be59-edc48ab3ee48" class="">Write a program to construct a binary tree from level-order input, while treating -1 <br/>as a placeholder for missing nodes. The program reads input, constructs the tree, <br/>and provides an in-order traversal to verify correctness.<br/><br/>Input Format:<br/>---------------<br/>Space separated integers, level order data (where -1 indiactes null node).<br/><br/>Output Format:<br/>-----------------<br/>Print the in-order data of the tree.<br/><br/><br/>Sample Input:<br/>----------------<br/>1 2 3 -1 -1 4 5<br/><br/>Sample Output:<br/>----------------<br/>2 1 4 3 5<br/><br/>Explanation:<br/>--------------<br/>    1<br/>   / \<br/>  2   3<br/>     / \<br/>    4   5<br/><br/><br/>Sample Input:<br/>----------------<br/>1 2 3 4 5 6 7<br/><br/>Sample Output:<br/>----------------<br/>4 2 5 1 6 3 7<br/><br/>Explanation:<br/>--------------<br/>        1<br/>       / \<br/>      2   3<br/>     / \  / \<br/>    4  5 6  7<br/></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="19358fd8-d211-8060-9426-c6bf29b632fc" class="code"><code class="language-Java">import java.util.*;
+class Tree{
+    int data;
+    Tree left,right;
+    Tree(int data){
+        this.data=data;
+        left=null;
+        right=null;
+    }
+}
+public class Solution{
+    static void buildTree(int[] arr){
+        Tree root = new Tree(arr[0]);
+        Queue&lt;Tree&gt; q = new LinkedList&lt;&gt;();
+        int ind=0;
+        int n=arr.length;
+        q.add(root);
+        while(!q.isEmpty()){
+            Tree node = q.poll();
+            if(ind+1&lt;n){
+                if(arr[ind+1]!=-1)
+                {
+                    node.left=new Tree(arr[ind+1]);
+                    q.add(node.left);
+                }
+            }
+            ind++;
+            if(ind+1&lt;n){
+                if(arr[ind+1]!=-1)
+                {
+                    node.right=new Tree(arr[ind+1]);
+                    q.add(node.right);
+                }
+            }
+            ind++;
+        }
+        
+        inorder(root);
+    }
+    
+    static void inorder(Tree root){
+        if(root==null) return;
+        inorder(root.left);
+        System.out.print(root.data+&quot; &quot;);
+        inorder(root.right);
+        
+    }
+    public static void main(String[] args){
+        Scanner sc=new Scanner(System.in);
+        String s[]=sc.nextLine().split(&quot; &quot;);
+        int n=s.length;
+        int arr[] = new int[n];
+        for(int i=0;i&lt;n;i++) arr[i]=Integer.parseInt(s[i]+&quot;&quot;);
+        
+        buildTree(arr);
+
+    }
+    
+}</code></pre><h2 id="19858fd8-d211-805c-b185-f1abb1badd78" class="">Program3</h2><p id="19858fd8-d211-8018-a851-e52054c9324f" class="">Given the in-order and post-order traversals of a binary tree, construct<br/>the original binary tree. For the given Q number of queries,<br/>each query consists of a lower level and an upper level.<br/>The output should list the nodes in the order they appear in a level-wise.<br/></p><p id="19858fd8-d211-8042-aac1-e85e7cb8732f" class="">Input Format:</p><p id="19858fd8-d211-80aa-8742-e60b3a59e25b" class="">An integer N representing the number nodes.<br/>A space-separated list of N integers representing the similar to in-order traversal.<br/>A space-separated list of N integers representing the similar to post-order traversal.<br/>An integer Q representing the number of queries.<br/>Q pairs of integers, each representing a query in the form:<br/>Lower level (L)<br/>Upper level (U)<br/></p><p id="19858fd8-d211-8060-a2fa-c2dd1d6911de" class="">Output Format:<br/>For each query, print the nodes in order within the given depth range<br/></p><p id="19858fd8-d211-8026-969b-e3982abcf3e0" class="">Example<br/>Input:<br/>7<br/>4 2 5 1 6 3 7<br/>4 5 2 6 7 3 1<br/>2<br/>1 2<br/>2 3<br/>Output:<br/>[1, 2, 3]<br/>[2, 3, 4, 5, 6, 7]<br/></p><p id="19858fd8-d211-801b-aae6-f4697ce334bb" class="">Explanation:<br/>1<br/>/ \<br/>2   3<br/>/ \  / \<br/>4   5 6  7<br/>Query 1 (Levels 1 to 2): 1 2 3<br/>Query 2 (Levels 2 to 3): 2 3 4 5 6 7<br/></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="19858fd8-d211-80d2-bea5-c9a3f700c633" class="code"><code class="language-Java">import java.util.*;
+
+class Tree{
+    int data;
+    Tree left;
+    Tree right;
+    Tree(int data){
+        this.data=data;
+        left=null;
+        right=null;
+    }
+}
+
+
+class Solution{
+
+    static Tree BuildTree(int in[], int[] po, int start, int end,HashMap&lt;Integer,Integer&gt; map,Stack&lt;Integer&gt; s)
+    {
+        
+        if(start&gt;end) return null;
+        
+        int curr = s.peek();
+        s.pop();
+        Tree root = new Tree(curr);
+        if(start==end) return root;
+        int pos = map.get(curr);
+        root.right = BuildTree(in,po,pos+1,end,map,s);
+        root.left = BuildTree(in,po,start,pos-1,map,s);
+        
+        return root;
+    }
+    static List&lt;List&lt;Integer&gt;&gt; levelOrder(Tree root){
+        List&lt;List&lt;Integer&gt;&gt; levels = new ArrayList&lt;&gt;();
+        if (root == null) return levels;
+        Queue&lt;Tree&gt; q = new LinkedList&lt;&gt;();
+        q.offer(root);
+        while (!q.isEmpty()) {
+            int size = q.size();
+            List&lt;Integer&gt; level = new ArrayList&lt;&gt;();
+            for (int i = 0; i &lt; size; i++) {
+                Tree node = q.poll();
+                level.add(node.data);
+                if (node.left != null) q.offer(node.left);
+                if (node.right != null) q.offer(node.right);
+            }
+            levels.add(level);
+        }
+        return levels;
+    }
+    public static void main (String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n=sc.nextInt();
+        int in[] = new int[n];
+        int po[] = new int[n];
+        for(int i=0;i&lt;n;i++) in[i]=sc.nextInt();
+        for(int i=0;i&lt;n;i++) po[i]=sc.nextInt();
+        
+        HashMap&lt;Integer,Integer&gt; map = new HashMap&lt;&gt;();
+        Stack&lt;Integer&gt; s = new Stack&lt;&gt;();
+        for(int i=0;i&lt;n;i++)
+        {
+            map.put(in[i],i);
+            s.add(po[i]);
+        }
+
+        Tree root = BuildTree(in,po,0,n-1,map,s);
+        
+        // inorder(root);
+        
+        int q=sc.nextInt();
+        
+        List&lt;List&lt;Integer&gt;&gt; ans = new ArrayList&lt;&gt;();
+        ans = levelOrder(root);
+        
+        List&lt;List&lt;Integer&gt;&gt; finans = new ArrayList&lt;&gt;();
+        
+        for(int i=0;i&lt;q;i++){
+            int l=sc.nextInt();
+            int r=sc.nextInt();
+            
+            List&lt;Integer&gt; res = new ArrayList&lt;&gt;();
+            for(int j=l;j&lt;=r;j++)
+            {
+              res.addAll(ans.get(j-1));  
+            }
+            
+            finans.add(res);
+        }
+        
+        for(int i=0;i&lt;q;i++){
+            System.out.println(finans.get(i));
+        }
+        
+    }
+    
+}</code></pre><h2 id="19858fd8-d211-80c1-b87c-cbfaa7899429" class="">Program4</h2><p id="19858fd8-d211-803b-8f96-e747a4d2c5cc" class="">Construct the binary tree from the given In-order and Pre-order.<br/>Find Nodes Between Two Levels in Spiral Order.<br/>The spiral order is as follows:<br/>-&gt; Odd levels → Left to Right.<br/>-&gt; Even levels → Right to Left.<br/></p><h2 id="19858fd8-d211-80cb-bb7f-c6b31ce9fe07" class="">Input Format:</h2><p id="19858fd8-d211-8085-84e5-c2777f764b18" class="">An integer N representing the number of nodes.<br/>A space-separated list of N integers representing the in-order traversal.<br/>A space-separated list of N integers representing the pre-order traversal.<br/>Two integers:<br/>Lower Level (L)<br/>Upper Level (U)<br/></p><p id="19858fd8-d211-80d4-9e66-faca04c23b7f" class="">Output Format:<br/>Print all nodes within the specified levels, but in spiral order.<br/></p><p id="19858fd8-d211-801f-97bf-d133a8dc7590" class="">Example:<br/>Input:<br/>7<br/>4 2 5 1 6 3 7<br/>1 2 4 5 3 6 7<br/>2 3<br/></p><p id="19858fd8-d211-8098-9fac-e94ff5f1b71e" class="">Output:<br/>3 2 4 5 6 7<br/></p><p id="19858fd8-d211-8042-810c-ef3bf4828425" class="">Explanation:<br/>Binary tree structure:<br/>1<br/>/ \<br/>2   3<br/>/ \  / \<br/>4   5 6  7<br/></p><p id="19858fd8-d211-800a-8341-c6ae8fdbfdaa" class="">Levels 2 to 3 in Regular Order:<br/>Level 2 → 2 3<br/>Level 3 → 4 5 6 7<br/></p><p id="19858fd8-d211-80f4-82b4-dda52573ea71" class="">Spiral Order:<br/>Level 2 (Even) → 3 2 (Right to Left)<br/>Level 3 (Odd) → 4 5 6 7 (Left to Right)<br/></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="19858fd8-d211-8087-aea0-c19d65899ba7" class="code"><code class="language-Java">import java.util.*;
+
+class Tree{
+    int data;
+    Tree left;
+    Tree right;
+    Tree(int data){
+        this.data=data;
+        left=null;
+        right=null;
+    }
+}
+
+
+class Solution{
+
+    static Tree BuildTree(int in[], int[] pre, int start, int end,HashMap&lt;Integer,Integer&gt; map,Queue&lt;Integer&gt; q)
+    {
+        
+        if(start&gt;end) return null;
+        
+        int curr = q.poll();
+        Tree root = new Tree(curr);
+        if(start==end) return root;
+        int pos = map.get(curr);
+        root.left = BuildTree(in,pre,start,pos-1,map,q);
+        root.right = BuildTree(in,pre,pos+1,end,map,q);
+        
+        return root;
+    }
+    static List&lt;List&lt;Integer&gt;&gt; levelOrder(Tree root){
+        List&lt;List&lt;Integer&gt;&gt; levels = new ArrayList&lt;&gt;();
+        if (root == null) return levels;
+        Queue&lt;Tree&gt; q = new LinkedList&lt;&gt;();
+        q.offer(root);
+        while (!q.isEmpty()) {
+            int size = q.size();
+            List&lt;Integer&gt; level = new ArrayList&lt;&gt;();
+            for (int i = 0; i &lt; size; i++) {
+                Tree node = q.poll();
+                level.add(node.data);
+                if (node.left != null) q.offer(node.left);
+                if (node.right != null) q.offer(node.right);
+            }
+            levels.add(level);
+        }
+        return levels;
+    }
+     
+    public static void main (String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n=sc.nextInt();
+        int in[] = new int[n];
+        int pre[] = new int[n];
+        for(int i=0;i&lt;n;i++) in[i]=sc.nextInt();
+        for(int i=0;i&lt;n;i++) pre[i]=sc.nextInt();
+        
+        HashMap&lt;Integer,Integer&gt; map = new HashMap&lt;&gt;();
+        Queue&lt;Integer&gt; q = new LinkedList&lt;&gt;();
+        for(int i=0;i&lt;n;i++)
+        {
+            map.put(in[i],i);
+            q.add(pre[i]);
+        }
+
+        Tree root = BuildTree(in,pre,0,n-1,map,q);
+        
+        
+        List&lt;List&lt;Integer&gt;&gt; ans = new ArrayList&lt;&gt;();
+        ans = levelOrder(root);
+        
+        int l=sc.nextInt();
+        int r=sc.nextInt();
+        for(int i=l;i&lt;=r;i++)
+        {
+          if(i%2==0)
+          {
+            for(int j=ans.get(i-1).size()-1;j&gt;=0;j--)
+            {
+              System.out.print(ans.get(i-1).get(j)+&quot; &quot;);  
+            }  
+          }
+          else
+          {
+            for(int j=0;j&lt;ans.get(i-1).size();j++)
+            {
+              System.out.print(ans.get(i-1).get(j)+&quot; &quot;);  
+            }
+          }  
+        }  
+        
+    }
+    
+}
+
+</code></pre><h2 id="19a58fd8-d211-807f-8a0a-d7abe225eab1" class="">Program5</h2><p id="19a58fd8-d211-80d5-9d1a-cba1af322463" class="">Given the preorder and postorder traversals of a binary tree, construct<br/>the original binary tree and print its level order traversal.<br/></p><h2 id="19a58fd8-d211-805d-b20b-e29abc10ae1f" class="">Input Format:</h2><p id="19a58fd8-d211-808a-9763-f8621c110287" class="">Space separated integers, pre order data<br/>Space separated integers, post order data<br/></p><h2 id="19a58fd8-d211-80f1-98ea-e5a574b417ee" class="">Output Format:</h2><p id="19a58fd8-d211-802c-adba-f23b15abe23b" class="">Print the level-order data of the tree.</p><h2 id="19a58fd8-d211-8092-a035-f12c2a085f63" class="">Sample Input:</h2><p id="19a58fd8-d211-8027-9f28-fd0f7ea5e333" class="">1 2 4 5 3 6 7<br/>4 5 2 6 7 3 1<br/></p><h2 id="19a58fd8-d211-80ad-9d97-f851da72431c" class="">Sample Output:</h2><p id="19a58fd8-d211-8031-b113-f843469da3f4" class="">[[1], [2, 3], [4, 5, 6, 7]]</p><h2 id="19a58fd8-d211-8009-8033-edbcab27dcba" class="">Explanation:</h2><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="19a58fd8-d211-8061-a93d-d5420bbd5606" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">    1
+   / \\
+  2   3
+ / \\  / \\
+4   5 6  7
+</code></pre><h2 id="19a58fd8-d211-805d-8104-c21be1dc6b8a" class="">Sample Input:</h2><p id="19a58fd8-d211-80da-b8bd-cfb3e556e8c4" class="">1 2 3<br/>2 3 1<br/></p><h2 id="19a58fd8-d211-8059-add5-ef2eddb02589" class="">Sample Output:</h2><p id="19a58fd8-d211-80be-8c22-fb9fd3904d12" class="">[[1], [2, 3]]</p><h2 id="19a58fd8-d211-80da-9687-eec7afde4e40" class="">Explanation:</h2><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="19a58fd8-d211-8004-a27b-e739c2fe2ec3" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">1
+</code></pre><p id="19a58fd8-d211-8092-b807-e261ab386d1b" class="">/ \<br/>2  3<br/></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="19a58fd8-d211-80eb-b9c9-edf8ecad1044" class="code"><code class="language-Java">import java.util.*;
+
+class Tree{
+    int data;
+    Tree left;
+    Tree right;
+    Tree(int data){
+        this.data=data;
+        this.left=null;
+        this.right=null;
+    }
+}
+
+class Solution{
+    
+    static Tree buildTree(Queue&lt;Integer&gt; pre, int[] pos, HashMap&lt;Integer, Integer&gt; posMap, int start, int end) {
+        if (pre.isEmpty() || start &gt; end) return null;
+
+        Tree root = new Tree(pre.poll());
+        
+        if (start == end) return root;
+        
+        int next = posMap.get(pre.peek());
+        
+        if (next &gt;= start &amp;&amp; next &lt; end) {
+            root.left = buildTree(pre, pos, posMap, start, next);
+            root.right = buildTree(pre, pos, posMap, next + 1, end - 1);
+        }
+
+        return root;
+    }
+
+    static List&lt;List&lt;Integer&gt;&gt; levelOrder(Tree root)
+    {
+
+        Queue&lt;Tree&gt; q = new LinkedList&lt;&gt;();
+        q.add(root);
+        List&lt;List&lt;Integer&gt;&gt; ans = new ArrayList&lt;&gt;();
+        while(!q.isEmpty())
+        {
+            int size=q.size();
+            List&lt;Integer&gt; temp = new ArrayList&lt;&gt;();
+            for(int i=0;i&lt;size;i++){
+                Tree node = q.poll();
+                if(node.left!=null) q.add(node.left);  
+                if(node.right!=null) q.add(node.right);  
+                temp.add(node.data);
+            }
+            ans.add(temp);
+        }
+        return ans;
+    }
+ 
+    public static void main (String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String[] pr = sc.nextLine().split(&quot; &quot;);
+        String[] po = sc.nextLine().split(&quot; &quot;);
+
+        int[] pos = new int[po.length];
+        Queue&lt;Integer&gt; q = new LinkedList&lt;&gt;();
+        HashMap&lt;Integer,Integer&gt; posMap = new HashMap&lt;&gt;();
+        
+        for(int i=0;i&lt;pr.length;i++)
+        {
+            pos[i] = Integer.parseInt(po[i]);
+            posMap.put(pos[i],i);
+            q.add(Integer.parseInt(pr[i]));
+        }
+        Tree root = buildTree(q,pos,posMap,0,pos.length-1);
+
+        List&lt;List&lt;Integer&gt;&gt; ans = levelOrder(root);
+        System.out.println(ans);
+        
+    }
+}</code></pre><h2 id="19a58fd8-d211-80b8-92ed-d11372bcc2a7" class="">Program6 (Right view)</h2><p id="19a58fd8-d211-8060-98d1-d34fa072c74f" class="">Balbir Singh is working with Binary Trees.<br/>The elements of the tree are given in level-order format.<br/></p><p id="19a58fd8-d211-8037-8506-caf8e81bf588" class="">Balbir is observing the tree from the right side, meaning he<br/>can only see the rightmost nodes (one node per level).<br/></p><p id="19a58fd8-d211-80f1-bec4-c8f7a06d1fd3" class="">You are given the root of a binary tree. Your task is to determine<br/>the nodes visible from the right side and return them in top-to-bottom order.<br/></p><h2 id="19a58fd8-d211-801c-9416-c1bca9e77b1d" class="">Input Format:</h2><p id="19a58fd8-d211-800d-9f3b-dae880e1c347" class="">Space separated integers, elements of the tree.</p><h2 id="19a58fd8-d211-8079-8518-c7730fcabac4" class="">Output Format:</h2><p id="19a58fd8-d211-8071-a0f5-dd08c87768ac" class="">A list of integers representing the node values visible from the right side</p><h2 id="19a58fd8-d211-80f9-a8bb-daadb59e4791" class="">Sample Input-1:</h2><p id="19a58fd8-d211-80ca-898b-ebb5e9bdb5f9" class="">1 2 3 5 -1 -1 5</p><h2 id="19a58fd8-d211-80b5-8132-eebc4f05a892" class="">Sample Output-1:</h2><p id="19a58fd8-d211-801e-9235-dcc64c5a815c" class="">[1, 3, 5]</p><h2 id="19a58fd8-d211-8063-b3cf-e5fce1d534bb" class="">Sample Input-2:</h2><p id="19a58fd8-d211-801d-a036-c44bcab44f60" class="">3 2 4 3 2</p><h2 id="19a58fd8-d211-8068-9c5c-fd494d2e0912" class="">Sample Output-2:</h2><p id="19a58fd8-d211-8075-943c-c9312c4261f6" class="">[3, 4, 2]</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="19a58fd8-d211-806f-b7d7-f91410188a17" class="code"><code class="language-Java">import java.util.*;
+
+class Tree{
+    int data;
+    Tree left=null;
+    Tree right=null;
+    Tree(int data)
+    {this.data=data;}
+}
+
+class Solution{
+    
+    static Tree buildTree(int[] arr)
+    {
+        Tree root1 = new Tree(arr[0]);
+        int ind=0;
+        Queue&lt;Tree&gt; q = new LinkedList&lt;&gt;();
+        q.add(root1);
+        while(ind&lt;arr.length)
+        {
+            Tree root = q.poll();
+           if(ind+1&lt;arr.length)
+           {
+               if(arr[ind+1]!=-1)
+               {
+                   root.left = new Tree(arr[ind+1]);
+                   q.add(root.left);
+               }
+           }
+           ind++;
+           if(ind+1&lt;arr.length)
+           {
+               if(arr[ind+1]!=-1)
+               {
+                   root.right=new Tree(arr[ind+1]);
+                   q.add(root.right);
+               }
+           }
+           ind++;
+        }
+        return root1;
+    }
+    static void rightView(Tree root,int depth, List&lt;Integer&gt; ans)
+    {
+        if(root==null) return;
+        
+        
+        if(depth == ans.size()) ans.add(root.data);
+        rightView(root.right,depth+1,ans);
+        rightView(root.left,depth+1,ans);
+    }
+    public static void main (String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String s[] = sc.nextLine().split(&quot; &quot;);
+        int arr[] = new int[s.length];
+        for(int i=0;i&lt;s.length;i++) arr[i]=Integer.parseInt(s[i]);
+        
+        Tree root = buildTree(arr);
+        
+        List&lt;Integer&gt; ans = new ArrayList&lt;&gt;();
+        rightView(root,0,ans);
+        System.out.println(ans);
+    }
+}
+
+
+</code></pre><h2 id="19a58fd8-d211-80f7-9e6b-db204f9831c3" class="">Program7 (Boundary Traversal)</h2><p id="19a58fd8-d211-8023-bdaf-f1163f5990f2" class="">The Indian Army has established multiple military camps at strategic locations<br/>along the Line of Actual Control (LAC) in Galwan. These camps are connected in<br/>a hierarchical structure, with a main base camp acting as the root of the network.<br/></p><p id="19a58fd8-d211-80e6-ab5a-d61eeed19e45" class="">To fortify national security, the Government of India has planned to deploy<br/>a protective S.H.I.E.L.D. that encloses all military camps forming the outer<br/>boundary of the network.<br/></p><p id="19a58fd8-d211-8055-b028-e7c2e0aa7b08" class="">Structure of Military Camps:<br/>- Each military camp is uniquely identified by an integer ID.<br/>- A camp can have at most two direct connections:<br/>- Left connection → Represents a subordinate camp on the left.<br/>- Right connection → Represents a subordinate camp on the right.<br/>- If a military camp does not exist at a specific position, it is<br/>represented by -1<br/></p><p id="19a58fd8-d211-80f8-8c16-def9dc7ac2b5" class="">Mission: Deploying the S.H.I.E.L.D.<br/>Your task is to determine the list of military camp IDs forming the outer<br/>boundary of the military network. This boundary must be traversed in<br/>anti-clockwise order, starting from the main base camp (root).<br/></p><p id="19a58fd8-d211-809b-8af3-d3958e7f3cf0" class="">The boundary consists of:</p><ol type="1" id="19a58fd8-d211-8097-bd13-d8f3d8bdc664" class="numbered-list" start="1"><li>The main base camp (root).</li></ol><ol type="1" id="19a58fd8-d211-80f4-bf2a-cf4978f74791" class="numbered-list" start="2"><li>The left boundary:<ul id="19a58fd8-d211-8037-9f63-d63bed18a185" class="bulleted-list"><li style="list-style-type:disc">Starts from the root’s left child and follows the leftmost path downwards.</li></ul><ul id="19a58fd8-d211-8000-b8f4-e9a094e7225f" class="bulleted-list"><li style="list-style-type:disc">If a camp has a left connection, follow it.</li></ul><ul id="19a58fd8-d211-8069-8aef-eacaabd04c6c" class="bulleted-list"><li style="list-style-type:disc">If no left connection exists but a right connection does, follow the right connection.</li></ul><ul id="19a58fd8-d211-803c-ad1a-c80464daa0b8" class="bulleted-list"><li style="list-style-type:disc">The leftmost leaf camp is NOT included in this boundary.</li></ul></li></ol><ol type="1" id="19a58fd8-d211-8001-8bec-c510264d94be" class="numbered-list" start="3"><li>The leaf camps (i.e., camps with no further connections), ordered from left to right.</li></ol><ol type="1" id="19a58fd8-d211-8038-a0a1-ede1fc63063d" class="numbered-list" start="4"><li>The right boundary (in reverse order):<ul id="19a58fd8-d211-80e9-9466-ce4147231278" class="bulleted-list"><li style="list-style-type:disc">Starts from the root’s right child and follows the rightmost path downwards.</li></ul><ul id="19a58fd8-d211-80f7-89ff-f8966946e932" class="bulleted-list"><li style="list-style-type:disc">If a camp has a right connection, follow it.</li></ul><ul id="19a58fd8-d211-8079-bc9d-f3cae63243ee" class="bulleted-list"><li style="list-style-type:disc">If no right connection exists but a left connection does, follow the left connection.</li></ul><ul id="19a58fd8-d211-807c-bd4e-e849a13fe91a" class="bulleted-list"><li style="list-style-type:disc">The rightmost leaf camp is NOT included in this boundary.</li></ul></li></ol><h2 id="19a58fd8-d211-80e6-a236-ed6744095e98" class="">Input Format:</h2><p id="19a58fd8-d211-8079-b57a-fad7594a0243" class="">space separated integers, military-camp IDs.</p><h2 id="19a58fd8-d211-8016-a1ba-f26b6e2cc75c" class="">Output Format:</h2><p id="19a58fd8-d211-80b8-bbd8-e365b6fe8063" class="">Print all the military-camp IDs, which are at the edge of S.H.I.E.L.D.</p><h2 id="19a58fd8-d211-8072-9cec-cb4098a6922c" class="">Sample Input-1:</h2><p id="19a58fd8-d211-80fe-8652-cd471e6c3437" class="">5 2 4 7 9 8 1</p><h2 id="19a58fd8-d211-80b5-98d1-c3ca7e487ffc" class="">Sample Output-1:</h2><p id="19a58fd8-d211-8057-ab0e-dcb06866f4c0" class="">[5, 2, 7, 9, 8, 1, 4]</p><h2 id="19a58fd8-d211-803e-8a9c-f5dee02b5bf8" class="">Sample Input-2:</h2><p id="19a58fd8-d211-80b9-8deb-f73d379878f4" class="">11 2 13 4 25 6 -1 -1 -1 7 18 9 10</p><h2 id="19a58fd8-d211-8058-805c-c72d7f8c23ef" class="">Sample Output-2:</h2><p id="19a58fd8-d211-80d2-be2c-e9194193738c" class="">[11, 2, 4, 7, 18, 9, 10, 6, 13]</p><h2 id="19a58fd8-d211-80c2-ae8b-f7d9eddba2fc" class="">Sample Input-3:</h2><p id="19a58fd8-d211-80fb-be4e-ddf6dcb19158" class="">1 2 3 -1 -1 -1 5 -1 6 7</p><h2 id="19a58fd8-d211-80e4-a8e6-ea15270aa363" class="">Sample Output-3:</h2><p id="19a58fd8-d211-8074-860e-e988015057dd" class="">[1, 2, 7, 6, 5, 3]</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="19a58fd8-d211-800b-8bf8-cbd8c9906c06" class="code"><code class="language-Java">import java.util.*;
+
+class Node{
+    
+    int data;
+    Node left;
+    Node right;
+    
+    Node(int data){
+        this.data = data;
+    }
+}
+
+
+class Solution{
+    
+    static Node buildTree(int [] arr){
+        
+        int ind=0;
+        Node root = new Node(arr[0]);
+        Queue&lt;Node&gt; q = new LinkedList&lt;&gt;();
+        q.offer(root);
+        ind++;
+        while(ind&lt;arr.length){
+            Node node = q.poll();
+            if(ind &lt; arr.length){
+                if(arr[ind] != -1){
+                    node.left = new Node(arr[ind]);
+                    q.offer(node.left);
+                }
+            }
+            ind++;
+            if(ind &lt; arr.length){
+                if(arr[ind] != -1){
+                    node.right = new Node(arr[ind]);
+                    q.offer(node.right);
+                }
+            }
+            ind++;
+        }
+        
+            
+        return root;
+    }
+     
+      
+    static void Inorder(Node root){
+        
+        if(root == null) return;
+        Inorder(root.left);
+        System.out.print(root.data+&quot; &quot;);
+        Inorder(root.right);
+    }
+        
+    
+    static void func(Node root , ArrayList&lt;Integer&gt; a){
+        if(root == null) return;
+        a.add(root.data);
+        
+        lb(root.left,a);
+        leaves(root.left,a);
+        leaves(root.right,a);
+        rb(root.right,a);
+        
+        return ;
+    }
+    
+    
+    static void lb(Node root, ArrayList&lt;Integer&gt; a){
+        
+        if(root == null) return;
+        if(root.left == null &amp;&amp; root.right == null) return;
+        
+        a.add(root.data);
+        if(root.left !=null){
+            lb(root.left,a);
+        }else{
+            lb(root.right,a);
+        }
+    }
+        
+    static void rb(Node root, ArrayList&lt;Integer&gt; a){
+        
+        if(root == null) return;
+        if(root.left == null &amp;&amp; root.right == null) return;
+        
+        if(root.right !=null){
+            rb(root.right,a);
+        }else{
+            rb(root.left,a);
+        }
+        a.add(root.data);
+    }
+        
+        
+    static void leaves(Node root, ArrayList&lt;Integer&gt; a){
+        
+        if(root == null) return;
+        if(root.left == null &amp;&amp; root.right == null){
+            
+            a.add(root.data);
+            return;
+        }
+            
+    
+        leaves(root.left,a);
+        leaves(root.right,a);
+        
+    }
+    
+        
+    public static void main (String[] args) {
+        
+        Scanner sc = new Scanner(System.in);
+        String[] preo = sc.nextLine().split(&quot; &quot;);
+        int n = preo.length;
+        int list[] = new int[n];
+        for(int i=0;i&lt;n;i++){
+            list[i] = Integer.parseInt(preo[i]);
+        }
+        
+        Node root = buildTree(list);
+        // Inorder(root);
+        ArrayList&lt;Integer&gt; a = new ArrayList&lt;&gt;();
+        func(root,a);
+        System.out.println(a);
+        
+    }
+}
+</code></pre><h2 id="19a58fd8-d211-8092-992c-db1c27662b9f" class="">Program8 (LEFT VIEW OF BT)</h2><p id="19a58fd8-d211-80a5-a43e-f69736358ae1" class="">A software development company is designing a smart home automation<br/>system that uses sensor networks to monitor and control different devices<br/>in a house. The sensors are organized in a hierarchical structure, where each<br/>sensor node has a unique ID and can have up to two child nodes (left and right).<br/></p><p id="19a58fd8-d211-8091-8b38-da99edb9a52f" class="">The company wants to analyze the left-most sensors in the system to determine<br/>which ones are critical for detecting environmental changes. The hierarchy of<br/>the sensors is provided as a level-order input, where missing sensors are<br/>represented as -1.<br/></p><p id="19a58fd8-d211-80e6-86ec-f872924c7f8e" class="">Your task is to build the sensor network as a binary tree and then determine<br/>the left-most sensor IDs at each level.<br/></p><h2 id="19a58fd8-d211-8042-8ade-f0176f3a3e14" class="">Input Format:</h2><p id="19a58fd8-d211-80ca-90bc-c238d128094f" class="">Space separated integers, elements of the tree.</p><h2 id="19a58fd8-d211-80ba-9c2b-d0691050fd37" class="">Output Format:</h2><p id="19a58fd8-d211-8067-886b-e0e8e5f44cbe" class="">A list of integers representing the left-most sensor IDs at each level</p><h2 id="19a58fd8-d211-807b-9449-c68c7f536a34" class="">Sample Input-1:</h2><p id="19a58fd8-d211-80c2-bf32-f214a0ea0299" class="">1 2 3 4 -1 -1 5</p><h2 id="19a58fd8-d211-8024-9c77-c25d57cbe8f3" class="">Sample Output-1:</h2><p id="19a58fd8-d211-8026-bc2b-e6d57794b3ae" class="">[1, 2, 4]</p><h2 id="19a58fd8-d211-8051-9b51-de95edb10e1e" class="">Sample Input-2:</h2><p id="19a58fd8-d211-8024-8d6d-ef028fe05a95" class="">3 2 4 1 5</p><h2 id="19a58fd8-d211-80d1-95f7-cb62cb9a8eb1" class="">Sample Output-2:</h2><p id="19a58fd8-d211-8088-abcc-f00d45f652e5" class="">[3, 2, 1]</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="19a58fd8-d211-804e-a139-e9214ec4d425" class="code"><code class="language-Java">import java.util.*;
+
+
+class Tree{
+    int data;
+    Tree left;
+    Tree right;
+    Tree(int data)
+    {
+        this.data=data;
+        left=null;
+        right=null;
+    }
+}
+class Solution{
+    static Tree buildTree(int[] arr)
+    {
+        Tree root1 = new Tree(arr[0]);
+        int ind=0;
+        Queue&lt;Tree&gt; q = new LinkedList&lt;&gt;();
+        q.add(root1);
+        while(ind&lt;arr.length)
+        {
+            Tree root = q.poll();
+           if(ind+1&lt;arr.length)
+           {
+               if(arr[ind+1]!=-1)
+               {
+                   root.left = new Tree(arr[ind+1]);
+                   q.add(root.left);
+               }
+           }
+           ind++;
+           if(ind+1&lt;arr.length)
+           {
+               if(arr[ind+1]!=-1)
+               {
+                   root.right=new Tree(arr[ind+1]);
+                   q.add(root.right);
+               }
+           }
+           ind++;
+        }
+        return root1;
+    }
+    static void leftView(Tree root,int depth, List&lt;Integer&gt; ans)
+    {
+        if(root==null) return;
+        
+        
+        if(depth == ans.size()) ans.add(root.data);
+        leftView(root.left,depth+1,ans);
+        leftView(root.right,depth+1,ans);
+    }
+    public static void main (String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String s[] = sc.nextLine().split(&quot; &quot;);
+        int arr[] = new int[s.length];
+        for(int i=0;i&lt;s.length;i++) arr[i] = Integer.parseInt(s[i]);
+        
+        Tree root = buildTree(arr);
+        List&lt;Integer&gt; ans = new ArrayList&lt;&gt;();
+        leftView(root,0,ans);
+        System.out.println(ans);
+    }
+}</code></pre><h2 id="1a058fd8-d211-8071-8845-f9ddf3f45144" class="">Program9</h2><p id="1a058fd8-d211-8077-bc98-f1d682128bf7" class="">Distance</p><p id="1a058fd8-d211-80ca-9754-f59f715ef481" class="">Bubloo is working with computer networks, where servers are connected<br/>in a hierarchical structure, represented as a Binary Tree. Each server (node)<br/>is uniquely identified by an integer value.<br/></p><p id="1a058fd8-d211-8041-abb8-fd7e3015a115" class="">Bubloo has been assigned an important task: find the shortest communication<br/>path (in terms of network hops) between two specific servers in the network.<br/></p><h2 id="1a058fd8-d211-8005-bde1-c5e8b0c722d8" class="">Network Structure:</h2><p id="1a058fd8-d211-809e-8c61-cf0107b2c0a5" class="">The network of servers follows a binary tree topology.<br/>Each server (node) has a unique identifier (integer).<br/>If a server does not exist at a certain position, it is represented as &#x27;-1&#x27; (NULL).<br/></p><p id="1a058fd8-d211-80e1-84f2-ca17efd3725c" class="">Given the root of the network tree, and two specific server IDs (E1 &amp; E2),<br/>determine the minimum number of network hops (edges) required to<br/>communicate between these two servers.<br/></p><h2 id="1a058fd8-d211-80c7-96ed-db6dce9b50ef" class="">Input Format:</h2><p id="1a058fd8-d211-80ac-a91d-ef97eb51d4c6" class="">Space separated integers, elements of the tree.</p><h2 id="1a058fd8-d211-80d8-947b-da0069a1e078" class="">Output Format:</h2><p id="1a058fd8-d211-80b5-a884-c3d15584c6ea" class="">Print an integer value.</p><h2 id="1a058fd8-d211-8022-971c-e3d75500954c" class="">Sample Input-1:</h2><p id="1a058fd8-d211-8080-a2d6-fbce8bd9e683" class="">1 2 4 3 5 6 7 8 9 10 11 12<br/>4 8<br/></p><h2 id="1a058fd8-d211-80b6-bbdc-d308f918b04d" class="">Sample Output-1:</h2><p id="1a058fd8-d211-80ec-9abd-cde0ab57d0e1" class="">4</p><h2 id="1a058fd8-d211-80de-9f2c-c27ac44ceaaa" class="">Explanation:</h2><p id="1a058fd8-d211-8060-a419-ce67d929da41" class="">The edegs between 4 and 8 are: [4,1], [1,2], [2,3], [3,8]</p><h2 id="1a058fd8-d211-805d-9d10-f7ec97fad922" class="">Sample Input-2:</h2><p id="1a058fd8-d211-80c4-b80c-df167431ea27" class="">1 2 4 3 5 6 7 8 9 10 11 12<br/>6 6<br/></p><h2 id="1a058fd8-d211-801c-93d1-caa1f475bed6" class="">Sample Output-2:</h2><p id="1a058fd8-d211-8071-996f-df9d64dbeb98" class="">0</p><h2 id="1a058fd8-d211-80ab-b643-e2b8e4c1b57e" class="">Explanation:</h2><p id="1a058fd8-d211-809a-85eb-e2765262ca44" class="">No edegs between 6 and 6.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1a058fd8-d211-8024-914c-f39722b892f8" class="code"><code class="language-Java">import java.util.*;
+
+class Tree {
+    int data;
+    Tree left = null;
+    Tree right = null;
+
+    Tree(int data) {
+        this.data = data;
+    }
+}
+
+class Solution {
+
+    static Tree buildTree(int[] arr) {
+        if (arr.length == 0) return null;
+        
+        Tree root = new Tree(arr[0]);
+        Queue&lt;Tree&gt; q = new LinkedList&lt;&gt;();
+        q.add(root);
+        
+        int ind = 0;
+        while (!q.isEmpty() &amp;&amp; ind &lt; arr.length) {
+            Tree node = q.poll();
+            
+            if (ind + 1 &lt; arr.length &amp;&amp; arr[ind + 1] != -1) {
+                node.left = new Tree(arr[ind + 1]);
+                q.add(node.left);
+            }
+            ind++;
+            
+            if (ind + 1 &lt; arr.length &amp;&amp; arr[ind + 1] != -1) {
+                node.right = new Tree(arr[ind + 1]);
+                q.add(node.right);
+            }
+            ind++;
+        }
+        return root;
+    }
+
+    static Tree findLCA(Tree root, int src, int dest) {
+        if (root == null) return null;
+        if (root.data == src || root.data == dest) return root;
+        
+        Tree left = findLCA(root.left, src, dest);
+        Tree right = findLCA(root.right, src, dest);
+        
+        if (left != null &amp;&amp; right != null) return root;
+        
+        return (left != null) ? left : right;
+    }
+
+    static int findLevel(Tree root, int val, int level) {
+        if (root == null) return -1;
+        if (root.data == val) return level;
+        
+        int left = findLevel(root.left, val, level + 1);
+        if (left != -1) return left;
+        
+        return findLevel(root.right, val, level + 1);
+    }
+
+    static int findDist(Tree root, int src, int dest) {
+        Tree lca = findLCA(root, src, dest);
+        if (lca == null) return -1;
+        
+        int d1 = findLevel(lca, src, 0);
+        int d2 = findLevel(lca, dest, 0);
+        
+        return d1 + d2;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String[] s = sc.nextLine().split(&quot; &quot;);
+        int arr[] = new int[s.length];
+        
+        for (int i = 0; i &lt; s.length; i++) arr[i] = Integer.parseInt(s[i]);
+        
+        int src = sc.nextInt();
+        int dest = sc.nextInt();
+        
+        Tree root = buildTree(arr);
+        int dist = findDist(root, src, dest);
+        
+        System.out.println(dist!=-1?dist:-1);
+    }
+}
+
+
+
+
+// approach 2
+
+import java.util.*;
+class TreeNode
+{
+    int data;
+    TreeNode left,right;
+    public TreeNode(int v){
+        this.data=v;
+        this.left=null;
+        this.right=null;
+    }
+}
+public class prog1
+{
+    public static void buildGraph(TreeNode root,HashMap&lt;Integer,List&lt;Integer&gt;&gt; graph,HashMap&lt;Integer,Integer&gt; dist,int i){
+        if(root==null){
+            return;
+        }
+        List&lt;Integer&gt; l=graph.getOrDefault(root.data,new ArrayList&lt;&gt;());
+        if(root.left!=null){
+            l.add(root.left.data);
+        }
+        if(root.right!=null){
+            l.add(root.right.data);
+        }
+        graph.put(root.data,l);
+        
+        dist.put(root.data,i);
+        buildGraph(root.left,graph,dist,i+1);
+        buildGraph(root.right,graph,dist,i+1);
+    }
+    public static boolean isInSameTree(HashMap&lt;Integer,List&lt;Integer&gt;&gt; graph,int curNode,int targetNode){
+        if(curNode==targetNode){
+            return true;
+        }
+        boolean res=false;
+        for(int val:graph.getOrDefault(curNode,new ArrayList&lt;&gt;())){
+            res=res||isInSameTree(graph,val,targetNode);
+        }
+        return res;
+    }
+    public static int minDistance(TreeNode root,int n1,int n2){
+        HashMap&lt;Integer,List&lt;Integer&gt;&gt; graph=new HashMap&lt;&gt;();
+        HashMap&lt;Integer,Integer&gt; dist=new HashMap&lt;&gt;();
+        
+        buildGraph(root,graph,dist,0);
+        // System.out.println(&quot;Graph&quot;);
+        // System.out.println(graph);
+        // System.out.println(&quot;Distances&quot;);
+        // System.out.println(dist);
+        boolean issame = isInSameTree(graph,n1,n2) || isInSameTree(graph,n2,n1);
+        if(issame){
+            return Math.abs(dist.get(n1)-dist.get(n2));
+        }
+        return dist.get(n1)+dist.get(n2);
+    }
+    public static void main (String[] args) {
+        Scanner sc=new Scanner(System.in);
+        
+        String[] a=sc.nextLine().split(&quot; &quot;);
+        
+        int n=a.length;
+        
+        int[] arr=new int[n];
+        
+        for(int i=0;i&lt;n;i++){
+            arr[i]=Integer.parseInt(a[i]);
+        }
+        
+        TreeNode root=new TreeNode(arr[0]);
+        int idx=0;
+        
+        Queue&lt;TreeNode&gt; q=new LinkedList&lt;&gt;();
+        q.add(root);
+        
+        while(!q.isEmpty()){
+            TreeNode p=q.poll();
+            if(idx+1&lt;n &amp;&amp; arr[idx+1]!=-1){
+                p.left=new TreeNode(arr[idx+1]);
+                q.add(p.left);
+            }
+            idx++;
+            
+            if(idx+1&lt;n &amp;&amp; arr[idx+1]!=-1){
+                p.right=new TreeNode(arr[idx+1]);
+                q.add(p.right);
+            }
+            idx++;
+        }
+        int n1=sc.nextInt();
+        int n2=sc.nextInt();
+        System.out.println(minDistance(root,n1,n2));
+    }
+
+}</code></pre><h2 id="1a058fd8-d211-80ef-a5ae-c100d8492219" class="">Program10</h2><p id="1a058fd8-d211-80e1-8251-f1600d6cfdc5" class="">Symmetric</p><p id="1a058fd8-d211-803c-bb80-da41696d1a4f" class="">Mr. Rakesh is interested in working with Data Structures.</p><p id="1a058fd8-d211-80fd-b4ea-fc62ef918e67" class="">He has constructed a Binary Tree (BT) and asked his friend<br/>Anil to check whether the BT is a self-mirror tree or not.<br/></p><p id="1a058fd8-d211-8069-94e9-dc94b13eeb47" class="">Can you help Rakesh determine whether the given BT is a self-mirror tree?<br/>Return true if it is a self-mirror tree; otherwise, return false.<br/></p><h2 id="1a058fd8-d211-804e-8cf8-e5b84a53e4f6" class="">Note:</h2><p id="1a058fd8-d211-802e-bc18-dad5a8b79e9f" class="">In the tree, &#x27;-1&#x27; indicates an empty (null) node.</p><h2 id="1a058fd8-d211-808e-b639-d02219c36782" class="">Input Format:</h2><p id="1a058fd8-d211-80bb-bee8-e9a08c3eb140" class="">A single line of space separated integers, values at the treenode</p><h2 id="1a058fd8-d211-807c-9dba-e8a084876f6e" class="">Output Format:</h2><p id="1a058fd8-d211-8010-ba58-da26aefa840c" class="">Print a boolean value.</p><h2 id="1a058fd8-d211-80e5-ba9b-fac44ede7cb6" class="">Sample Input-1:</h2><p id="1a058fd8-d211-8001-92c9-f0800408afaf" class="">2 1 1 2 3 3 2</p><h2 id="1a058fd8-d211-802d-9d8d-ecad512500b7" class="">Sample Output-1:</h2><p id="1a058fd8-d211-80a4-ab36-e4f8515bcab6" class="">true</p><h2 id="1a058fd8-d211-8044-9de8-f44e1520de6b" class="">Sample Input-2:</h2><p id="1a058fd8-d211-80e8-a45c-c7dc339d9808" class="">2 1 1 -1 3 -1 3</p><h2 id="1a058fd8-d211-80e4-9ad8-cac832e4df93" class="">Sample Output-2:</h2><p id="1a058fd8-d211-8087-be1d-cee88e39360e" class="">false</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1a058fd8-d211-8088-a593-e0666361665d" class="code"><code class="language-Java">import java.util.*;
+
+
+class Tree {
+    int data;
+    Tree left = null;
+    Tree right = null;
+
+    Tree(int data) {
+        this.data = data;
+    }
+}
+
+class Solution {
+
+    static Tree buildTree(int[] arr) {
+        if (arr.length == 0) return null;
+        
+        Tree root = new Tree(arr[0]);
+        Queue&lt;Tree&gt; q = new LinkedList&lt;&gt;();
+        q.add(root);
+        
+        int ind = 0;
+        while (!q.isEmpty() &amp;&amp; ind &lt; arr.length) {
+            Tree node = q.poll();
+            
+            if (ind + 1 &lt; arr.length &amp;&amp; arr[ind + 1] != -1) {
+                node.left = new Tree(arr[ind + 1]);
+                q.add(node.left);
+            }
+            ind++;
+            
+            if (ind + 1 &lt; arr.length &amp;&amp; arr[ind + 1] != -1) {
+                node.right = new Tree(arr[ind + 1]);
+                q.add(node.right);
+            }
+            ind++;
+        }
+        return root;
+    }
+
+    static boolean isSymmetric(Tree root1,Tree root2)
+    {
+        if(root1==null &amp;&amp; root2==null) return true;
+        if(root1==null || root2==null || root1.data!=root2.data) return false;
+        
+        return isSymmetric(root1.left,root2.right) &amp;&amp; isSymmetric(root1.right,root2.left);
+        
+        // return false;
+    }
+    
+
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String[] s = sc.nextLine().split(&quot; &quot;);
+        int arr[] = new int[s.length];
+        
+        for (int i = 0; i &lt; s.length; i++) arr[i] = Integer.parseInt(s[i]);
+    
+        Tree root = buildTree(arr);
+        System.out.println(isSymmetric(root.left,root.right));
+    }
+}
+
+</code></pre><h2 id="1a058fd8-d211-802d-8e9e-e77324d2ceec" class="">Program11</h2><p id="1a058fd8-d211-8017-b3d6-d406837fb0b1" class="">Balbir Singh is working with networked systems, where servers are connected<br/>in a hierarchical structure, represented as a Binary Tree. Each server (node) has<br/>a certain processing load (integer value).<br/></p><p id="1a058fd8-d211-8043-8acb-f3342d469a67" class="">Balbir has been given a critical task: split the network into two balanced<br/>sub-networks by removing only one connection (edge). The total processing<br/>load in both resulting sub-networks must be equal after the split.<br/></p><p id="1a058fd8-d211-8074-a9d2-ffc3c8deac1d" class="">Network Structure:</p><ul id="1a058fd8-d211-8082-9477-f70217c6daf7" class="bulleted-list"><li style="list-style-type:disc">The network of servers follows a binary tree structure.</li></ul><ul id="1a058fd8-d211-80ce-8a56-d8210896b5e8" class="bulleted-list"><li style="list-style-type:disc">Each server is represented by an integer value, indicating its processing load.</li></ul><ul id="1a058fd8-d211-80e7-b416-e73e3a5a9763" class="bulleted-list"><li style="list-style-type:disc">If a server does not exist at a particular position, it is represented as &#x27;-1&#x27; (NULL).</li></ul><p id="1a058fd8-d211-8094-9d45-f52bcada8e62" class="">Help Balbir Singh determine if it is possible to split the network into two equal<br/>processing load sub-networks by removing exactly one connection.<br/></p><h2 id="1a058fd8-d211-80b9-b858-d4dd35c11f8e" class="">Input Format:</h2><p id="1a058fd8-d211-80c8-bef6-e96b7cea8c9e" class="">Space separated integers, elements of the tree.</p><h2 id="1a058fd8-d211-804b-8d2d-c2caf2c53e9c" class="">Output Format:</h2><p id="1a058fd8-d211-8075-ad97-f30dd6e098a5" class="">Print a boolean value.</p><h2 id="1a058fd8-d211-8057-9343-d75173d164b6" class="">Sample Input-1:</h2><p id="1a058fd8-d211-80f6-bfd3-d130fc131dd0" class="">1 2 3 5 -1 -1 5</p><h2 id="1a058fd8-d211-8025-9cbf-ea35d309c30a" class="">Sample Output-1:</h2><p id="1a058fd8-d211-808c-ba80-cb7f1feef6f6" class="">true</p><h2 id="1a058fd8-d211-80f9-aaff-e80e314e9edc" class="">Sample Input-2:</h2><p id="1a058fd8-d211-802c-88b3-e0307b367a3e" class="">3 2 4 3 2 -1 7</p><h2 id="1a058fd8-d211-80e4-96a8-d5bf3ffc4afe" class="">Sample Output-2:</h2><p id="1a058fd8-d211-80d5-8167-f61858b3b747" class="">false</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1a058fd8-d211-80a0-ad16-d5a25506c24d" class="code"><code class="language-Java">import java.util.*;
+
+class Tree{
+    int data;
+    Tree left=null;
+    Tree right=null;
+    Tree(int data) {this.data=data;}
+}
+
+class Solution{
+    static Tree buildTree(int[] arr) {
+        if (arr.length == 0) return null;
+        
+        Tree root = new Tree(arr[0]);
+        Queue&lt;Tree&gt; q = new LinkedList&lt;&gt;();
+        q.add(root);
+        
+        int ind = 1;
+        while (!q.isEmpty() &amp;&amp; ind &lt; arr.length) {
+            Tree node = q.poll();
+            
+            if (ind &lt; arr.length &amp;&amp; arr[ind] != -1) {
+                node.left = new Tree(arr[ind]);
+                q.add(node.left);
+            }
+            ind++;
+            
+            if (ind &lt; arr.length &amp;&amp; arr[ind] != -1) {
+                node.right = new Tree(arr[ind]);
+                q.add(node.right);
+            }
+            ind++;
+        }
+        return root;
+    }
+    
+    static int totalSum;
+    
+    static boolean check(Tree root) {
+        totalSum = sum(root);
+        if (totalSum % 2 != 0) return false;
+        return findPartition(root, new int[1]);
+    }
+    
+    static int sum(Tree root) {
+        if (root == null) return 0;
+        return root.data + sum(root.left) + sum(root.right);
+    }
+    
+    static boolean findPartition(Tree root, int[] subSum) {
+        if (root == null) return false;
+        
+        int leftSum = sum(root.left);
+        int rightSum = sum(root.right);
+        
+        if (leftSum == totalSum - leftSum || rightSum == totalSum - rightSum) return true;
+        
+        return findPartition(root.left, subSum) || findPartition(root.right, subSum);
+    }
+    
+    public static void main (String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String[] s = sc.nextLine().split(&quot; &quot;);
+        int arr[] = new int[s.length];
+        
+        for (int i = 0; i &lt; s.length; i++) arr[i] = Integer.parseInt(s[i]);
+        
+        Tree root = buildTree(arr);
+        System.out.println(check(root));
+    }
+}
+</code></pre><h2 id="1a058fd8-d211-80d4-867b-db977757a720" class="">Program12</h2><p id="1a058fd8-d211-80ad-a1b0-c5c96a5ebfb3" class="">Balbir Singh is working with Binary Trees.<br/>The elements of the tree is given in the level order format.<br/>Balbir has a task to split the tree into two parts by removing only one edge<br/>in the tree, such that the product of sums of both the splitted-trees should be maximum.<br/></p><p id="1a058fd8-d211-808f-8ebe-d3f0861c8ed4" class="">You will be given the root of the binary tree.<br/>Your task is to help the Balbir Singh to split the binary tree as specified.<br/>print the product value, as the product may be large, print the (product % 1000000007)<br/></p><p id="1a058fd8-d211-8089-9026-e7671042c49c" class="">NOTE:<br/>Please do consider the node with data as &#x27;-1&#x27; as null in the given trees.<br/></p><h2 id="1a058fd8-d211-807a-8c98-c520d5cd3b2e" class="">Input Format:</h2><p id="1a058fd8-d211-8066-84d6-e820918658bd" class="">Space separated integers, elements of the tree.</p><h2 id="1a058fd8-d211-8034-b312-c6fdda517047" class="">Output Format:</h2><p id="1a058fd8-d211-80b3-af5b-d1331094034f" class="">Print an integer value.</p><h2 id="1a058fd8-d211-802d-975c-e590f0abecc9" class="">Sample Input-1:</h2><p id="1a058fd8-d211-8051-9ef3-cc2ab8f46a19" class="">1 2 4 3 5 6</p><h2 id="1a058fd8-d211-8053-ad88-f5749219b372" class="">Sample Output-1:</h2><p id="1a058fd8-d211-800e-84c7-d82395c39c00" class="">110</p><h2 id="1a058fd8-d211-8033-aae5-db9e91b07348" class="">Explanation:</h2><p id="1a058fd8-d211-80e2-9e18-f2bb43f6978a" class="">if you split the tree by removing edge between 1 and 4,<br/>then the sums of two trees are 11 and 10. So, the max product is 110.<br/></p><h2 id="1a058fd8-d211-8069-be12-caa5c44cc468" class="">Sample Input-2:</h2><p id="1a058fd8-d211-805d-bc1c-e1c0eceddc7c" class="">3 2 4 3 2 -1 6</p><h2 id="1a058fd8-d211-80a1-aa19-e07ada26d141" class="">Sample Output-2:</h2><p id="1a058fd8-d211-800c-8a73-d42a5251f8dd" class="">100</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1a058fd8-d211-806a-b6aa-c1adbb8c28c3" class="code"><code class="language-Java">
+import java.util.*;
+
+class Tree{
+    int data;
+    Tree left=null;
+    Tree right=null;
+    Tree(int data) {this.data=data;}
+}
+
+class Solution{
+    static Tree buildTree(int[] arr) {
+        if (arr.length == 0) return null;
+        
+        Tree root = new Tree(arr[0]);
+        Queue&lt;Tree&gt; q = new LinkedList&lt;&gt;();
+        q.add(root);
+        
+        int ind = 1;
+        while (!q.isEmpty() &amp;&amp; ind &lt; arr.length) {
+            Tree node = q.poll();
+            
+            if (ind &lt; arr.length &amp;&amp; arr[ind] != -1) {
+                node.left = new Tree(arr[ind]);
+                q.add(node.left);
+            }
+            ind++;
+            
+            if (ind &lt; arr.length &amp;&amp; arr[ind] != -1) {
+                node.right = new Tree(arr[ind]);
+                q.add(node.right);
+            }
+            ind++;
+        }
+        return root;
+    }
+    
+    static int totalSum;
+    
+    static int check(Tree root, int[] prod) {
+        totalSum = sum(root);
+        prod[0]=0;
+        findPartition(root,prod);
+        return prod[0];
+    }
+    
+    static int sum(Tree root) {
+        if (root == null) return 0;
+        return root.data + sum(root.left) + sum(root.right);
+    }
+    
+    static void findPartition(Tree root,int prod[]) {
+        if (root == null) return ;
+        
+        int leftSum = sum(root.left);
+        int rightSum = sum(root.right);
+
+        prod[0] = Math.max(prod[0],(leftSum*(totalSum-leftSum)));
+        prod[0] = Math.max(prod[0],(rightSum*(totalSum-rightSum)));
+         findPartition(root.left,prod); findPartition(root.right,prod);
+    }
+    
+    public static void main (String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String[] s = sc.nextLine().split(&quot; &quot;);
+        int arr[] = new int[s.length];
+        
+        for (int i = 0; i &lt; s.length; i++) arr[i] = Integer.parseInt(s[i]);
+        
+        Tree root = buildTree(arr);
+        int prod[] = new int[1];
+        check(root,prod);
+        System.out.println(prod[0] % 1000000007);
+    }
+}
+</code></pre><h2 id="1a058fd8-d211-8050-9119-eefda94494cd" class="">Program13</h2><p id="1a058fd8-d211-8003-af27-d32d5f78b7ab" class="">Imagine you are a librarian organizing books on vertical shelves in a grand<br/>library. The books are currently scattered across a tree-like structure, where<br/>each book (node) has a position determined by its shelf number (column) and row<br/>number (level).<br/></p><p id="1a058fd8-d211-80e2-b386-e4369e66873a" class="">Your task is to arrange the books on shelves so that:</p><ol type="1" id="1a058fd8-d211-800e-a7b1-f09374a45fd6" class="numbered-list" start="1"><li>Books are placed column by column from left to right.</li></ol><ol type="1" id="1a058fd8-d211-80a7-bc53-c05358d8fffd" class="numbered-list" start="2"><li>Within the same column, books are arranged from top to bottom (i.e., by row).</li></ol><ol type="1" id="1a058fd8-d211-80f3-ab65-f56d25ec1bed" class="numbered-list" start="3"><li>If multiple books belong to the same shelf and row, they should be arranged<br/>from left to right, just as they appear in the original scattered arrangement.<br/></li></ol><h2 id="1a058fd8-d211-805a-b34d-d364b3b6d08a" class="">Sample Input:</h2><p id="1a058fd8-d211-8099-9afe-d656b5ea7861" class="">3 9 20 -1 -1 15 7</p><h2 id="1a058fd8-d211-807b-b8c3-eb44234b893e" class="">Sample Output:</h2><p id="1a058fd8-d211-809c-82c4-c032ee444246" class="">[[9],[3,15],[20],[7]]</p><h2 id="1a058fd8-d211-8026-b18c-f8121621a29d" class="">Explanation:</h2><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1a058fd8-d211-80cd-ab24-e36597b37cc9" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">     3
+   /   \\
+  9     20
+      /    \\
+     15     7
+</code></pre><p id="1a058fd8-d211-8058-9d2c-c771a91986b6" class="">Shelf 1: [9]<br/>Shelf 2: [3, 15]<br/>Shelf 3: [20]<br/>Shelf 4: [7]<br/></p><h2 id="1a058fd8-d211-80dd-815d-fe21a9e75bd9" class="">Sample Input-2:</h2><p id="1a058fd8-d211-8011-8e5e-fea387741dc9" class="">3 9 8 4 0 1 7</p><h2 id="1a058fd8-d211-80d1-b4c6-dfbc7614df7e" class="">Sample Output-2:</h2><p id="1a058fd8-d211-80f8-8d25-eed9ee896f7d" class="">[[4],[9],[3,0,1],[8],[7]]</p><h2 id="1a058fd8-d211-8043-b626-ef512238395a" class="">Explanation:</h2><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1a058fd8-d211-8038-8fff-ed796ed0e7e6" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">      3
+   /     \\
+  9       8
+/   \\   /   \\
+</code></pre><p id="1a058fd8-d211-8071-bdda-e222547fb5c1" class="">4     0 1     7</p><p id="1a058fd8-d211-800b-9fdf-fb7a6d406e3d" class="">Shelf 1: [4]<br/>Shelf 2: [9]<br/>Shelf 3: [3, 0, 1]<br/>Shelf 4: [8]<br/>Shelf 5: [7]<br/></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1a058fd8-d211-80f0-9114-ebdab38889ee" class="code"><code class="language-Java">import java.util.*;
+
+class Tree{
+    int data;
+    Tree left=null;
+    Tree right=null;
+    Tree(int data) {this.data=data;}
+}
+
+class Pair{
+    Tree node;
+    int x;
+    int y;
+    Pair(Tree node,int x, int y)
+    {
+        this.node=node;
+        this.x=x;
+        this.y=y;
+    }
+}
+
+class Solution{
+    static Tree buildTree(int[] arr) {
+        if (arr.length == 0) return null;
+        
+        Tree root = new Tree(arr[0]);
+        Queue&lt;Tree&gt; q = new LinkedList&lt;&gt;();
+        q.add(root);
+        
+        int ind = 1;
+        while (!q.isEmpty() &amp;&amp; ind &lt; arr.length) {
+            Tree node = q.poll();
+            
+            if (ind &lt; arr.length &amp;&amp; arr[ind] != -1) {
+                node.left = new Tree(arr[ind]);
+                q.add(node.left);
+            }
+            ind++;
+            
+            if (ind &lt; arr.length &amp;&amp; arr[ind] != -1) {
+                node.right = new Tree(arr[ind]);
+                q.add(node.right);
+            }
+            ind++;
+        }
+        return root;
+    }
+    
+    
+    
+    static void verticalOrder(Tree root)
+    {
+        Map&lt;Integer,ArrayList&lt;Integer&gt;&gt; nodes = new TreeMap&lt;&gt;();
+        
+        Queue&lt;Pair&gt; q = new LinkedList&lt;&gt;();
+        
+        q.add(new Pair(root,0,0));
+        
+        while(!q.isEmpty())
+        {
+            Pair p  =q.poll();
+            
+            Tree temp=p.node;
+            int x=p.x;
+            int y=p.y;
+            
+            nodes.computeIfAbsent(x,k-&gt; new ArrayList&lt;&gt;()).add(temp.data);
+                
+            if(temp.left!=null) q.add(new Pair(temp.left,x-1,y+1));
+            if(temp.right!=null) q.add(new Pair(temp.right,x+1,y+1));
+        }
+        
+        List&lt;List&lt;Integer&gt;&gt; ans = new ArrayList&lt;&gt;();
+        
+        for(ArrayList&lt;Integer&gt; entry: nodes.values()){
+
+            ans.add(entry);
+        }
+        
+        System.out.println(ans);
+    }
+    
+    public static void main (String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String[] s = sc.nextLine().split(&quot; &quot;);
+        int arr[] = new int[s.length];
+        
+        for (int i = 0; i &lt; s.length; i++) arr[i] = Integer.parseInt(s[i]);
+        
+        Tree root = buildTree(arr);
+        
+        verticalOrder(root);
+
+        
+    }
+}
+</code></pre><h2 id="1a058fd8-d211-80ca-8607-cbb953d264a9" class="">Program14</h2><p id="1a058fd8-d211-809e-9725-ebcd828976ed" class="">You are a gardener designing a beautiful floral pathway in a vast botanical<br/>garden. The garden is currently overgrown with plants, trees, and bushes<br/>arranged in a complex branching structure, much like a binary tree. Your task<br/>is to carefully prune and rearrange the plants to form a single-file walking<br/>path that visitors can follow effortlessly.<br/></p><p id="1a058fd8-d211-80f0-a9a6-c43ee6b1507b" class="">To accomplish this, you must flatten the garden’s layout into a linear sequence<br/>while following these rules:<br/>1. The garden path should maintain the same PlantNode structure,<br/>where the right branch connects to the next plant in the sequence,<br/>and the left branch is always trimmed (set to null).<br/>2. The plants in the final garden path should follow the same arrangement<br/>as a pre-order traversal of the original garden layout.<br/></p><h2 id="1a058fd8-d211-80a1-9c27-fc6b94d97641" class="">Input Format:</h2><p id="1a058fd8-d211-8062-9aff-cdedb7af071e" class="">Space separated integers, elements of the tree.</p><h2 id="1a058fd8-d211-8041-ad92-fd10eadc4a77" class="">Output Format:</h2><p id="1a058fd8-d211-807f-b22f-d686fa786315" class="">Print the list.</p><h2 id="1a058fd8-d211-80f7-9fde-d446ecbb6844" class="">Sample Input:</h2><p id="1a058fd8-d211-8048-89d6-df1349c7aaf0" class="">1 2 5 3 4 -1 6</p><h2 id="1a058fd8-d211-800a-97c7-cd7179cb4f90" class="">Sample Output:</h2><p id="1a058fd8-d211-8084-a064-d114b32e38df" class="">1 2 3 4 5 6</p><h2 id="1a058fd8-d211-80e9-96f0-c095dc8b0958" class="">Explanation:</h2><p id="1a058fd8-d211-80a4-86b7-c85436e3c52e" class="">input structure:<br/>1<br/>/ \<br/>2   5<br/>/ \    \<br/>3   4    6<br/></p><p id="1a058fd8-d211-80fc-b495-c2b8ed05e369" class="">output structure:<br/>1<br/>\<br/>2<br/>\<br/>3<br/>\<br/>4<br/>\<br/>5<br/>\<br/>6<br/></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1a058fd8-d211-8039-aad3-e65ea1c663bf" class="code"><code class="language-Java">
+import java.util.*;
+
+
+class Tree{
+    int data;
+    Tree left=null;
+    Tree right=null;
+    Tree(int data) {this.data=data;}
+}
+
+
+
+
+class Solution{
+    static Tree buildTree(int[] arr) {
+        if (arr.length == 0) return null;
+        
+        Tree root = new Tree(arr[0]);
+        Queue&lt;Tree&gt; q = new LinkedList&lt;&gt;();
+        q.add(root);
+        
+        int ind = 1;
+        while (!q.isEmpty() &amp;&amp; ind &lt; arr.length) {
+            Tree node = q.poll();
+            
+            if (ind &lt; arr.length &amp;&amp; arr[ind] != -1) {
+                node.left = new Tree(arr[ind]);
+                q.add(node.left);
+            }
+            ind++;
+            
+            if (ind &lt; arr.length &amp;&amp; arr[ind] != -1) {
+                node.right = new Tree(arr[ind]);
+                q.add(node.right);
+            }
+            ind++;
+        }
+        return root;
+    }
+    
+    static void buildList(Tree root)
+    {
+        if(root==null) return;
+        
+        
+        Tree left=root.left;
+        Tree right=root.right;
+        
+        Tree temp=left;
+        while(temp!=null &amp;&amp; temp.right!=null) temp=temp.right;
+        
+        if(temp!=null)
+            temp.right=right;
+        
+        root.right=(left!=null)?left:right;
+        root.left=null;
+        
+        buildList(root.right);
+
+    }
+    
+    static void level(Tree root){
+        Queue&lt;Tree&gt; q = new LinkedList&lt;&gt;();
+        q.add(root);
+        while(!q.isEmpty())
+        {
+            int s=q.size();
+            for(int i=0;i&lt;s;i++)
+            {
+                Tree n=q.poll();
+                System.out.print(n.data+&quot; &quot;);
+                if(n.left!=null) q.add(n.left);
+                if(n.right!=null) q.add(n.right);
+            }
+        }
+    }
+    static void inorder(Tree root){
+        if(root==null) return;
+        inorder(root.left);
+        System.out.print(root.data+&quot; &quot;);
+        inorder(root.right);
+    }
+
+    public static void main (String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String[] s = sc.nextLine().split(&quot; &quot;);
+        int arr[] = new int[s.length];
+        
+        for (int i = 0; i &lt; s.length; i++) arr[i] = Integer.parseInt(s[i]);
+        
+        Tree root = buildTree(arr);
+        
+        buildList(root);
+        
+        level(root);
+    
+
+        
+    }
+}</code></pre><h2 id="1a058fd8-d211-80f8-8beb-f9f7acb0ca93" class="">Program15</h2><p id="1a758fd8-d211-800e-844b-e007c4f1fb73" class="">Imagine you’re decoding a secret message that outlines the hierarchical structure<br/>of a covert spy network. The message is a string composed of numbers and parentheses.<br/>Here’s how the code works:<br/></p><ul id="1a758fd8-d211-8039-bc2b-c2078b42e190" class="bulleted-list"><li style="list-style-type:disc">The string always starts with an agent’s identification number, this is the<br/>leader of the network.<br/></li></ul><ul id="1a758fd8-d211-803d-9ca7-e9738596cbd1" class="bulleted-list"><li style="list-style-type:disc">After the leader’s ID, there can be zero, one, or two segments enclosed in<br/>parentheses. Each segment represents the complete structure of one subordinate<br/>network.<br/></li></ul><ul id="1a758fd8-d211-8072-ada8-cad53e52030f" class="bulleted-list"><li style="list-style-type:disc">If two subordinate networks are present, the one enclosed in the first (leftmost)<br/>pair of parentheses represents the left branch, and the second (rightmost)<br/>represents the right branch.<br/></li></ul><p id="1a758fd8-d211-8025-953b-fee2adcbc97b" class="">Your mission is to reconstruct the entire spy network hierarchy based on this<br/>coded message.<br/></p><p id="1a758fd8-d211-80e6-b1e7-d77fff61cd5d" class="">Example 1:<br/>Input: 4(2(3)(1))(6(5))<br/>Output: [4, 2, 6, 3, 1, 5]<br/></p><p id="1a758fd8-d211-8024-83b9-d21a6238aae7" class="">Spy network:<br/>4<br/>/ \<br/>2   6<br/>/ \  /<br/>3   1 5<br/></p><p id="1a758fd8-d211-8080-a00d-e23fbaf13e86" class="">Explanation:<br/>Agent 4 is the leader.<br/>Agent 2 (with its own subordinates 3 and 1) is the left branch.<br/>Agent 6 (with subordinate 5) is the right branch.<br/></p><p id="1a758fd8-d211-8064-b8f7-e0bbb04959f0" class="">Example 2:<br/>Input: 4(2(3)(1))(6(5)(7))<br/>Output: [4, 2, 6, 3, 1, 5, 7]<br/></p><p id="1a758fd8-d211-80bc-b9c3-d9584ac0693b" class="">Spy network:<br/>4<br/>/   \<br/>2     6<br/>/ \   / \<br/>3   1 5   7<br/></p><p id="1a758fd8-d211-80c8-8f49-d108b38f0909" class="">Explanation:<br/>Agent 4 leads the network.<br/>Agent 2 with subordinates 3 and 1 forms the left branch.<br/>Agent 6 with subordinates 5 and 7 forms the right branch.<br/></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1a758fd8-d211-80e7-9e24-c492aa73e35a" class="code"><code class="language-Java">import java.util.*;
+class Tree {
+    int data;
+    Tree left = null;
+    Tree right = null;
+
+    Tree(int data) {
+        this.data = data;
+    }
+}
+
+class Solution {
+    static Tree buildTree(String s) {
+        if (s.isEmpty()) return null;
+        Stack&lt;Tree&gt; st = new Stack&lt;&gt;();
+        int i = 0, j = 0;
+        boolean isN=false;
+        
+        if(s.charAt(0)==&#x27;-&#x27;)
+        {
+          i++;
+          isN=true;
+        }
+        j=i;
+        while (j &lt; s.length() &amp;&amp; Character.isDigit(s.charAt(j))) {
+            j++;
+        }
+        int num = Integer.parseInt(s.substring(i, j)+&quot;&quot;);
+        if(isN) num*=-1;
+        isN=false;
+        Tree root = new Tree(num);
+        st.push(root);
+
+        for (i = j; i &lt; s.length(); i++) {
+            if (s.charAt(i) == &#x27;)&#x27;) {
+                st.pop();  
+            } 
+            else if(s.charAt(i)==&#x27;(&#x27;) continue;
+            else{ 
+                if(s.charAt(i)==&#x27;-&#x27;)
+                {
+                    i++;
+                    isN=true;
+                }
+                j = i;
+                while (j &lt; s.length() &amp;&amp; Character.isDigit(s.charAt(j))) {
+                    j++;
+                }
+                num = Integer.parseInt(s.substring(i, j)+&quot;&quot;);
+                if(isN) num*=-1;
+                isN=false;
+                i = j - 1; 
+
+                if (!st.isEmpty()) {
+                    Tree node = st.peek();
+                    if (node.left == null) {
+                        node.left = new Tree(num);
+                        st.push(node.left);
+                    } else if (node.right == null) {
+                        node.right = new Tree(num);
+                        st.push(node.right);
+                    }
+                }
+            }
+        }
+        return root;
+    }
+
+    static void level(Tree root) {
+        if (root == null) return;
+        Queue&lt;Tree&gt; q = new LinkedList&lt;&gt;();
+        q.offer(root);
+        List&lt;Integer&gt; l = new ArrayList&lt;&gt;();
+
+        while (!q.isEmpty()) {
+            int s = q.size();
+            for (int i = 0; i &lt; s; i++) {
+                Tree n = q.poll();
+                l.add(n.data);
+                if (n.left != null) q.offer(n.left);
+                if (n.right != null) q.offer(n.right);
+            }
+        }
+        System.out.println(l);
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String s = sc.next();
+        Tree root = buildTree(s);
+        level(root);
+    }
+}</code></pre><h2 id="1a758fd8-d211-8065-8f16-d5ceaad6c3db" class="">Program 16</h2><p id="1a758fd8-d211-801d-a0ff-d818eb89a566" class="">Imagine a company where each employee has a performance score, and<br/>the organizational chart is structured as a binary tree with the CEO at the top.<br/>An employee is considered &quot;outstanding&quot; if, along the chain of command from the<br/>CEO down to that employee, no one has a performance score higher than that<br/>employee&#x27;s score. Your task is to determine the total number of outstanding<br/>employees in the company.<br/></p><p id="1a758fd8-d211-80f8-983d-d9b98e61dccb" class="">Example 1:<br/>Input: 3 1 4 3 -1 1 5<br/>Output: 4<br/></p><p id="1a758fd8-d211-809a-829f-f52d9347ce02" class="">Chart formed:<br/>3<br/>/ \<br/>1   4<br/>/   / \<br/>3   1   5<br/></p><p id="1a758fd8-d211-8031-9309-c88efc0a7d74" class="">Explanation:</p><ul id="1a758fd8-d211-80ce-bab0-c52ad3c619c1" class="bulleted-list"><li style="list-style-type:disc">The CEO (score 3) is automatically outstanding.</li></ul><ul id="1a758fd8-d211-803c-b1c3-fd61462d28a2" class="bulleted-list"><li style="list-style-type:disc">The employee with score 4, whose chain is [3,4], is outstanding because 4<br/>is higher than 3.<br/></li></ul><ul id="1a758fd8-d211-80b5-97a2-e83615457ac9" class="bulleted-list"><li style="list-style-type:disc">The employee with score 5, following the path [3,4,5], is outstanding as 5<br/>is the highest so far.<br/></li></ul><ul id="1a758fd8-d211-80ce-a211-f7a6007952e7" class="bulleted-list"><li style="list-style-type:disc">The subordinate with score 3, along the path [3,1,3], is outstanding because<br/>none of the managers in that chain have a score exceeding 3.<br/></li></ul><p id="1a758fd8-d211-80f7-8381-ec938c3de0a8" class="">Example 2:<br/>Input: 3 3 -1 4 2<br/>Output: 3<br/></p><p id="1a758fd8-d211-80e9-bb86-d61856abcd5b" class="">Chart formed:<br/>3<br/>/<br/>3<br/>/ \<br/>4   2<br/></p><p id="1a758fd8-d211-8023-b8bf-d1ca89179eb4" class="">Explanation:</p><ul id="1a758fd8-d211-8032-9ace-cba9f6795faa" class="bulleted-list"><li style="list-style-type:disc">The CEO (score 3) is outstanding.</li></ul><ul id="1a758fd8-d211-80a5-9309-eeeae6196b3a" class="bulleted-list"><li style="list-style-type:disc">The subordinate with score 3 (chain: [3,3]) is outstanding.</li></ul><ul id="1a758fd8-d211-80cc-8f02-ce8cfcd228b8" class="bulleted-list"><li style="list-style-type:disc">The employee with score 2 (chain: [3,3,2]) is not outstanding because the<br/>managers have higher scores.<br/></li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1a758fd8-d211-8016-8af0-ef2759c90721" class="code"><code class="language-Java">import java.util.*;
+
+class Tree{
+    int data;
+    Tree left,right;
+    Tree(int data){
+        this.data=data;
+        left=null;
+        right=null;
+    }
+}
+public class Solution{
+    
+    static int cnt;
+    static Tree buildTree(int[] arr){
+        Tree root = new Tree(arr[0]);
+        Queue&lt;Tree&gt; q = new LinkedList&lt;&gt;();
+        int ind=0;
+        int n=arr.length;
+        q.add(root);
+        while(!q.isEmpty()){
+            Tree node = q.poll();
+            if(ind+1&lt;n){
+                if(arr[ind+1]!=-1)
+                {
+                    node.left=new Tree(arr[ind+1]);
+                    q.add(node.left);
+                }
+            }
+            ind++;
+            if(ind+1&lt;n){
+                if(arr[ind+1]!=-1)
+                {
+                    node.right=new Tree(arr[ind+1]);
+                    q.add(node.right);
+                }
+            }
+            ind++;
+        }
+        return root;
+    }
+    static void countNodes(Tree root,int max)
+    {
+        if(root==null) return;
+        
+        if(root.left!=null)
+            countNodes(root.left,root.left.data&gt;=max?root.left.data:max);
+        if(root.right!=null)
+            countNodes(root.right,root.right.data&gt;=max?root.right.data:max);
+        if(root.data&gt;=max){
+            cnt++;
+        }
+    }
+  
+    public static void main(String[] args){
+        Scanner sc=new Scanner(System.in);
+        cnt=0;
+        String s[]=sc.nextLine().split(&quot; &quot;);
+        int n=s.length;
+        int arr[] = new int[n];
+        for(int i=0;i&lt;n;i++) arr[i]=Integer.parseInt(s[i]+&quot;&quot;);
+        
+        Tree root = buildTree(arr);
+        
+        countNodes(root,root.data);
+        
+        System.out.println(cnt);
+        
+    
+    }
+    
+}
+</code></pre><h2 id="1a858fd8-d211-8026-aaa5-e20b2b519155" class="">Program17</h2><p id="1a858fd8-d211-80e3-85a2-c771a99825db" class="">Imagine you are navigating a maze where each path you take has a section with a<br/>code. The maze is structured as a series of interconnected rooms,<br/>represented as a tree structure. Each room in the maze has a code (integral value)<br/>associated with it, and you are trying to check if a given sequence of code<br/>matches a valid path from the entrance to an exit.<br/></p><p id="1a858fd8-d211-800f-a2bf-ce8489503f41" class="">You are provide with the maze structure, where you have to build the maze and then,<br/>you are provided with a series of space seperated digits, representing a journey<br/>starting from the entrance and passing through the rooms along the way.<br/>The task is to verify whether the path corresponding to this array of codes<br/>exists in the maze.<br/></p><p id="1a858fd8-d211-804c-be58-c430354a2849" class="">Example 1:<br/>Input:<br/>0 1 0 0 1 0 -1 -1 1 0 0         //maze structure<br/>0 1 0 1                         //path to verify<br/></p><p id="1a858fd8-d211-80a0-bb81-c78e04572a4f" class="">Output: true</p><p id="1a858fd8-d211-8021-863f-cba91c709514" class="">Explanation:<br/>0<br/>/   \<br/>1     0<br/>/ \    /<br/>0   1  0<br/>\  / \<br/>1 0  0<br/></p><p id="1a858fd8-d211-8090-b098-e387c37e9bcb" class="">The given path 0 → 1 → 0 → 1 is a valid path in the maze.<br/>Other valid sequences in the maze include 0 → 1 → 1 → 0 and 0 → 0 → 0.<br/></p><p id="1a858fd8-d211-80f7-80f9-d1041ccc1703" class="">Example 2:<br/>Input:<br/>1 2 3<br/>1 2 3<br/></p><p id="1a858fd8-d211-8084-8680-ef8fbb399fc4" class="">output: false</p><p id="1a858fd8-d211-8051-a19b-dfc855843535" class="">Explanation:<br/>The proposed path 1 → 2 → 3 does not exist in the maze,<br/>so it cannot be a valid path.<br/></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1a858fd8-d211-80fc-997d-e393d973795f" class="code"><code class="language-Java">import java.util.*;
+
+class Tree{
+    int data;
+    Tree left,right;
+    Tree(int data){
+        this.data=data;
+        left=null;
+        right=null;
+    }
+}
+public class Solution{
+    
+    static int cnt;
+    static Tree buildTree(int[] arr){
+        Tree root = new Tree(arr[0]);
+        Queue&lt;Tree&gt; q = new LinkedList&lt;&gt;();
+        int ind=0;
+        int n=arr.length;
+        q.add(root);
+        while(!q.isEmpty()){
+            Tree node = q.poll();
+            if(ind+1&lt;n){
+                if(arr[ind+1]!=-1)
+                {
+                    node.left=new Tree(arr[ind+1]);
+                    q.add(node.left);
+                }
+            }
+            ind++;
+            if(ind+1&lt;n){
+                if(arr[ind+1]!=-1)
+                {
+                    node.right=new Tree(arr[ind+1]);
+                    q.add(node.right);
+                }
+            }
+            ind++;
+        }
+        return root;
+    }
+    
+    static boolean validate(Tree root, int[] path, int ind,boolean vis[])
+    {
+        if(path.length==ind) return true;
+        if(root==null) return false;
+        if(path[ind]!=root.data) return false;
+        return validate(root.left,path,ind+1,vis) || validate(root.right,path,ind+1,vis);
+        
+    }
+  
+    public static void main(String[] args){
+        Scanner sc=new Scanner(System.in);
+        cnt=0;
+        String s[]=sc.nextLine().split(&quot; &quot;);
+        int n=s.length;
+        int arr[] = new int[n];
+        for(int i=0;i&lt;n;i++) arr[i]=Integer.parseInt(s[i]+&quot;&quot;);
+        
+        String p[]=sc.nextLine().split(&quot; &quot;);
+        n=p.length;
+        int path[] = new int[n];
+        for(int i=0;i&lt;n;i++) path[i]=Integer.parseInt(p[i]+&quot;&quot;);
+        
+        Tree root = buildTree(arr);
+        if(root.data!=path[0])
+        {
+            System.out.println(false);
+            return;
+        }else
+        System.out.println(validate(root,path,0,new boolean[n]));
+    
+    }
+    
+}
+
+</code></pre><h2 id="1a858fd8-d211-80d2-b222-d87ff596ea03" class="">Program18 </h2><p id="1a858fd8-d211-805d-96af-e86e68a99664" class="">Imagine you are designing a network of secret corridors in an ancient castle.<br/>Each chamber in the castle leads to at most two other chambers through<br/>hidden passageways, forming a branching layout.<br/>The castle’s &quot;longest secret route&quot; is defined as the maximum number of corridors<br/>you must traverse to get from one chamber to another (without repeating the corridor).<br/>This route may or may not pass through the main entry chamber.<br/></p><p id="1a858fd8-d211-80fc-a276-de94ec0a10a5" class="">Your task is to compute the length of longest secret route between<br/>two chambers which is represented by the number of corridors between them.<br/></p><p id="1a858fd8-d211-8046-81f1-c0416b89f4dd" class="">Example 1<br/>input=<br/>1 2 3 4 5<br/>output=<br/>3<br/></p><p id="1a858fd8-d211-80ea-bfac-e39d49db9aa9" class="">Structure:<br/>1<br/>/ \<br/>2   3<br/>/ \<br/>4   5<br/></p><p id="1a858fd8-d211-80c9-9b4f-d0947628a699" class="">Explanation:<br/>The longest secret route from chamber 4 to chamber 3<br/>(alternatively, from chamber 5 to chamber 3) along the route:<br/>4 → 2 → 1 → 3<br/>This path has 3 corridors (4–2, 2–1, 1–3), so the length is 3.<br/></p><p id="1a858fd8-d211-802f-9cdb-fe597858b20d" class="">Example 2:<br/>input=<br/>1 -1 2 3 4<br/>output=<br/>2<br/></p><p id="1a858fd8-d211-8036-b3a9-e7aadd7431a0" class="">Structure:<br/>1<br/>\<br/>2<br/>/ \<br/>3   4<br/>/\<br/></p><p id="1a858fd8-d211-80b4-80e1-d16d0511f8ab" class="">Explanation:<br/>The longest secret route from chamber 3 to chamber 4<br/>(alternatively, from chamber 1 to chamber 4) along the route:<br/>3 → 2 → 4<br/>This path has 2 corridors (3–2, 2–4), so the length is 2.<br/></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1a858fd8-d211-80df-bcdc-ea9c0d150e65" class="code"><code class="language-Java">import java.util.*;
+
+class Tree{
+    int data;
+    Tree left=null;
+    Tree right=null;
+    Tree(int data) {this.data=data;}
+}
+
+class Solution{
+    static int ans=0;
+    static Tree buildTree(int[] arr) {
+        if (arr.length == 0) return null;
+        
+        Tree root = new Tree(arr[0]);
+        Queue&lt;Tree&gt; q = new LinkedList&lt;&gt;();
+        q.add(root);
+        
+        int ind = 1;
+        while (!q.isEmpty() &amp;&amp; ind &lt; arr.length) {
+            Tree node = q.poll();
+            
+            if (ind &lt; arr.length &amp;&amp; arr[ind] != -1) {
+                node.left = new Tree(arr[ind]);
+                q.add(node.left);
+            }
+            ind++;
+            
+            if (ind &lt; arr.length &amp;&amp; arr[ind] != -1) {
+                node.right = new Tree(arr[ind]);
+                q.add(node.right);
+            }
+            ind++;
+        }
+        return root;
+    }
+   
+    static int solve(Tree root)
+    {
+        if(root==null) return 0;
+        int lh=solve(root.left);
+        int rh=solve(root.right);
+        ans=Math.max(lh+rh,ans);
+        return Math.max(lh,rh)+1;
+        
+    }
+
+    public static void main (String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String[] s = sc.nextLine().split(&quot; &quot;);
+        int arr[] = new int[s.length];
+        
+        for (int i = 0; i &lt; s.length; i++) arr[i] = Integer.parseInt(s[i]);
+        
+        Tree root = buildTree(arr);
+        
+        
+        solve(root);
+        System.out.println(ans);
+        
+        
+    }
+}
+</code></pre><h2 id="1a858fd8-d211-80a1-9a76-e300580f7bdf" class="">Program18</h2><p id="1a858fd8-d211-8056-8273-d35dac489ca0" class="">Imagine you&#x27;re an archivist in the ancient Kingdom of Numeria, tasked with<br/>recording the royal lineage on a sacred scroll. Every monarch is identified<br/>by a unique number, and the family tree unfolds in a very specific way.<br/>Your mission is to transcribe this dynasty using a method that adheres<br/>to the following customs:<br/></p><p id="1a858fd8-d211-8065-a496-dead144e6fde" class="">Royal Inscription:</p><ul id="1a858fd8-d211-80c6-abc6-db71f7f4e553" class="bulleted-list"><li style="list-style-type:disc">Each monarch’s unique number is written as their signature on the scroll.</li></ul><p id="1a858fd8-d211-8026-b0e2-c33ed0660b51" class="">Enclosing Descendants:</p><ul id="1a858fd8-d211-80f4-9370-fcd20f90e0be" class="bulleted-list"><li style="list-style-type:disc">If a monarch has offspring, their descendants must be recorded inside parentheses<br/>immediately following the monarch’s number.<br/><ul id="1a858fd8-d211-804f-b133-da2620e6b62c" class="bulleted-list"><li style="list-style-type:circle">The first-born (or primary heir) is enclosed in its own set of parentheses.</li></ul><ul id="1a858fd8-d211-8056-9fd0-d43ebf3efbad" class="bulleted-list"><li style="list-style-type:circle">If there is a second-born, their number is similarly enclosed, following<br/>the first-born’s parentheses.<br/></li></ul></li></ul><p id="1a858fd8-d211-807f-9a70-cb117f24315e" class="">Omitting Redundant Markings:</p><ul id="1a858fd8-d211-8001-9149-d4d57c932ce8" class="bulleted-list"><li style="list-style-type:disc">Empty pairs of parentheses are generally left off the scroll to keep the record neat.</li></ul><ul id="1a858fd8-d211-80fc-b330-cf9d291b75b1" class="bulleted-list"><li style="list-style-type:disc">However, if a monarch has a second-born but first-born is no more, you must include<br/>an empty pair of parentheses to clearly mark the absence of a primary heir—ensuring<br/>the lineage is accurately mapped.<br/></li></ul><p id="1a858fd8-d211-80f4-8f27-cb0b4e4a64cf" class="">Your task is to create such an inscription that perfectly reflects the<br/>hierarchical structure of the royal lineage.<br/></p><p id="1a858fd8-d211-809f-acaf-d54339cc8089" class="">Example 1:<br/>Input=<br/>1 2 3 4<br/>Output=<br/>1(2(4))(3)<br/></p><p id="1a858fd8-d211-80e7-b8b8-e893fea051a5" class="">Explanation:<br/>1<br/>/ \<br/>2   3<br/>/<br/></p><p id="1a858fd8-d211-8007-b583-cc9d564a545b" class="">4</p><ul id="1a858fd8-d211-80df-8e68-e79fe684e8ee" class="bulleted-list"><li style="list-style-type:disc">Monarch 1 is the founding ruler. He has two heirs: Monarch 2 (first-born) and<br/>Monarch 3 (second-born).<br/></li></ul><ul id="1a858fd8-d211-80c3-bcbc-f67021f08d12" class="bulleted-list"><li style="list-style-type:disc">Monarch 2 has a single descendant, Monarch 4, recorded as his first-born.</li></ul><ul id="1a858fd8-d211-8002-819b-c6d676ead20f" class="bulleted-list"><li style="list-style-type:disc">Since empty markings for non-existent descendants are omitted (because they<br/>don&#x27;t add any information), the inscription is kept concise.<br/></li></ul><ul id="1a858fd8-d211-802e-907e-e0b7b4afe623" class="bulleted-list"><li style="list-style-type:disc">Thus, the final transcription on the sacred scroll is: &quot;1(2(4))(3)&quot;</li></ul><p id="1a858fd8-d211-8095-b8cd-de36c6131cc7" class="">Example 2:<br/>Input=<br/>1 2 3 -1 4<br/>Output=<br/>1(2()(4))(3)<br/></p><p id="1a858fd8-d211-80e9-8349-f3a4d030d102" class="">Explanation:<br/>1<br/>/ \<br/>2   3<br/>\<br/>4<br/></p><ul id="1a858fd8-d211-8006-929f-c603976b84f7" class="bulleted-list"><li style="list-style-type:disc">Monarch 1 is the founding ruler with two heirs: Monarch 2 and Monarch 3.</li></ul><ul id="1a858fd8-d211-8066-ae95-e7ca2123848e" class="bulleted-list"><li style="list-style-type:disc">In this dynasty, Monarch 2 first-born is no more alive but does have a younger<br/>descendant, Monarch 4.<br/></li></ul><ul id="1a858fd8-d211-80d0-ba1d-ee9302d583c7" class="bulleted-list"><li style="list-style-type:disc">To ensure the record accurately reflects the gap in succession for Monarch 2,<br/>an empty pair of parentheses is added before representing Monarch 4.<br/>This explicitly marks the absence of a first-born heir.<br/></li></ul><ul id="1a858fd8-d211-8062-a2a9-f217acfc6813" class="bulleted-list"><li style="list-style-type:disc">Therefore, the recorded inscription becomes: &quot;1(2()(4))(3)&quot;</li></ul><p id="1a858fd8-d211-80f3-bfda-d81123e12ce3" class="">Example 3:<br/>input=<br/>1 2 3 4 -1 5 6 -1 7<br/>output=<br/>1(2(4()(7)))(3(5)(6))<br/></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1a858fd8-d211-8044-b1f4-f0e4cc51ed70" class="code"><code class="language-Java">import java.util.*;
+
+class Tree{
+    int data;
+    Tree left=null;
+    Tree right=null;
+    Tree(int data) {this.data=data;}
+}
+
+class Solution{
+    static Tree buildTree(int[] arr) {
+        if (arr.length == 0) return null;
+        
+        Tree root = new Tree(arr[0]);
+        Queue&lt;Tree&gt; q = new LinkedList&lt;&gt;();
+        q.add(root);
+        
+        int ind = 1;
+        while (!q.isEmpty() &amp;&amp; ind &lt; arr.length) {
+            Tree node = q.poll();
+            
+            if (ind &lt; arr.length &amp;&amp; arr[ind] != -1) {
+                node.left = new Tree(arr[ind]);
+                q.add(node.left);
+            }
+            ind++;
+            
+            if (ind &lt; arr.length &amp;&amp; arr[ind] != -1) {
+                node.right = new Tree(arr[ind]);
+                q.add(node.right);
+            }
+            ind++;
+        }
+        return root;
+    }
+    
+    static void convert(Tree root,StringBuilder s){
+       if(root==null) return;
+       s.append(root.data);
+       if(root.left==null &amp;&amp; root.right==null) return;
+       if(root.left==null &amp;&amp; root.right!=null)
+       {
+           s.append(&quot;()&quot;);
+           s.append(&quot;(&quot;);
+           convert(root.right,s);
+           s.append(&quot;)&quot;);
+           return;
+       }
+       if(root.left!=null &amp;&amp; root.right==null)
+       {
+           s.append(&quot;(&quot;);
+           convert(root.left,s);
+           s.append(&quot;)&quot;);
+           return;
+       }
+       s.append(&quot;(&quot;);
+       convert(root.left,s);
+       s.append(&quot;)&quot;);
+       s.append(&quot;(&quot;);
+       convert(root.right,s);
+       s.append(&quot;)&quot;);
+    }
+
+    public static void main (String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String[] s = sc.nextLine().split(&quot; &quot;);
+        int arr[] = new int[s.length];
+        
+        for (int i = 0; i &lt; s.length; i++) arr[i] = Integer.parseInt(s[i]);
+        
+        Tree root = buildTree(arr);
+        StringBuilder si = new StringBuilder();
+        convert(root,si);
+        System.out.print(si.toString());
+        
+        
+    }
+}
+</code></pre><h2 id="1a858fd8-d211-80fe-a8ed-cc97322836d4" class="">Program19</h2><p id="1a858fd8-d211-8027-8e3e-fda65221cbb9" class="">A shipping company is managing two cargo ships: a large cargo ship and<br/>a smaller cargo ship. The company has divided the large cargo ship into<br/>X compartments and the smaller cargo ship into Y compartments, where X &gt; Y.<br/></p><p id="1a858fd8-d211-808d-8dc5-c6af689ca9f5" class="">Each compartment in both ships is loaded with a specific amount of cargo.<br/>The company needs to relocate cargo from the large cargo ship to the smaller<br/>cargo ship by selecting Y compartments from the large ship and transferring<br/>their cargo to Y compartments in the smaller ship, maintaining the respective order.<br/></p><p id="1a858fd8-d211-80b6-8a2a-de9019881fdf" class="">However, due to weight balance regulations, the amount in compartment n+1<br/>should always be greater than or equal to that in the compartment n of the smaller<br/>cargo ship, after the transferred from the large cargo ship.<br/></p><p id="1a858fd8-d211-80b2-9160-f1089d85ee46" class="">Your task is to help the company determine the number of ways they can transfer<br/>the cargo while satisfying these regulations.<br/></p><h2 id="1a858fd8-d211-80cd-8b73-fefe36b6bb45" class="">Input Format:</h2><p id="1a858fd8-d211-805c-9a09-c8ddb56bb494" class="">Number of compartments in the large cargo ship (X).<br/>Number of compartments in the smaller cargo ship (Y).<br/>Cargo weights in compartments of the large cargo ship.<br/>Cargo weights in compartments of the smaller cargo ship.<br/></p><h2 id="1a858fd8-d211-803d-8732-c8280097a523" class="">Output Format:</h2><p id="1a858fd8-d211-80d9-b255-e4ff0278cf5e" class="">Return the number of valid ways to transfer the cargo.</p><h2 id="1a858fd8-d211-80f3-b4d3-d69fc74aeb01" class="">Sample Input:</h2><p id="1a858fd8-d211-806d-8ccd-cd05db55306c" class="">5<br/>3<br/>1 5 2 4 7<br/>7 8 6<br/></p><h2 id="1a858fd8-d211-8075-b766-c14ed32866bc" class="">Sample Output:</h2><p id="1a858fd8-d211-80cb-bdaf-c6b6b2fdbbb4" class="">4</p><h2 id="1a858fd8-d211-802c-8c5a-ee6d193ec479" class="">Explanation:</h2><p id="1a858fd8-d211-80b0-a038-c76a9562ee2e" class="">The compartments from the large cargo ship can be selected as:</p><ul id="1a858fd8-d211-80f0-bc9b-fb9aba58124c" class="bulleted-list"><li style="list-style-type:disc">(1, 2, 7)</li></ul><ul id="1a858fd8-d211-806b-b8d9-feea414a7a7f" class="bulleted-list"><li style="list-style-type:disc">(1, 4, 7)</li></ul><ul id="1a858fd8-d211-80be-8c62-e021f6ed4c1a" class="bulleted-list"><li style="list-style-type:disc">(5, 4, 7)</li></ul><ul id="1a858fd8-d211-808d-8d55-d6e72f3be9e9" class="bulleted-list"><li style="list-style-type:disc">(2, 4, 7)<br/>Thus, there are 4 valid ways to transfer the cargo.<br/></li></ul><h2 id="1a858fd8-d211-800c-8551-d4ac0139d5d4" class="">Sample Input:</h2><p id="1a858fd8-d211-808f-9c35-c6b81df6809a" class="">4<br/>2<br/>7 7 7 7<br/>3 4<br/></p><h2 id="1a858fd8-d211-80cc-9f42-db6c96ba17f5" class="">Sample Output:</h2><p id="1a858fd8-d211-80f5-87ac-e053f0c4caf7" class="">6</p><h2 id="1a858fd8-d211-8003-9152-f0c7d441835a" class="">Explanation:</h2><p id="1a858fd8-d211-806a-a52c-e1091e8cf486" class="">The compartments from the large cargo ship can be selected as:</p><ul id="1a858fd8-d211-809c-8d8a-e6010c9f55b4" class="bulleted-list"><li style="list-style-type:disc">(1st, 2nd) (7,7)</li></ul><ul id="1a858fd8-d211-80d5-a110-de990f05fc1b" class="bulleted-list"><li style="list-style-type:disc">(1st, 3rd) (7,7)</li></ul><ul id="1a858fd8-d211-806d-8bf4-fe7b4b20a9ea" class="bulleted-list"><li style="list-style-type:disc">(1st, 4th) (7,7)</li></ul><ul id="1a858fd8-d211-80d3-b8e8-edb5245e2325" class="bulleted-list"><li style="list-style-type:disc">(2nd, 3rd) (7,7)</li></ul><ul id="1a858fd8-d211-809b-96bc-cec97423afbc" class="bulleted-list"><li style="list-style-type:disc">(2nd, 4th) (7,7)</li></ul><ul id="1a858fd8-d211-80f9-a741-d9f38efb943f" class="bulleted-list"><li style="list-style-type:disc">(3rd, 4th) (7,7)</li></ul><p id="1a858fd8-d211-804b-b659-e5aa7a342a47" class="">Thus, there are 6 valid ways to transfer the cargo.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1a858fd8-d211-801f-ab75-e00a5402256d" class="code"><code class="language-Java">import java.util.*;
+
+class Solution{
+    
+    static int ans=0;
+    static void calc(int[] lg, int y, int x,int prev,int ind,int ind2,int[] sm)
+    {
+        if(ind2==y)
+        {
+            ans++;
+            return;
+        }
+        for(int i=ind;i&lt;x;i++)
+        {
+            if(sm[ind2]+lg[i]&gt;=prev)
+            {
+                calc(lg,y,x,lg[i]+sm[ind2],i+1,ind2+1,sm);
+            }
+        }
+        
+        
+    }
+    public static void main (String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int x=sc.nextInt();
+        int y=sc.nextInt();
+        int[] lg = new int[x];
+        int[] sm = new int[y];
+        for(int i=0;i&lt;x;i++) lg[i]=sc.nextInt();
+        for(int j=0;j&lt;y;j++) sm[j]=sc.nextInt();
+ 
+        calc(lg,y,x,0,0,0,sm);
+        
+        System.out.println(ans);
+    }
+}
+
+
+</code></pre></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

@@ -1,0 +1,731 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Queries</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-default_background {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.highlight-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.block-color-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: undefined; }
+.select-value-color-pink { background-color: rgba(225, 136, 179, 0.27); }
+.select-value-color-purple { background-color: rgba(168, 129, 197, 0.27); }
+.select-value-color-green { background-color: rgba(123, 183, 129, 0.27); }
+.select-value-color-gray { background-color: rgba(84, 72, 49, 0.15); }
+.select-value-color-transparentGray { background-color: undefined; }
+.select-value-color-translucentGray { background-color: undefined; }
+.select-value-color-orange { background-color: rgba(224, 124, 57, 0.27); }
+.select-value-color-brown { background-color: rgba(210, 162, 141, 0.35); }
+.select-value-color-red { background-color: rgba(244, 171, 159, 0.4); }
+.select-value-color-yellow { background-color: rgba(236, 191, 66, 0.39); }
+.select-value-color-blue { background-color: rgba(93, 165, 206, 0.27); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="1a858fd8-d211-80d0-a2a8-ea1b3b5623fa" class="page sans"><header><h1 class="page-title">Queries</h1><p class="page-description"></p></header><div class="page-body"><h2 id="1a858fd8-d211-800f-a862-efac10a0184c" class="">Query1</h2><p id="1a858fd8-d211-80a6-a459-c40421269faf" class="">/*<br/>Write a MongoDB query to identify the student with the highest average score<br/>specifically for the &quot;Python&quot; subject.<br/></p><p id="1a858fd8-d211-807d-a37f-d73b63058715" class="">Collection: &#x27;stucollection&#x27;</p><h2 id="1a858fd8-d211-806e-a6d3-f17551f3f6f5" class="">Reference Document:</h2><p id="1a858fd8-d211-801c-86e2-e5a42906fd46" class="">{<br/>&quot;student_id&quot;: &quot;S1001&quot;,<br/>&quot;name&quot;: &quot;Alice Johnson&quot;,<br/>&quot;age&quot;: 18,<br/>&quot;contact&quot;: {<br/>&quot;email&quot;: &quot;<br/><a href="mailto:alice@example.com">alice@example.com</a>&quot;,<br/>&quot;phone&quot;: &quot;123-456-7890&quot;,<br/>&quot;address&quot;: {<br/>&quot;street&quot;: &quot;123 Maple St&quot;,<br/>&quot;city&quot;: &quot;New York&quot;,<br/>&quot;state&quot;: &quot;NY&quot;,<br/>&quot;zip&quot;: &quot;10001&quot;<br/>}<br/>},<br/>&quot;enrolled_courses&quot;: [&quot;Java&quot;, &quot;Python&quot;],<br/>&quot;exams&quot;: [<br/>{<br/>&quot;subject&quot;: &quot;Java&quot;,<br/>&quot;scores&quot;: [<br/>{ &quot;type&quot;: &quot;quiz&quot;, &quot;score&quot;: 80 },<br/>{ &quot;type&quot;: &quot;midterm&quot;, &quot;score&quot;: 75 },<br/>{ &quot;type&quot;: &quot;final&quot;, &quot;score&quot;: 90 }<br/>],<br/>&quot;passed&quot;: true<br/>},<br/>{<br/>&quot;subject&quot;: &quot;Python&quot;,<br/>&quot;scores&quot;: [<br/>{ &quot;type&quot;: &quot;quiz&quot;, &quot;score&quot;: 70 },<br/>{ &quot;type&quot;: &quot;midterm&quot;, &quot;score&quot;: 65 },<br/>{ &quot;type&quot;: &quot;final&quot;, &quot;score&quot;: 85 }<br/>],<br/>&quot;passed&quot;: true<br/>}<br/>],<br/>&quot;skills&quot;: [&quot;Java&quot;, &quot;Spring Boot&quot;],<br/>&quot;guardian&quot;: {<br/>&quot;name&quot;: &quot;Robert Johnson&quot;,<br/>&quot;relation&quot;: &quot;Father&quot;,<br/>&quot;contact&quot;: &quot;<br/><a href="mailto:robert.j@example.com">robert.j@example.com</a>&quot;<br/>}<br/>}<br/></p><h2 id="1a858fd8-d211-809e-b736-d448f03ab916" class="">Sample Output:</h2><p id="1a858fd8-d211-80e1-ad06-edc2fa9f4899" class="">[</p><p id="1a858fd8-d211-802b-b572-f9f9812b079a" class="">{</p><p id="1a858fd8-d211-8031-8530-c0da98e20032" class="">student_id: &#x27;S1006&#x27;,</p><p id="1a858fd8-d211-80db-8f52-f9a483dc7c36" class="">name: &#x27;Sophia White&#x27;,</p><p id="1a858fd8-d211-801d-a151-d8fc92bf7c36" class="">avgPythonScore: 87.67</p><p id="1a858fd8-d211-8032-802f-f8510263d186" class="">}</p><p id="1a858fd8-d211-8087-90c1-cfd259ddb364" class="">]</p><h2 id="1a858fd8-d211-80f5-9f0e-dd7c20c8983d" class="">Query Reference:</h2><p id="1a858fd8-d211-8011-bc8d-d74d59a5419f" class="">printjson() : JS library function to display the JSON Object data.<br/>In db.&lt;collection&gt;.find():<br/>db -&gt; Refers to the database.<br/>&lt;collection&gt; -&gt; Your collection name<br/>find() -&gt; Method to write the selection and projection part of the query.<br/></p><ul id="1a858fd8-d211-808d-b539-dfa474fff9bf" class="bulleted-list"><li style="list-style-type:disc">/</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1a858fd8-d211-8058-b423-f2d37dbcb05a" class="code"><code class="language-Java">printjson(
+	db.stucollection.aggregate([
+	    {$unwind:&quot;$exams&quot;},
+	    {$unwind:&quot;$exams.scores&quot;},
+	    {$match:{&quot;exams.subject&quot;:&quot;Python&quot;}},
+	    {$group:{_id:&quot;$name&quot;,student_id:{&quot;$first&quot;:&quot;$student_id&quot;},name:{&quot;$first&quot;:&quot;$name&quot;},avgPythonScore:{$avg:&quot;$exams.scores.score&quot;}}},
+	    {$project:{_id:0,student_id:1,name:&quot;$_id&quot;,avgPythonScore:{$round:[&quot;$avgPythonScore&quot;,2]}}},
+	    {$sort:{avgPythonScore:-1}},
+	    {$limit:1}
+	   
+	 ])
+)
+</code></pre><h2 id="1a858fd8-d211-8087-a8a9-ca6963ee4927" class="">Query2</h2><p id="1a858fd8-d211-80cc-a958-fab3be4c387d" class="">/*<br/>Write a MongoDB query to retrieve guardian contact information for students<br/>who have failed at least one exam<br/></p><p id="1a858fd8-d211-8078-836f-d86f18c8a917" class="">Collection: &#x27;stucollection&#x27;</p><h2 id="1a858fd8-d211-805c-8055-cbb7063facc6" class="">Reference Document:</h2><p id="1a858fd8-d211-800b-8283-ebb6c17a6ad7" class="">{<br/>&quot;student_id&quot;: &quot;S1001&quot;,<br/>&quot;name&quot;: &quot;Alice Johnson&quot;,<br/>&quot;age&quot;: 18,<br/>&quot;contact&quot;: {<br/>&quot;email&quot;: &quot;<br/><a href="mailto:alice@example.com">alice@example.com</a>&quot;,<br/>&quot;phone&quot;: &quot;123-456-7890&quot;,<br/>&quot;address&quot;: {<br/>&quot;street&quot;: &quot;123 Maple St&quot;,<br/>&quot;city&quot;: &quot;New York&quot;,<br/>&quot;state&quot;: &quot;NY&quot;,<br/>&quot;zip&quot;: &quot;10001&quot;<br/>}<br/>},<br/>&quot;enrolled_courses&quot;: [&quot;Java&quot;, &quot;Python&quot;],<br/>&quot;exams&quot;: [<br/>{<br/>&quot;subject&quot;: &quot;Java&quot;,<br/>&quot;scores&quot;: [<br/>{ &quot;type&quot;: &quot;quiz&quot;, &quot;score&quot;: 80 },<br/>{ &quot;type&quot;: &quot;midterm&quot;, &quot;score&quot;: 75 },<br/>{ &quot;type&quot;: &quot;final&quot;, &quot;score&quot;: 90 }<br/>],<br/>&quot;passed&quot;: true<br/>},<br/>{<br/>&quot;subject&quot;: &quot;Python&quot;,<br/>&quot;scores&quot;: [<br/>{ &quot;type&quot;: &quot;quiz&quot;, &quot;score&quot;: 70 },<br/>{ &quot;type&quot;: &quot;midterm&quot;, &quot;score&quot;: 65 },<br/>{ &quot;type&quot;: &quot;final&quot;, &quot;score&quot;: 85 }<br/>],<br/>&quot;passed&quot;: true<br/>}<br/>],<br/>&quot;skills&quot;: [&quot;Java&quot;, &quot;Spring Boot&quot;],<br/>&quot;guardian&quot;: {<br/>&quot;name&quot;: &quot;Robert Johnson&quot;,<br/>&quot;relation&quot;: &quot;Father&quot;,<br/>&quot;contact&quot;: &quot;<br/><a href="mailto:robert.j@example.com">robert.j@example.com</a>&quot;<br/>}<br/>}<br/></p><h2 id="1a858fd8-d211-80dd-ba9f-eda62b1042b0" class="">Sample Output:</h2><p id="1a858fd8-d211-804b-9db2-d1ef039fbb02" class="">[</p><p id="1a858fd8-d211-8020-a7b4-d23fc7a4ec38" class="">{</p><p id="1a858fd8-d211-8022-b509-f996daafb825" class="">student_id: &#x27;S1002&#x27;,</p><p id="1a858fd8-d211-808b-9983-f7e0301ef8c6" class="">name: &#x27;Bob Smith&#x27;,</p><p id="1a858fd8-d211-800f-bbc3-d633414ca263" class="">guardian: {</p><p id="1a858fd8-d211-805c-b37c-e4472862eae1" class="">name: &#x27;Emma Smith&#x27;,</p><p id="1a858fd8-d211-8053-ae63-dc0f9600d398" class="">relation: &#x27;Mother&#x27;,</p><p id="1a858fd8-d211-80b2-8c29-cf9dc1d11033" class="">contact: &#x27;emma.s@example.com&#x27;</p><p id="1a858fd8-d211-80d7-9814-f3dc7c73e7a1" class="">}</p><p id="1a858fd8-d211-8025-bd35-da30c0367d3a" class="">}</p><p id="1a858fd8-d211-8089-8248-cc166be7d5aa" class="">]</p><h2 id="1a858fd8-d211-80d4-bd5c-d51c52c1274a" class="">Query Reference:</h2><p id="1a858fd8-d211-806d-bdd2-f18757947502" class="">printjson() : JS library function to display the JSON Object data.<br/>In db.&lt;collection&gt;.find():<br/>db -&gt; Refers to the database.<br/>&lt;collection&gt; -&gt; Your collection name<br/>find() -&gt; Method to write the selection and projection part of the query.<br/></p><ul id="1a858fd8-d211-80a3-be0a-fee647e3bdbc" class="bulleted-list"><li style="list-style-type:disc">/</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1a858fd8-d211-8088-8c44-e4ede20d35d6" class="code"><code class="language-Java">printjson(
+	db.stucollection.aggregate([
+	   // {$unwind:&quot;$exams&quot;},
+	   {$match:{&quot;exams.passed&quot;:false}},
+	   {$project:{_id:0,student_id:1,name:1,guardian:1}}
+	])
+)
+</code></pre><h2 id="1a858fd8-d211-80d8-b7f3-c19c8f1100a5" class="">Query3</h2><p id="1a858fd8-d211-80fa-be8f-fa20e76f2cd3" class="">/*<br/>Write a MongoDB query to compute each student’s overall average score (rounded<br/>to 2 decimals) from all exam score entries and sort the data by student_id.<br/></p><p id="1a858fd8-d211-806c-bd0b-c79281800ae2" class="">Collection: &#x27;stucollection&#x27;</p><h2 id="1a858fd8-d211-8044-b1f8-c82c98352dd8" class="">Reference Document:</h2><p id="1a858fd8-d211-809f-bbe4-f4598df6f37a" class="">{<br/>&quot;student_id&quot;: &quot;S1001&quot;,<br/>&quot;name&quot;: &quot;Alice Johnson&quot;,<br/>&quot;age&quot;: 18,<br/>&quot;contact&quot;: {<br/>&quot;email&quot;: &quot;<br/><a href="mailto:alice@example.com">alice@example.com</a>&quot;,<br/>&quot;phone&quot;: &quot;123-456-7890&quot;,<br/>&quot;address&quot;: {<br/>&quot;street&quot;: &quot;123 Maple St&quot;,<br/>&quot;city&quot;: &quot;New York&quot;,<br/>&quot;state&quot;: &quot;NY&quot;,<br/>&quot;zip&quot;: &quot;10001&quot;<br/>}<br/>},<br/>&quot;enrolled_courses&quot;: [&quot;Java&quot;, &quot;Python&quot;],<br/>&quot;exams&quot;: [<br/>{<br/>&quot;subject&quot;: &quot;Java&quot;,<br/>&quot;scores&quot;: [<br/>{ &quot;type&quot;: &quot;quiz&quot;, &quot;score&quot;: 80 },<br/>{ &quot;type&quot;: &quot;midterm&quot;, &quot;score&quot;: 75 },<br/>{ &quot;type&quot;: &quot;final&quot;, &quot;score&quot;: 90 }<br/>],<br/>&quot;passed&quot;: true<br/>},<br/>{<br/>&quot;subject&quot;: &quot;Python&quot;,<br/>&quot;scores&quot;: [<br/>{ &quot;type&quot;: &quot;quiz&quot;, &quot;score&quot;: 70 },<br/>{ &quot;type&quot;: &quot;midterm&quot;, &quot;score&quot;: 65 },<br/>{ &quot;type&quot;: &quot;final&quot;, &quot;score&quot;: 85 }<br/>],<br/>&quot;passed&quot;: true<br/>}<br/>],<br/>&quot;skills&quot;: [&quot;Java&quot;, &quot;Spring Boot&quot;],<br/>&quot;guardian&quot;: {<br/>&quot;name&quot;: &quot;Robert Johnson&quot;,<br/>&quot;relation&quot;: &quot;Father&quot;,<br/>&quot;contact&quot;: &quot;<br/><a href="mailto:robert.j@example.com">robert.j@example.com</a>&quot;<br/>}<br/>}<br/></p><h2 id="1a858fd8-d211-8013-87de-caba406cc7a7" class="">Sample Output:</h2><p id="1a858fd8-d211-8060-ab45-d81564303393" class="">[</p><p id="1a858fd8-d211-8019-948e-e138674cdf45" class="">{</p><p id="1a858fd8-d211-8001-87b6-ee1f24dc68bd" class="">student_id: &#x27;S1001&#x27;,</p><p id="1a858fd8-d211-8068-9e68-fadf6034c3fd" class="">name: &#x27;Alice Johnson&#x27;,</p><p id="1a858fd8-d211-80ef-8b64-eeb0fed9c391" class="">averageScore: 77.5</p><p id="1a858fd8-d211-80b2-bbf0-df1c1d213d1b" class="">},</p><p id="1a858fd8-d211-808c-8bc6-ef23e4a11ab1" class="">{</p><p id="1a858fd8-d211-809a-8f2b-ed185e58ccf9" class="">student_id: &#x27;S1002&#x27;,</p><p id="1a858fd8-d211-8001-aaba-d8a3d6541c2c" class="">name: &#x27;Bob Smith&#x27;,</p><p id="1a858fd8-d211-8047-9c8e-f68c9260071c" class="">averageScore: 57.5</p><p id="1a858fd8-d211-8038-b14e-d1950b6c0fc2" class="">}<br/>]<br/></p><h2 id="1a858fd8-d211-8012-87bf-c7016eff5889" class="">Query Reference:</h2><p id="1a858fd8-d211-8087-8126-ee5a79caddfe" class="">printjson() : JS library function to display the JSON Object data.<br/>In db.&lt;collection&gt;.find():<br/>db -&gt; Refers to the database.<br/>&lt;collection&gt; -&gt; Your collection name<br/>find() -&gt; Method to write the selection and projection part of the query.<br/></p><ul id="1a858fd8-d211-8090-8853-c20318193edf" class="bulleted-list"><li style="list-style-type:disc">/</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1a858fd8-d211-803d-bad2-cc30bb2f8df3" class="code"><code class="language-Java">	
+printjson(
+	db.stucollection.aggregate([
+	    {$unwind:&quot;$exams&quot;},
+	    {$unwind:&quot;$exams.scores&quot;},
+	    {$group:{_id:&quot;$name&quot;,student_id:{&quot;$first&quot;:&quot;$student_id&quot;},averageScore:{$avg:&quot;$exams.scores.score&quot;}}},
+	    {$project:{_id:0,student_id:1,name:&quot;$_id&quot;,averageScore:{$round:[&quot;$averageScore&quot;,2]}}},
+	    {$sort:{student_id:1}}
+	    ])
+)
+</code></pre><h2 id="1a858fd8-d211-8088-8afb-e9208f265081" class="">Query4</h2><p id="1a858fd8-d211-802d-aabb-fe4b81e68280" class="">/*<br/>Write a MongoDB query for students older than 20, display the student’s name<br/>along with the number of courses they’re enrolled in.<br/></p><p id="1a858fd8-d211-804b-a5aa-c235ea687573" class="">Collection: &#x27;stucollection&#x27;</p><h2 id="1a858fd8-d211-8066-86fb-d9a05df25ce4" class="">Reference Document:</h2><p id="1a858fd8-d211-80ef-945e-d6da22f3f5d4" class="">{<br/>&quot;student_id&quot;: &quot;S1001&quot;,<br/>&quot;name&quot;: &quot;Alice Johnson&quot;,<br/>&quot;age&quot;: 18,<br/>&quot;contact&quot;: {<br/>&quot;email&quot;: &quot;<br/><a href="mailto:alice@example.com">alice@example.com</a>&quot;,<br/>&quot;phone&quot;: &quot;123-456-7890&quot;,<br/>&quot;address&quot;: {<br/>&quot;street&quot;: &quot;123 Maple St&quot;,<br/>&quot;city&quot;: &quot;New York&quot;,<br/>&quot;state&quot;: &quot;NY&quot;,<br/>&quot;zip&quot;: &quot;10001&quot;<br/>}<br/>},<br/>&quot;enrolled_courses&quot;: [&quot;Java&quot;, &quot;Python&quot;],<br/>&quot;exams&quot;: [<br/>{<br/>&quot;subject&quot;: &quot;Java&quot;,<br/>&quot;scores&quot;: [<br/>{ &quot;type&quot;: &quot;quiz&quot;, &quot;score&quot;: 80 },<br/>{ &quot;type&quot;: &quot;midterm&quot;, &quot;score&quot;: 75 },<br/>{ &quot;type&quot;: &quot;final&quot;, &quot;score&quot;: 90 }<br/>],<br/>&quot;passed&quot;: true<br/>},<br/>{<br/>&quot;subject&quot;: &quot;Python&quot;,<br/>&quot;scores&quot;: [<br/>{ &quot;type&quot;: &quot;quiz&quot;, &quot;score&quot;: 70 },<br/>{ &quot;type&quot;: &quot;midterm&quot;, &quot;score&quot;: 65 },<br/>{ &quot;type&quot;: &quot;final&quot;, &quot;score&quot;: 85 }<br/>],<br/>&quot;passed&quot;: true<br/>}<br/>],<br/>&quot;skills&quot;: [&quot;Java&quot;, &quot;Spring Boot&quot;],<br/>&quot;guardian&quot;: {<br/>&quot;name&quot;: &quot;Robert Johnson&quot;,<br/>&quot;relation&quot;: &quot;Father&quot;,<br/>&quot;contact&quot;: &quot;<br/><a href="mailto:robert.j@example.com">robert.j@example.com</a>&quot;<br/>}<br/>}<br/></p><h2 id="1a858fd8-d211-8019-9b6b-da9c7ecd004e" class="">Sample Output:</h2><p id="1a858fd8-d211-8042-a688-e5e375dcdb10" class="">[</p><p id="1a858fd8-d211-80f7-818a-f8fa3d7aa71a" class="">[</p><p id="1a858fd8-d211-803a-ab6c-c1297351570b" class="">{</p><p id="1a858fd8-d211-80a5-85bc-f0f1c8f15942" class="">student_id: &#x27;S1004&#x27;,</p><p id="1a858fd8-d211-80c8-8cc4-c3cfa54d7904" class="">name: &#x27;David Brown&#x27;,</p><p id="1a858fd8-d211-80ef-8277-f6801e28f10b" class="">enrolledCoursesCount: 2</p><p id="1a858fd8-d211-8061-bcfe-f82526dd03bb" class="">},</p><p id="1a858fd8-d211-8028-a9da-d9aab0756b9f" class="">{</p><p id="1a858fd8-d211-8037-bc30-d3de4292aa7f" class="">student_id: &#x27;S1005&#x27;,</p><p id="1a858fd8-d211-80b8-b89a-fe67c08d2759" class="">name: &#x27;Ethan Harris&#x27;,</p><p id="1a858fd8-d211-8051-ab19-d7b76d5cec8f" class="">enrolledCoursesCount: 2</p><p id="1a858fd8-d211-803a-847a-c4b23cc459a9" class="">}<br/>]<br/></p><h2 id="1a858fd8-d211-80f1-9bf9-d839bcf74af3" class="">Query Reference:</h2><p id="1a858fd8-d211-807a-b7d5-e97326a43f61" class="">printjson() : JS library function to display the JSON Object data.<br/>In db.&lt;collection&gt;.find():<br/>db -&gt; Refers to the database.<br/>&lt;collection&gt; -&gt; Your collection name<br/>find() -&gt; Method to write the selection and projection part of the query.<br/></p><ul id="1a858fd8-d211-805a-8d5d-fb3664213723" class="bulleted-list"><li style="list-style-type:disc">/</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1a858fd8-d211-807b-bfe4-f5ad7887ffad" class="code"><code class="language-Java">printjson(
+	db.stucollection.aggregate([
+	    {$match:{age:{$gt:20}}},
+	    {$project:{_id:0,student_id:1,name:1,enrolledCoursesCount:{$size:&quot;$enrolled_courses&quot;}}}
+	    
+	])
+)
+</code></pre><h2 id="1a858fd8-d211-8032-abf8-cb5b79654f42" class="">Query5</h2><p id="1a858fd8-d211-8079-a5ad-c27d40cd2932" class="">/*<br/>Write a MongoDB query to calculate the average score from the &quot;final&quot; exam<br/>for each subject across all students, print the output in the sorted order<br/>of the subject names.<br/></p><p id="1a858fd8-d211-8077-969e-d333d6e45a11" class="">Collection: &#x27;stucollection&#x27;</p><h2 id="1a858fd8-d211-806f-91b0-cb210fc74e8b" class="">Reference Document:</h2><p id="1a858fd8-d211-80d2-a48a-d3b15eeb4769" class="">{<br/>&quot;student_id&quot;: &quot;S1001&quot;,<br/>&quot;name&quot;: &quot;Alice Johnson&quot;,<br/>&quot;age&quot;: 18,<br/>&quot;contact&quot;: {<br/>&quot;email&quot;: &quot;<br/><a href="mailto:alice@example.com">alice@example.com</a>&quot;,<br/>&quot;phone&quot;: &quot;123-456-7890&quot;,<br/>&quot;address&quot;: {<br/>&quot;street&quot;: &quot;123 Maple St&quot;,<br/>&quot;city&quot;: &quot;New York&quot;,<br/>&quot;state&quot;: &quot;NY&quot;,<br/>&quot;zip&quot;: &quot;10001&quot;<br/>}<br/>},<br/>&quot;enrolled_courses&quot;: [&quot;Java&quot;, &quot;Python&quot;],<br/>&quot;exams&quot;: [<br/>{<br/>&quot;subject&quot;: &quot;Java&quot;,<br/>&quot;scores&quot;: [<br/>{ &quot;type&quot;: &quot;quiz&quot;, &quot;score&quot;: 80 },<br/>{ &quot;type&quot;: &quot;midterm&quot;, &quot;score&quot;: 75 },<br/>{ &quot;type&quot;: &quot;final&quot;, &quot;score&quot;: 90 }<br/>],<br/>&quot;passed&quot;: true<br/>},<br/>{<br/>&quot;subject&quot;: &quot;Python&quot;,<br/>&quot;scores&quot;: [<br/>{ &quot;type&quot;: &quot;quiz&quot;, &quot;score&quot;: 70 },<br/>{ &quot;type&quot;: &quot;midterm&quot;, &quot;score&quot;: 65 },<br/>{ &quot;type&quot;: &quot;final&quot;, &quot;score&quot;: 85 }<br/>],<br/>&quot;passed&quot;: true<br/>}<br/>],<br/>&quot;skills&quot;: [&quot;Java&quot;, &quot;Spring Boot&quot;],<br/>&quot;guardian&quot;: {<br/>&quot;name&quot;: &quot;Robert Johnson&quot;,<br/>&quot;relation&quot;: &quot;Father&quot;,<br/>&quot;contact&quot;: &quot;<br/><a href="mailto:robert.j@example.com">robert.j@example.com</a>&quot;<br/>}<br/>}<br/></p><h2 id="1a858fd8-d211-80e8-8b3c-f0f7525c4c00" class="">Sample Output:</h2><p id="1a858fd8-d211-805e-a295-c68be9cdf88b" class="">[</p><p id="1a858fd8-d211-8072-974c-c70183c2daea" class="">{</p><p id="1a858fd8-d211-8014-9a61-d2635ef19703" class="">subject: &#x27;C&#x27;,</p><p id="1a858fd8-d211-80f0-a73b-ecd9ee52498f" class="">averageFinalScore: 75</p><p id="1a858fd8-d211-8057-936f-dc90a0b9ceef" class="">},</p><p id="1a858fd8-d211-8020-8ce5-d1a8beed99f5" class="">{</p><p id="1a858fd8-d211-8011-aa0f-d73a00bf99ba" class="">subject: &#x27;C++&#x27;,</p><p id="1a858fd8-d211-80dd-899b-ead954ee9f13" class="">averageFinalScore: 68.75</p><p id="1a858fd8-d211-801c-a7f5-c18d8bce06cd" class="">}<br/>]<br/></p><h2 id="1a858fd8-d211-8011-8018-f036a1609ea4" class="">Query Reference:</h2><p id="1a858fd8-d211-8098-94e0-e68ddca07847" class="">printjson() : JS library function to display the JSON Object data.<br/>In db.&lt;collection&gt;.find():<br/>db -&gt; Refers to the database.<br/>&lt;collection&gt; -&gt; Your collection name<br/>find() -&gt; Method to write the selection and projection part of the query.<br/></p><ul id="1a858fd8-d211-80b9-a4fd-dab89746676d" class="bulleted-list"><li style="list-style-type:disc">/</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1a858fd8-d211-8099-9ffb-d9d8e39caaf3" class="code"><code class="language-Java">printjson(
+	db.stucollection.aggregate([
+	    {$unwind:&quot;$exams&quot;},
+	    {$unwind:&quot;$exams.scores&quot;},
+	    {$match:{&quot;exams.scores.type&quot;:&quot;final&quot;}},
+	    {$group:{_id:&quot;$exams.subject&quot;, averageFinalScore:{$avg:&quot;$exams.scores.score&quot;}}},
+	    {$project:{_id:0,subject:&quot;$_id&quot;,averageFinalScore:{$round:[&quot;$averageFinalScore&quot;,2]}}},
+	    {$sort:{subject:1}}
+	])
+)
+</code></pre><p id="1a858fd8-d211-8004-9a22-cca98f7211d3" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

@@ -1,0 +1,1171 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>SLIDING WINDOW</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-default_background {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.highlight-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.block-color-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: undefined; }
+.select-value-color-pink { background-color: rgba(225, 136, 179, 0.27); }
+.select-value-color-purple { background-color: rgba(168, 129, 197, 0.27); }
+.select-value-color-green { background-color: rgba(123, 183, 129, 0.27); }
+.select-value-color-gray { background-color: rgba(84, 72, 49, 0.15); }
+.select-value-color-transparentGray { background-color: undefined; }
+.select-value-color-translucentGray { background-color: undefined; }
+.select-value-color-orange { background-color: rgba(224, 124, 57, 0.27); }
+.select-value-color-brown { background-color: rgba(210, 162, 141, 0.35); }
+.select-value-color-red { background-color: rgba(244, 171, 159, 0.4); }
+.select-value-color-yellow { background-color: rgba(236, 191, 66, 0.39); }
+.select-value-color-blue { background-color: rgba(93, 165, 206, 0.27); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="19358fd8-d211-80bb-a403-c7807b8b59a6" class="page sans"><header><h1 class="page-title">SLIDING WINDOW</h1><p class="page-description"></p></header><div class="page-body"><h2 id="19358fd8-d211-8014-aac3-d84f8c3016b2" class="">program1</h2><p id="19358fd8-d211-8019-aef2-fdc556d30390" class="">You are given an integer array nums and two integers l and r. Your task is to <br/>find the minimum positive energy produced by a sequence of operations. <br/>Each operation corresponds to selecting a contiguous subarray of nums <br/>whose length is between l and r (inclusive).<br/><br/>The energy of a sequence is defined as the product of all the numbers in <br/>the subarray. You need to find the sequence with the smallest positive energy.<br/><br/>If no such sequence exists, return -1.<br/><br/>Input Format:<br/>---------------<br/>Line-1: Three space separated integers, N, L and R.<br/>Line-2: N space separated integers, array[].<br/><br/>Output Format:<br/>-----------------<br/>An integer result, smallest positive energy.<br/><br/>Sample Input-1:<br/>-----------------<br/>4 2 3<br/>2 -1 3 4<br/><br/>Sample Output-1:<br/>-------------------<br/>12<br/><br/>Explanation:<br/>--------------<br/>The possible sequences of operations with lengths between l = 2 and r = 3 are:<br/><br/>[2, -1] (not valid, energy = -2)<br/>[3, 4] (energy = 12)<br/>[2, -1, 3] (not valid, energy = -6)<br/>The sequence [3, 4] produces the smallest positive energy of 12. Hence, <br/>the output is 12.<br/><br/>Sample Input-2:<br/>-----------------<br/>3 2 3<br/>-1 -3 2<br/><br/>Sample Output-1:<br/>-------------------<br/>3<br/><br/>Explanation:<br/>No valid sequence produces a positive energy. Thus, the output is -1.<br/><br/>Constraints:<br/>============<br/>1 ≤ nums.length ≤ 100<br/>1 ≤ l ≤ r ≤ nums.length<br/>−1000 ≤ nums[i] ≤ 1000<br/> <br/></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="19358fd8-d211-80ed-b7b4-f0db6486dbfe" class="code"><code class="language-undefined">import java.util.*;
+public class Solution {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int l = sc.nextInt();
+        int r = sc.nextInt();
+        int[] arr = new int[n];
+
+        for (int i = 0; i &lt; n; i++){
+            arr[i] = sc.nextInt();
+        }
+        long minProduct = Long.MAX_VALUE;
+        boolean foundPositiveProduct = false;  
+        for (int len = l; len &lt;= r; len++) {
+            long prod = 1;
+            for (int i = 0; i &lt; len; i++) {
+                if (arr[i] != 0) {
+                    prod *= arr[i];
+                } else {
+                    prod = 0;
+                    break;
+                }
+            }
+            if (prod &gt; 0) {
+                minProduct = Math.min(minProduct, prod);
+                foundPositiveProduct = true;
+            }
+            for (int i = len; i &lt; n; i++) {
+                if (arr[i - len] != 0) {
+                    prod /= arr[i - len];
+                } else {
+                    prod = 1;
+                    for (int j = i - len + 1; j &lt;= i; j++) {
+                        if (arr[j] != 0) {
+                            prod *= arr[j];
+                        } else {
+                            prod = 0;
+                            break;
+                        }
+                    }
+                }
+                prod *= arr[i]; 
+                if (prod &gt; 0) {
+                    minProduct = Math.min(minProduct, prod);
+                    foundPositiveProduct = true;
+                }
+            }
+        }
+        System.out.println(foundPositiveProduct ? minProduct : -1);
+    }
+}</code></pre><h2 id="19358fd8-d211-808a-8bc1-e4e96a71c7a2" class="">Program2</h2><p id="19358fd8-d211-809b-b751-f5be84ca00ab" class="">The Kingdom of CodeLand has a long bridge made of square tiles, <br/>where each tile is painted either red (&#x27;R&#x27;) or blue (&#x27;B&#x27;). <br/>A critical mission has been assigned to you: ensure that a section of the <br/>bridge is sturdy enough to support heavy traffic. Blue tiles are reinforced,<br/>while red tiles are weak and need to be reinforced by painting them blue.<br/><br/>You are given a 0-indexed string bridge of length n, where bridge[i] represents the color of the i-th tile. Each character in bridge is either &#x27;R&#x27; (red) or &#x27;B&#x27; (blue).<br/><br/>Your goal is to ensure that there is at least one segment of k consecutive blue tiles on the bridge to support heavy traffic. You can repaint a red tile (&#x27;R&#x27;) to a blue tile (&#x27;B&#x27;) in one operation.<br/><br/>Write a program to determine the minimum number of repaint operations needed to create a segment of k consecutive blue tiles.<br/><br/>Input Format:<br/>---------------<br/>Space separated string and integer, S and K<br/><br/>Output Format:<br/>-----------------<br/>An integer value.<br/><br/><br/>Sample Input-1:<br/>------------------<br/>RRBRBBRRBR 4<br/><br/>Sample Output-1:<br/>--------------------<br/>1<br/><br/>Explanation:<br/>-------------<br/>One way to achieve 4 consecutive blue tiles is to repaint the 4th tile to get bridge = &quot;RRBBBBRRBR&quot;.<br/>This requires 1 operations.<br/><br/>Sample Input-2:<br/>------------------<br/>BRBRRBB 3<br/><br/>Sample Output-2:<br/>--------------------<br/>1<br/><br/>Explanation:<br/>--------------<br/>One way to achieve 3 consecutive blue tiles is to repaint the 2nd tile to get bridge = &quot;BBBRRBB&quot;.<br/>This requires only 1 operation.<br/><br/>Sample Input-3:<br/>------------------<br/>BBBRRBRBRR 5<br/><br/>Sample Output-3:<br/>--------------------<br/>2<br/><br/>Explanation:<br/>--------------<br/>One way to achieve 5 consecutive blue tiles is to repaint the 4th and 9th tiles to get bridge = &quot;BBBBBBBRRR&quot;.<br/>This requires 2 operations.<br/><br/></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="19358fd8-d211-80e3-a0b8-e8fa240db3a3" class="code"><code class="language-Java">import java.util.*;
+class Solution{
+    public static void main(String[] args){
+        Scanner sc = new Scanner(System.in);
+        String s =sc.next();
+        int k=sc.nextInt();
+        int ans=Integer.MIN_VALUE;
+        int len=0;
+        int count=0;
+        for(int i=0;i&lt;k;i++)
+        {
+            count+=s.charAt(i)==&#x27;B&#x27;?1:0;
+        }
+        ans=Math.max(count,ans);
+        for(int i=k;i&lt;s.length();i++)
+        {
+            count-=s.charAt(i-k)==&#x27;B&#x27;?1:0;
+            count+=s.charAt(i)==&#x27;B&#x27;?1:0;
+            ans=Math.max(ans,count);
+        }
+        System.out.println(k-ans);
+    }
+}</code></pre><h2 id="19358fd8-d211-80b2-b1fa-de7590881f9d" class="">Program3</h2><p id="19358fd8-d211-80f5-9a7c-cf60bc826832" class="">You are an architect tasked with designing a series of connected rooms in a <br/>building. You are given a list of room sizes represented by an integer array <br/>roomSizes, an integer maxFrequency representing the maximum number of times <br/>a particular room size can appear, and an integer maxArea representing <br/>the maximum allowable total area of connected rooms. A set of connected <br/>rooms is called viable if the frequency of each room size in this set is <br/>less than or equal to maxFrequency, and the total area of the rooms in <br/>this set is less than or equal to maxArea. <br/><br/>Return the length of the longest viable set of connected rooms from roomSizes.<br/><br/>Input Format:<br/>-------------<br/>Line-1: 3 space separated integers, n, maxFrequency, maxArea<br/>Line-2: N space separated integers, roomSizes[].<br/><br/>Output Format:<br/>-------------<br/>An integer, the length of the longest viable set of connected rooms<br/><br/><br/>Sample Input-1:<br/>---------------<br/>8 2 10<br/>1 2 3 1 2 3 1 2<br/><br/>Sample Output-1:<br/>----------------<br/>5 <br/><br/>Explanation: <br/>------------<br/>The longest possible viable set of connected rooms is [1, 2, 3, 1, 2] since <br/>the room sizes 1, 2, and 3 appear at most twice, and the total area is less than 10.<br/><br/>Sample Input-2:<br/>---------------<br/>6 1 3<br/>1 2 1 2 1 2<br/><br/>Sample Output-2:<br/>----------------<br/>2<br/><br/>Explanation: The longest possible viable set of connected rooms is [1, 2] since <br/>the room sizes 1 and 2 appear at most once, and the total area is 3.<br/><br/>Constraints:<br/>------------<br/>1 &lt;= roomSizes.length &lt;= 10^5<br/>1 &lt;= roomSizes[i] &lt;= 10^4 where roomSizes[i] is the size of the i-th room.<br/>1 &lt;= maxFrequency &lt;= roomSizes.length<br/>1 &lt;= maxArea &lt;= 10^9<br/></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="19358fd8-d211-8088-8b2c-f4d2be51ac8c" class="code"><code class="language-Java">import java.util.*;
+
+class Solution{
+    public static void main(String[] args){
+        Scanner sc = new Scanner(System.in);
+        int n=sc.nextInt();
+        int mfreq=sc.nextInt();
+        int marea = sc.nextInt();
+        int arr[] = new int[n];
+        for(int i=0;i&lt;n;i++){
+            arr[i]=sc.nextInt();
+        }
+        HashMap&lt;Integer,Integer&gt; map = new HashMap&lt;&gt;();
+        int len=0;
+        int sum=0;
+        int fin=0;
+        int ind=0;
+        for(int i=0;i&lt;n;i++)
+        {
+            int val = arr[i];
+            map.put(val, map.getOrDefault(val, 0) + 1);
+            sum += val;
+            while (map.get(val) &gt; mfreq || sum &gt; marea) {
+                map.put(arr[ind], map.get(arr[ind]) - 1);
+                sum -= arr[ind];
+                ind++;
+            }
+            fin = Math.max(fin, i - ind + 1);
+
+        }
+        System.out.println(fin);
+        
+    }
+}</code></pre><h2 id="19358fd8-d211-802a-b3cb-fe19892cf501" class="">Program4</h2><p id="19358fd8-d211-8003-a6d0-f43bfefeff7c" class="">In a software development company, a team works on various projects over n weeks. <br/>The team completes a certain number of tasks tasks[i] each week and dedicates <br/>hours[i] hours of work. Given an integer k, for every consecutive sequence of <br/>k weeks (tasks[i], tasks[i+1], ..., tasks[i+k-1] and <br/>hours[i], hours[i+1], ..., hours[i+k-1] for all 0 &lt;= i &lt;= n-k), <br/>they evaluate T, the total number of tasks completed during that sequence <br/>of k weeks, and E, the total hours of work during that sequence of k weeks:<br/><br/>a) If T &lt; lower and E &gt;= work_goal, the team performed very poorly and loses 2 points<br/>b) If T &lt; lower and E &lt; work_goal, the team performed poorly and loses 1 point.<br/>c) If T &gt;= upper and E &gt;= work_goal, the team performed well and gains 1 point.<br/>d) If T &gt;= upper and E &lt; work_goal, the team performed exceptionally well and gains 2 points.<br/>e) Otherwise, the team&#x27;s performance is normal and there is no change in points.<br/><br/>Initially, the team starts with zero points. Return the total number of points <br/>the team has after working for n weeks. Note that the total points can be negative.<br/><br/>Example 1<br/>Input:<br/>n = 5<br/>tasks = [10, 20, 30, 40, 50]<br/>hours = [30, 20, 10, 30, 40]<br/>k = 2<br/>lower = 35<br/>upper = 70<br/>work_goal = 45<br/><br/>Output: 1<br/>Explanation:<br/>For [10, 20] and [30, 20]:<br/>T = 30 &lt; lower and E = 50 &gt;= work_goal, the team performed very poorly and loses 2 points.<br/><br/>For [20, 30] and [20, 10]:<br/>T = 50 &gt;= lower and T &lt;= upper and E = 30 &lt; work_goal, no change in points.<br/><br/>For [30, 40] and [10, 30]:<br/>T = 70 = upper and E = 40 &lt; work_goal, the team performed exceptionally well and <br/>gains 2 points.<br/><br/>For [40, 50] and [30, 40]:<br/>T = 90 &gt; upper and E = 70 &gt;= work_goal, the team performed well and gains 1 point.<br/><br/>Therefore, the team gains 1 point (0 - 2 + 2 + 1 = 1).<br/><br/>Sample Input=<br/>4	//n<br/>5 8 10 15<br/>25 30 20 25<br/>3	//k<br/>25	//lower<br/>40	//upper<br/>60	//work_goal<br/>Sample Output=<br/>-2<br/></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="19358fd8-d211-8078-b888-eb7ef871b135" class="code"><code class="language-Java">import java.util.*;
+
+class Solution{
+    static int points=0;
+    
+    static void genPoints(int T, int E, int l, int u, int wg)
+    {
+        if(T&lt;l &amp;&amp; E&gt;=wg) points-=2;
+        if(T&lt;l &amp;&amp; E&lt;wg) points-=1;
+        if(T&gt;=u &amp;&amp; E&gt;-u) points+=1;
+        if(T&gt;=u &amp;&amp; E&lt;wg) points+=1;
+        
+    }
+    public static void main(String[] args){
+        Scanner sc=new Scanner(System.in);
+        int n=sc.nextInt();
+        int tasks[] = new int[n];
+        int hours[] = new int[n];
+        for(int i=0;i&lt;n;i++) tasks[i]=sc.nextInt();
+        for(int i=0;i&lt;n;i++) hours[i]=sc.nextInt();
+        int k=sc.nextInt();
+        int l=sc.nextInt();
+        int u=sc.nextInt();
+        int wg=sc.nextInt();
+        
+        // int points=0;
+        int T=0;
+        int E=0;
+        
+        for(int i=0;i&lt;k;i++)
+        {
+            T+=tasks[i];
+            E+=hours[i];
+        }
+        genPoints(T,E,l,u,wg);
+        int left=0;
+        for(int r=k;r&lt;n;r++)
+        {
+            T-=tasks[left];
+            T+=tasks[r];
+            E-=hours[left];
+            E+=hours[r];
+            left++;
+            genPoints(T,E,l,u,wg);
+        }
+        System.out.println(points);
+        
+    }
+}</code></pre><h2 id="19358fd8-d211-80c4-acb9-c0da78e276ce" class="">Program5</h2><p id="19358fd8-d211-807e-8a25-d547f375c08b" class="">You are a treasure hunter exploring an ancient vault filled with <br/>treasure boxes. The vault is represented as an array treasures of <br/>n integers, where each integer corresponds to the value of a treasure. <br/>You have a special key that allows you to scan and select treasures <br/>from a sub-vault (a segment of the array) of size k. Additionally, <br/>you have a magical power factor f and a priority filter x.<br/><br/>The priority-weighted treasure sum of a sub-vault is calculated as follows:<br/>	1. Count the occurrences of each treasure value in the sub-vault.<br/>	2. Assign a priority score to each treasure based on its frequency <br/>	multiplied by the treasure&#x27;s value raised to the power of f <br/>	(i.e., priority_score[treasure] = frequency[treasure] * (value^f)).<br/>	3. Select only the top x treasures based on their priority scores. <br/>	If two treasures have the same priority score, the treasure with <br/>	the higher value is prioritized.<br/>	4. Calculate the total value of the selected treasures.<br/><br/>Your task is to return an integer array priority_sums of length n - k + 1, <br/>where priority_sums[i] represents the priority-weighted treasure sum for <br/>the sub-vault corresponding to treasures[i..i + k - 1].<br/><br/>Input Format:<br/>---------------<br/>Line-1: Four space separated integers, N, K, X, F<br/>Line-2: N space separated integers, boxes[].<br/><br/>Output Format:<br/>-----------------<br/>An integer array, priority_sums[], of length n - k + 1<br/><br/><br/>Sample Input-1:<br/>-----------------<br/>8 5 2 2<br/>1 2 3 1 2 2 3 4<br/><br/>Sample Output-1:<br/>--------------------<br/>[7, 9, 10, 7]<br/><br/>Explanation:<br/>We calculate the priority-weighted treasure sum for each sub-vault:<br/><br/>1. Sub-vault 1: [1, 2, 3, 1, 2]<br/>   - Frequencies: {1: 2, 2: 2, 3: 1}<br/>   - Priority scores:<br/>     - 1 → 2 * (1^2) = 2<br/>     - 2 → 2 * (2^2) = 8<br/>     - 3 → 1 * (3^2) = 9<br/>   - Top 2 treasures by priority: 3 (score 9) and 2 (score 8).<br/>   - Total value: 2 + 3 + 2  = 7.<br/><br/>2. Sub-vault 2: [2, 3, 1, 2, 2]<br/>   - Frequencies: {2: 3, 3: 1, 1: 1}<br/>   - Priority scores:<br/>     - 2 → 3 * (2^2) = 12<br/>     - 3 → 1 * (3^2) = 9<br/>     - 1 → 1 * (1^2) = 1<br/>   - Top 2 treasures by priority: 2 (score 12) and 3 (score 9).<br/>   - Total value: 2 + 2 + 2 + 3 = 9.<br/><br/>3. Sub-vault 3: [3, 1, 2, 2, 3]<br/>   - Frequencies: {3: 2, 2: 2, 1: 1}<br/>   - Priority scores:<br/>     - 3 → 2 * (3^2) = 18<br/>     - 2 → 2 * (2^2) = 8<br/>     - 1 → 1 * (1^2) = 1<br/>   - Top 2 treasures by priority: 3 (score 18) and 2 (score 8).<br/>   - Total value: 3 + 2 + 2 + 3 = 10.<br/><br/>4. Sub-vault 4: [1, 2, 2, 3, 4]<br/>   - Frequencies: {1: 1, 2: 2, 3: 1, 4: 1}<br/>   - Priority scores:<br/>     - 2 → 2 * (2^2) = 8<br/>     - 3 → 1 * (3^2) = 9<br/>     - 4 → 1 * (4^2) = 16<br/>     - 1 → 1 * (1^2) = 1<br/>   - Top 2 treasures by priority: 4 (score 16) and 3 (score 9).<br/>   - Total value: 3 + 4  = 7.<br/><br/>Sample Input-2:<br/>-----------------<br/>6 3 2 1<br/>5 5 6 7 5 6<br/><br/>Sample Output-1:<br/>--------------------<br/>[16, 13, 13, 13]<br/><br/>Constraints:<br/>1. 1 &lt;= n == treasures.length &lt;= 50<br/>2. 1 &lt;= treasures[i] &lt;= 50<br/>3. 1 &lt;= x &lt;= k &lt;= treasures.length<br/>4. 1 &lt;= f &lt;= 10<br/></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="19358fd8-d211-80fe-b92d-c63c6a4eabdf" class="code"><code class="language-Java">import java.util.*;
+
+class Solution{
+    
+    static PriorityQueue&lt;int[]&gt;  getPriorityScores(HashMap&lt;Integer,Integer&gt; map,int f){
+        PriorityQueue&lt;int[]&gt; pq = new PriorityQueue&lt;&gt;((a,b)-&gt;b[1]-a[1]);
+        for(Map.Entry&lt;Integer,Integer&gt; m : map.entrySet())
+        {
+            int ps = m.getValue()*((int)Math.pow(m.getKey(),f));
+            pq.add(new int[]{m.getKey(),ps});
+        }
+        return pq;
+    }
+    
+    static int getFinalValue(PriorityQueue&lt;int[]&gt; pq,HashMap&lt;Integer,Integer&gt; map, int x){
+        int sum=0;
+        for(int i=0;i&lt;x;i++){
+            int[] ps = pq.poll();
+            int occ = map.get(ps[0]);
+            sum+=(occ*ps[0]);
+        }
+        return sum;
+    }
+    public static void main(String[] args){
+        Scanner sc = new Scanner(System.in);
+        int n=sc.nextInt();
+        int k=sc.nextInt();
+        int x=sc.nextInt();
+        int f=sc.nextInt();
+        int arr[] = new int[n];
+        for(int i=0;i&lt;n;i++) arr[i]=sc.nextInt();
+        
+        HashMap&lt;Integer,Integer&gt; map=new HashMap&lt;&gt;();
+        int ans[] = new int[n-k+1];
+        for(int i=0;i&lt;k;i++){
+            map.put(arr[i],map.getOrDefault(arr[i],0)+1);
+        }
+        PriorityQueue&lt;int[]&gt; pq = getPriorityScores(map,f);
+        int ind=0;
+        ans[ind]=getFinalValue(pq,map,x);;
+        ind++;
+        int left=0;
+        for(int i=k;i&lt;n;i++){
+            map.put(arr[left],map.get(arr[left])-1);
+            left++;
+            map.put(arr[i],map.getOrDefault(arr[i],0)+1);
+            pq = getPriorityScores(map,f);
+            ans[ind++]=getFinalValue(pq,map,x);
+        }
+        
+        for(int i=0;i&lt;ans.length;i++) System.out.print(ans[i]+&quot; &quot;);
+    }
+}</code></pre><h2 id="19658fd8-d211-807c-a689-e594e12dffb4" class="">Program6</h2><p id="19658fd8-d211-809e-b3f7-cfca184af703" class="">public In a distant galaxy, there exists an ancient space station covered in a vast <br/>array of digital codes. These codes are believed to hold the key to unlocking <br/>powerful alien technology. The interstellar explorers call these codes &quot;prime <br/>sequences.&quot;<br/><br/>The prime-sequence beauty of the digital code is defined as the number of prime <br/>sequences that meet the following conditions:<br/>    -The prime sequence has a length of k.<br/>    -The prime sequence is a divisor of the entire digital code.<br/>    -The prime sequence is a prime number.<br/><br/>Given the digital code on the space station, represented as an integer code, and<br/>the length of the prime sequences k, return the prime-sequence beauty of the code.<br/><br/>Note:<br/>-----<br/>Leading zeros in prime sequences are allowed.<br/>0 is not a divisor of any value.<br/>A prime sequence is a contiguous sequence of characters in the main digital code.<br/><br/>Input Format:<br/>-------------<br/>Line-1: space separated String and integer, code and K<br/><br/>Output Format:<br/>-------------<br/>An integer, the prime-sequence beauty of the code.<br/><br/><br/>Sample Input:<br/>-------------<br/>239246 2 <br/><br/>Sample Output:<br/>--------------<br/>1 <br/><br/>Explanation:<br/>------------<br/>The following are the prime sequences of length k:<br/>    &quot;23&quot; from &quot;239246&quot;: 23 is a divisor of 239246 and is a prime number.<br/>    &quot;39&quot; from &quot;239246&quot;: 39 is not a divisor.<br/>    &quot;92&quot; from &quot;239246&quot;: 92 is not a divisor.<br/>    &quot;24&quot; from &quot;239246&quot;: 24 is is not a divisor 239246.<br/>    &quot;46&quot; from &quot;239246&quot;: 46 is a divisor of 239246 but is not a prime number.<br/>    Therefore, the prime-sequence beauty is 1.<br/><br/>Sample Input:<br/>-------------<br/>24224 1<br/><br/>Sample Output:<br/>--------------<br/>3<br/> {<br/>    <br/>}<br/></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="19658fd8-d211-8005-ac68-f47fcbab9236" class="code"><code class="language-Java">import java.util.*;
+
+class Solution{
+    static int c=0;
+    
+    static boolean validate(StringBuilder s, long n)
+    {
+        String s1=s.toString();
+        if(n%Long.parseLong(s1)!=0) return false;
+        Long num=Long.parseLong(s1);
+        if(num==1 || num==0) return false;
+        for(int i=2;i*i&lt;=num;i++)
+        {
+            if(num%i==0) return false;
+        }
+        return true;
+    }
+    static void primeSeq(int[] arr, int k, long n)
+    {
+        StringBuilder s=new StringBuilder();
+        for(int i=0;i&lt;k;i++)
+        {
+            s.append(arr[i]);
+        }
+        if(validate(s,n))
+        {
+            c++;
+        }
+        for(int i=k;i&lt;arr.length;i++)
+        {
+            s.deleteCharAt(0);
+            s.append(arr[i]);
+            if(validate(s,n)) c++;
+        }
+    }
+    public static void main (String[] args) {
+        Scanner sc = new Scanner(System.in);
+        long n=sc.nextInt();
+        int k=sc.nextInt();
+        String s=n+&quot;&quot;;
+        int arr[] = new int[s.length()];
+        for(int i=0;i&lt;s.length();i++){
+            arr[i]=Integer.parseInt(s.charAt(i)+&quot;&quot;);
+        }
+        primeSeq(arr,k,n);
+        System.out.println(c);
+    }
+}
+</code></pre><h2 id="19658fd8-d211-80b5-b5ca-e5c35c2d32ec" class="">Program7</h2><p id="19658fd8-d211-8036-b557-cc8b11a2311e" class="">In a film festival, there is a lineup of movies, each with a rating. The festival <br/>organizer wants to find the maximum total rating of &#x27;k&#x27; sequence of movies while <br/>following these rules:<br/>    1. The sequence must be exactly k movies long.<br/>    2. Each movie in the sequence must have a distinct rating.<br/>    3. None of the movies in the sequence should have a restricted rating, as <br/>       these are reserved for special screenings.<br/><br/>Given an array movieRatings representing the sequence of movie ratings, an integer k <br/>representing the length of the sequence, and a set restrictedRatings (of size m) of <br/>special ratings, find the maximum total rating of any valid sequence. <br/>If no valid sequence exists, return -1.<br/><br/>Input Format:<br/>-------------<br/>Line-1: 3 space separated integers, n, k, m<br/>Line-2: n space separated integers, movieRatings[].<br/>Line-3: m space separated integers, restrictedRatings[].<br/><br/>Output Format:<br/>-------------<br/>An integer, the maximum total rating of any valid sequence<br/><br/><br/>Sample Input-1:<br/>---------------<br/>7 3 2<br/>1 5 4 2 9 9 9<br/>2 9<br/><br/>Sample Output-1:<br/>----------------<br/>10<br/><br/>Explanation: <br/>------------<br/>The sequences of movie ratings with length 3 are:<br/>- [1, 5, 4] which meets the requirements and has a total rating of 10.<br/>- [5, 4, 2] which does not meet the requirements because 2 is in the <br/>restricted set.<br/>- [4, 2, 9] which does not meet the requirements because 2 and 9 are in <br/>the restricted set.<br/>- [2, 9, 9] which does not meet the requirements because 2 and 9 are in <br/>the restricted set and 9 is repeated.<br/>- [9, 9, 9] which does not meet the requirements because 9 is in <br/>the restricted set and repeated.<br/><br/>We return 10 because it is the maximum total rating of all the sequences <br/>that meet the conditions.<br/><br/><br/>Sample Input-2:<br/>---------------<br/>3 3 1<br/>4 4 4<br/>4<br/><br/>Sample Output-2:<br/>----------------<br/>-1<br/><br/>Explanation: The sequences of movie ratings with length 3 are:<br/>[4, 4, 4] which does not meet the requirements because 4 is repeated and in the restricted set.<br/>We return -1 because no sequences meet the conditions.<br/><br/>Constraints:<br/>------------<br/>0 &lt;= m &lt;= n &lt;=1000<br/>k &lt;= n<br/>0 ≤ restrictedRatings.length ≤ 1000<br/></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="19658fd8-d211-8037-81a6-cdf46a3ba24e" class="code"><code class="language-Java">import java.util.*;
+
+class Solution{
+    
+    static int c=0;
+    static boolean f=false;
+    static boolean valid(ArrayList&lt;Integer&gt; temp,ArrayList&lt;Integer&gt; res)
+    {
+        // System.out.println(temp);
+        HashSet&lt;Integer&gt; set = new HashSet&lt;&gt;();
+        for(int i=0;i&lt;temp.size();i++)
+        {
+            if(set.contains(temp.get(i)) || res.contains(temp.get(i)))
+            {
+                return false;
+            }
+            else{
+                set.add(temp.get(i));
+            }
+        }
+        return true;
+    }
+    static void check(int[] arr,ArrayList&lt;Integer&gt; res,int k)
+    {
+        ArrayList&lt;Integer&gt; temp=new ArrayList&lt;&gt;();
+        // boolean valid=true;
+        for(int i=0;i&lt;k;i++)
+        {
+            temp.add(arr[i]);
+        }
+        if(valid(temp,res))
+        {
+            int sum=0;
+            for(int i=0;i&lt;temp.size();i++) sum+=temp.get(i);
+            c=Math.max(c,sum);
+            f=true;
+        }
+        
+        for(int i=k;i&lt;arr.length;i++){
+            temp.remove(0);
+            temp.add(arr[i]);
+            if(valid(temp,res))
+            {
+                int sum=0;
+                for(int j=0;j&lt;temp.size();j++) sum+=temp.get(j);
+                c=Math.max(c,sum);
+                f=true;
+            }
+        }
+        
+        
+    }
+    public static void main (String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n=sc.nextInt();
+        int k=sc.nextInt();
+        int m=sc.nextInt();
+        int ratings[] = new int[n];
+        for(int i=0;i&lt;n;i++) ratings[i]=sc.nextInt();
+        
+        ArrayList&lt;Integer&gt; res = new ArrayList&lt;&gt;();
+        for(int i=0;i&lt;m;i++) res.add(sc.nextInt());
+        
+        check(ratings,res,k);
+        
+        System.out.println(f?c:-1);
+        
+        
+        
+    }
+}</code></pre><h2 id="19658fd8-d211-800a-a2fe-e48df07cc063" class="">Program8</h2><p id="19658fd8-d211-80a7-ba4c-f7b36e8bdf1d" class="">You are given an integer array nums and two integers l and r. Your task is to <br/>analyze the volatility of a sequence of values. The volatility of a sequence is <br/>defined as the difference between the maximum and minimum values in that sequence.<br/><br/>You need to determine the sequence with the highest volatility among all <br/>sequences of length between l and r (inclusive).<br/><br/>Return the highest volatility. If no such sequence exists, return -1.<br/><br/>Input Format:<br/>-------------<br/>Line-1: 3 space separated integers, n, l, r<br/>Line-2: n space separated integers, nums[].<br/><br/>Output Format:<br/>-------------<br/>An integer, the highest volatility.<br/><br/><br/>Sample Input-1:<br/>---------------<br/>5 2 3<br/>8 3 1 6 2<br/><br/>Sample Output-1:<br/>----------------<br/>7<br/><br/>Explanation:<br/>------------<br/>The possible sequences of length between l = 2 and r = 3 are:<br/><br/>[8, 3] with a volatility of 8−3=5<br/>[3, 1] with a volatility of 3−1=2<br/>[1, 6] with a volatility of 6−1=5<br/>[8, 3, 1] with a volatility of 8−1=7<br/>The sequence [8, 3, 1] has the highest volatility of 7.<br/><br/>Sample Input-2:<br/>---------------<br/>4 2 4<br/>5 5 5 5<br/><br/>Sample Output-2:<br/>----------------<br/>0<br/><br/>Explanation:<br/>------------<br/>All possible sequences have no volatility as the maximum and minimum values <br/>are the same, resulting in a difference of 0.<br/></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="19658fd8-d211-8048-b821-edac590f85ce" class="code"><code class="language-Java">import java.util.*;
+
+class Solution{
+    
+    static int c=-1;
+    static void find(int[] arr, int k)
+    {
+        int max=arr[0];
+        int min=arr[0];
+        TreeSet&lt;Integer&gt; temp=new TreeSet&lt;&gt;();
+        for(int i=0;i&lt;k;i++)
+        {
+            temp.add(arr[i]);
+        }
+        c=Math.max(c,temp.last()-temp.first());
+        for(int i=k;i&lt;arr.length;i++)
+        {
+            temp.remove(arr[i-k]);
+            temp.add(arr[i]);
+            c=Math.max(c,temp.last()-temp.first());
+        }
+    }
+    public static void main(String[] args){
+        Scanner sc = new Scanner(System.in);
+        int n= sc.nextInt();
+        int l= sc.nextInt();
+        int r= sc.nextInt();
+        int arr[] = new int[n];
+        
+        for(int i=0;i&lt;n;i++) arr[i]=sc.nextInt();
+       
+        find(arr,r);
+ 
+        System.out.println(c);
+        
+    }
+}</code></pre><h2 id="19758fd8-d211-8065-b3d0-feca8514352c" class="">Program9</h2><p id="19758fd8-d211-80e6-926a-e562f5a838bb" class="">public You are an architect designing a street with houses represented as a 0-indexed array <br/>house_heights of n integers, where each element represents the height of a house. <br/>Additionally, a binary array visibility_mask of length n is provided, where 1 indicates <br/>a house that contributes to the neighborhood&#x27;s skyline, and 0 indicates a house that does not.<br/><br/>For any house located at index i, you are tasked with determining the average <br/>skyline height within a k-radius neighborhood centered at i. The average skyline <br/>height is the average of all house heights between indices i - k and i + k (inclusive) <br/>that have a corresponding visibility value of 1 in the visibility_mask. <br/><br/>If no houses with a visibility of 1 exist in the range, or if the range extends <br/>beyond the boundaries of the array, the average skyline height for that house is -1.<br/><br/>Return an array skyline_avgs of length n, where skyline_avgs[i] is the average <br/>skyline height for the neighborhood centered at index i.<br/><br/>Example 1:<br/>Input:<br/>house_heights = [10, 15, 20, 5, 30, 25, 40]<br/>visibility_mask = [1, 0, 1, 1, 0, 1, 1]<br/>k = 2<br/><br/>Output:<br/>skyline_avgs = [-1, -1, 11, 16, 22, -1, -1]<br/><br/><br/>Explanation:<br/>- For index 0, there are less than k houses in the left neighborhood, <br/>  so skyline_avgs[0] = -1.<br/>- For index 1, there are less than k houses in the left neighborhood, <br/>  so skyline_avgs[1] = -1.<br/>- For index 2, the neighborhood is [10, 15, 20, 5, 30]. From the visibility_mask, <br/>  only the houses with heights [10, 20, 5] contribute to the skyline. The average <br/>  is (10 + 20 + 5) / 3 = 11.<br/>- For index 3, the neighborhood is [15, 20, 5, 30, 25]. From the visibility_mask, <br/>  only the houses with heights [20, 5, 25] contribute. <br/>  The average is (20 + 5 + 25) / 3 = 16.<br/>- For index 4, the neighborhood is [20, 5, 30, 25, 40]. From the visibility_mask, <br/>  only the houses with heights [20, 5, 25, 40] contribute. The average <br/>  is (20 + 5 + 25 + 40) / 4 = 22.<br/>- For index 5, there are less than k houses in the right neighborhood, <br/>  so skyline_avgs[5] = -1.<br/>- For index 6, there are less than k houses in the right neighborhood, <br/>  so skyline_avgs[6] = -1.<br/><br/>Sample Input:<br/>3<br/>1<br/>50 60 70<br/>1 1 1<br/><br/>Sample Output:<br/>[-1, 60, -1]<br/><br/>Constraints:<br/>1. n == house_heights.length == visibility_mask.length<br/>2. 1 &lt;= n &lt;= 10^5<br/>3. 0 &lt;= house_heights[i] &lt;= 10^5<br/>4. visibility_mask[i] is either 0 or 1<br/>5. 0 &lt;= k &lt;= n<br/> {<br/>    <br/>}<br/><br/></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="19758fd8-d211-809d-87e7-e32aec6e67a5" class="code"><code class="language-Java">import java.util.*;
+
+class Solution{
+    static ArrayList&lt;Integer&gt; ans;
+    static void solve(int n, int k, int[] h,int []b){
+        int sum=0;
+        int c=0;
+        
+        if(2*k+1&gt;n)
+        {
+          for(int i=0;i&lt;n;i++) ans.add(-1);  
+        }
+        else
+        {
+            for(int i=0;i&lt;k;i++) ans.add(-1);
+            for(int i=0;i&lt;2*k+1;i++)
+            {
+                if(b[i]==1) {sum+=h[i];c++;}
+            
+            }
+            ans.add(sum/c);
+            for(int i=k+1;i&lt;n-k;i++)
+            {
+                if(b[i+k]==1)
+                {
+                    sum+=h[i+k];
+                    c++;
+                }
+                if(b[i-k-1]==1)
+                {
+                    sum-=h[i-k-1];
+                    c--;
+                }
+                ans.add(sum/c);
+            }
+            for(int i=n-k;i&lt;n;i++) ans.add(-1);
+        }
+    } 
+    public static void main (String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n=sc.nextInt();
+        int k=sc.nextInt();
+        int h[] = new int[n];
+        for(int i=0;i&lt;n;i++) h[i]=sc.nextInt();
+        int b[] = new int[n];
+        for(int i=0;i&lt;n;i++) b[i]=sc.nextInt();
+        ans = new ArrayList&lt;&gt;();
+        
+        solve(n,k,h,b);
+        
+        System.out.println(ans);
+        
+    }
+}</code></pre><h2 id="19758fd8-d211-800e-ae38-ccbeca1c4c00" class="">Program10</h2><p id="19758fd8-d211-8022-9698-d18cf855bb82" class="">public You are a renowned Alchemist exploring a mystical forest teeming with magical plants. <br/>Each plant you encounter has a unique Essence Power represented by an integer in <br/>the array plants of length n.<br/><br/>By collecting essences from consecutive plants, you can brew powerful Elixirs. <br/>The potency of an elixir is determined by the sum of the essence powers of the plants used. <br/>Due to the complexity of brewing, you can only create elixirs using sequences of <br/>plants that are at least m in length.<br/><br/>Your objective is to find the kth smallest elixir potency that can be brewed <br/>from these sequences.<br/><br/>Example 1:<br/>Input: n=3 plants = [2, 1, 3], k = 2, m = 2<br/>Output: 4<br/><br/>Explanation:<br/>Possible elixirs (sequences of length ≥ 2):<br/>- [2, 1]: Potency = 2 + 1 = 3<br/>- [1, 3]: Potency = 1 + 3 = 4<br/>- [2, 1, 3]: Potency = 2 + 1 + 3 = 6<br/>Ordered elixir potencies: 3, 4, 6<br/>The 2nd smallest elixir potency is 4.<br/><br/>Input Format:<br/>-------------<br/>Line-1: 3 space separated integers, n, k, m<br/>Line-2: n space separated integers, movieRatings[].<br/><br/>Output Format:<br/>-------------<br/>An integer, The kth smallest elixir potency<br/><br/><br/>Sample Input:<br/>4 3 2<br/>3 -3 5 2<br/><br/>Sample output:<br/>4<br/><br/>Explanation:<br/>Possible elixirs (sequences of length ≥ 2):<br/>- [3, -3]: Potency = 3 + -3 = 0<br/>- [-3, 5]: Potency = -3 + 5 = 2<br/>- [5, 2]: Potency = 5 + 2 = 7<br/>- [3, -3, 5]: Potency = 3 + -3 + 5 = 5<br/>- [-3, 5, 2]: Potency = -3 + 5 + 2 = 4<br/>- [3, -3, 5, 2]: Potency = 3 + -3 + 5 + 2 =7<br/><br/>Ordered elixir potencies: 0, 2, 4, 5, 7, 7<br/>The 3rd smallest elixir potency is 4. {<br/>    <br/>}<br/><br/></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="19758fd8-d211-805d-84ea-fd0013949689" class="code"><code class="language-Java">import java.util.*;
+
+class Solution{
+    static PriorityQueue&lt;Integer&gt; q;
+    static void helper(int[] p,int k)
+    {
+        int sum=0;
+        for(int i=0;i&lt;k;i++)
+        {
+            sum+=p[i];
+        }
+        q.add(sum);
+        for(int i=k;i&lt;p.length;i++){
+            sum-=p[i-k];
+            sum+=p[i];
+            q.add(sum);
+        }
+    }
+    static int solve(int n, int k, int m,int[] p){
+        q = new PriorityQueue&lt;&gt;();
+        for(int i=m;i&lt;=n;i++)
+        {
+            helper(p,i);
+        }
+       
+        for(int i=0;i&lt;k-1;i++) q.poll();
+        
+        return q.poll();
+    }
+    public static void main (String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n=sc.nextInt();
+        int k=sc.nextInt();
+        int m=sc.nextInt();
+        int p[] =  new int[n];
+        for(int i=0;i&lt;n;i++) p[i]=sc.nextInt();
+        
+        System.out.print(solve(n,k,m,p));
+    }
+}</code></pre><h2 id="1a858fd8-d211-802d-bcdc-cabb616b871c" class="">Program11 - UniqueFlowers</h2><p id="1a858fd8-d211-8006-9e99-fc87b9e993ac" class="">Imagine you&#x27;re a botanist managing a long row of garden plots. Each plot is<br/>planted with a flower that has a unique color code represented by an integer.<br/>You are given an array garden of length n, where each element denotes the color<br/>of the flower in that plot, and an integer k which indicates the number of<br/>consecutive plots you will examine at a time. Your objective is to determine<br/>how many different flower colors appear in every contiguous block of k plots.<br/></p><p id="1a858fd8-d211-80e3-af7e-e1e178293718" class="">Return an array result where result[i] is the count of unique flower colors in<br/>the section of the garden from plot i to plot i + k - 1.<br/></p><p id="1a858fd8-d211-8055-a570-de80ebbad489" class="">Example 1:</p><p id="1a858fd8-d211-80f9-aa59-eddaf6197513" class="">Input:<br/>7				\\n<br/>1 2 3 2 2 1 3	\\array garden<br/>3				\\k<br/></p><p id="1a858fd8-d211-8067-ad3f-d627e14c32f7" class="">Output:<br/>[3, 2, 2, 2, 3]<br/></p><p id="1a858fd8-d211-80f9-bc3b-f273d15f2277" class="">Explanation:</p><p id="1a858fd8-d211-80dd-9a39-c886b6428b86" class="">For plots 0 to 2: [1,2,3] → 3 unique colors<br/>For plots 1 to 3: [2,3,2] → 2 unique colors<br/>For plots 2 to 4: [3,2,2] → 2 unique colors<br/>For plots 3 to 5: [2,2,1] → 2 unique colors<br/>For plots 4 to 6: [2,1,3] → 3 unique colors<br/>Example 2:<br/></p><p id="1a858fd8-d211-80cd-b3a6-c99acd77e52e" class="">Input:<br/>7<br/>1 1 1 1 2 3 4<br/>4<br/></p><p id="1a858fd8-d211-8032-bbb2-c8a30bdb0406" class="">Output:<br/>[1, 2, 3, 4]<br/></p><p id="1a858fd8-d211-80a9-8705-c94e34f98184" class="">Explanation:<br/>For plots 0 to 3: [1,1,1,1] → 1 unique color<br/>For plots 1 to 4: [1,1,1,2] → 2 unique colors<br/>For plots 2 to 5: [1,1,2,3] → 3 unique colors<br/>For plots 3 to 6: [1,2,3,4] → 4 unique colors<br/></p><p id="1a858fd8-d211-8005-86a0-cf0265e31e57" class="">Constraints:<br/>• 1 &lt;= k &lt;= garden.length &lt;= 10^5<br/>• 1 &lt;= garden[i] &lt;= 10^5<br/></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1a858fd8-d211-809a-9947-ebe1f355e6b1" class="code"><code class="language-Java">import java.util.*;
+
+class Solution{
+    static void getUnique(int[] arr, List&lt;Integer&gt; l,int k)
+    {
+        HashMap&lt;Integer,Integer&gt; map = new HashMap&lt;&gt;();
+        for(int i=0;i&lt;k;i++)
+        {
+            map.put(arr[i],map.getOrDefault(arr[i],0)+1);
+        }
+        l.add(map.size());
+        for(int i=k;i&lt;arr.length;i++)
+        {
+            if(map.get(arr[i-k])==1)
+            {
+                map.remove(arr[i-k]);
+            }
+            else
+            {
+                map.put(arr[i-k],map.getOrDefault(arr[i-k],0)-1);
+            }
+            map.put(arr[i],map.getOrDefault(arr[i],0)+1);
+            l.add(map.size());
+        }
+    }
+    public static void main (String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n=sc.nextInt();
+        int arr[] = new int[n];
+        for(int i=0;i&lt;n;i++) arr[i]=sc.nextInt();
+        int k=sc.nextInt();
+        List&lt;Integer&gt; l = new ArrayList&lt;&gt;();
+        getUnique(arr,l,k);
+        System.out.print(l);
+    }
+}</code></pre></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

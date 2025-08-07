@@ -1,0 +1,932 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Two Pointers</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-default_background {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.highlight-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.block-color-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: undefined; }
+.select-value-color-pink { background-color: rgba(225, 136, 179, 0.27); }
+.select-value-color-purple { background-color: rgba(168, 129, 197, 0.27); }
+.select-value-color-green { background-color: rgba(123, 183, 129, 0.27); }
+.select-value-color-gray { background-color: rgba(84, 72, 49, 0.15); }
+.select-value-color-transparentGray { background-color: undefined; }
+.select-value-color-translucentGray { background-color: undefined; }
+.select-value-color-orange { background-color: rgba(224, 124, 57, 0.27); }
+.select-value-color-brown { background-color: rgba(210, 162, 141, 0.35); }
+.select-value-color-red { background-color: rgba(244, 171, 159, 0.4); }
+.select-value-color-yellow { background-color: rgba(236, 191, 66, 0.39); }
+.select-value-color-blue { background-color: rgba(93, 165, 206, 0.27); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="1a858fd8-d211-80ad-9292-ffce18a98a29" class="page sans"><header><h1 class="page-title">Two Pointers</h1><p class="page-description"></p></header><div class="page-body"><h2 id="1a858fd8-d211-8019-b07c-f89872c4e9dd" class="">Program1 - isPalindrome</h2><p id="1a858fd8-d211-800a-81eb-c0dc1353e1d4" class="">Cliff Shaw is working on the singly linked list.<br/>He is given a list of boxes arranged as singly linked list,<br/>where each box is printed a positive number on it.<br/></p><p id="1a858fd8-d211-8032-94de-dc9290f8e386" class="">Your task is to help Mr Cliff to find the given list is equivalent to<br/>the reverse of it or not. If yes, print &quot;true&quot;, otherwise print &quot;false&quot;<br/></p><h2 id="1a858fd8-d211-8083-98ac-c107d9149ac4" class="">Input Format:</h2><p id="1a858fd8-d211-80e6-8539-d976120f4d46" class="">Line-1: space separated integers, boxes as list.</p><h2 id="1a858fd8-d211-806c-960a-fdb3d8f8a581" class="">Output Format:</h2><p id="1a858fd8-d211-800c-a6ae-eab6daf8b79c" class="">Print a boolean a value.</p><h2 id="1a858fd8-d211-80f3-ac5b-ec02043330b1" class="">Sample Input-1:</h2><p id="1a858fd8-d211-8073-95df-e2f11235b9d8" class="">3 6 2 6 3</p><h2 id="1a858fd8-d211-80a6-a50b-fb189b16ceb1" class="">Sample Output-1:</h2><p id="1a858fd8-d211-8041-9a76-f1127471bc22" class="">true</p><h2 id="1a858fd8-d211-809a-ae30-f55632bce821" class="">Sample Input-2:</h2><p id="1a858fd8-d211-8057-ac53-f4311fd84fea" class="">3 6 2 3 6</p><h2 id="1a858fd8-d211-8050-9d56-d5251a3f2536" class="">Sample Output-2:</h2><p id="1a858fd8-d211-807a-81dc-c41078e1f86f" class="">false</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1a858fd8-d211-801a-8a78-e677796940db" class="code"><code class="language-Java">import java.util.*;
+
+class Node {
+    int data;
+    Node next = null;
+
+    Node(int data) {
+        this.data = data;
+    }
+}
+
+class Solution {
+
+    static Node buildLinkedList(String[] s) {
+        Node head = new Node(Integer.parseInt(s[0]));
+        Node temp = head;
+        for (int i = 1; i &lt; s.length; i++) {
+            temp.next = new Node(Integer.parseInt(s[i]));
+            temp = temp.next;
+        }
+        return head;
+    }
+
+    public static boolean isPalindrome(Node head) {
+        if (head == null || head.next == null) return true;
+
+        Node slow = head, fast = head;
+        
+        while (fast != null &amp;&amp; fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        Node secondHalf = reverse(slow);
+        Node firstHalf = head;
+        Node temp = secondHalf;
+
+        while (temp != null) {
+            if (firstHalf.data != temp.data) {
+                return false;
+            }
+            firstHalf = firstHalf.next;
+            temp = temp.next;
+        }
+
+        return true;
+    }
+
+    public static Node reverse(Node head) {
+        Node prev = null, curr = head, next;
+        while (curr != null) {
+            next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+        return prev;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String[] s = sc.nextLine().split(&quot; &quot;);
+        
+        Node head = buildLinkedList(s);
+        System.out.println(isPalindrome(head));
+    }
+}
+
+</code></pre><h2 id="1a858fd8-d211-8006-a931-caaf45e48fef" class="">Program2 - Valid Words</h2><p id="1a858fd8-d211-80cd-8435-c1fe8ef669f5" class="">Imagine you are a secret agent tasked with sending encoded messages.<br/>Each original message is a string of lowercase letters, and you can disguise<br/>it by replacing selected, non-adjacent segments with the count of characters<br/>in those segments. However, the encoding must follow strict rules: only<br/>non-empty segments can be replaced, replacements cannot be adjacent, and any<br/>numbers used must not have leading zeros.<br/></p><p id="1a858fd8-d211-8003-8cf5-ddaeece38242" class="">For instance, the message &quot;substitution&quot; can be encoded in various ways, such as:</p><ul id="1a858fd8-d211-8041-9a5b-c49cb166f298" class="bulleted-list"><li style="list-style-type:disc">&quot;s10n&quot; (keeping &#x27;s&#x27;, replacing the next 10 characters with 10, and ending with &#x27;n&#x27;)</li></ul><p id="1a858fd8-d211-806b-b900-e12aba619561" class="">• &quot;sub4u4&quot; (keeping &quot;sub&quot;, replacing 4 characters, then &#x27;u&#x27;, and replacing 4 more characters)</p><p id="1a858fd8-d211-801c-8035-fce0eb03cd55" class="">• &quot;12&quot; (replacing the entire message with its length)</p><p id="1a858fd8-d211-8012-a145-f06814006886" class="">• &quot;su3i1u2on&quot; (using a different pattern of replacements)</p><p id="1a858fd8-d211-8006-8498-e0f0e75b0a2d" class="">• &quot;substitution&quot; (leaving the message unaltered)</p><p id="1a858fd8-d211-8095-a137-d50e7b95dd2a" class="">Invalid encodings include:</p><ul id="1a858fd8-d211-8084-b684-db410dad8659" class="bulleted-list"><li style="list-style-type:disc">&quot;s55n&quot; (because the replaced segments are adjacent)</li></ul><p id="1a858fd8-d211-80e6-b4f6-c6a144ca8579" class="">• &quot;s010n&quot; (the number 010 has a leading zero)</p><p id="1a858fd8-d211-803a-b51f-d3b7c8e4e0e8" class="">• &quot;s0ubstitution&quot; (attempts to replace an empty segment)</p><p id="1a858fd8-d211-8009-8b49-fd186e819ab0" class="">Your task is: given an original message and an encoded version,<br/>determine if the encoded version is a valid secret code for the message.<br/></p><p id="1a858fd8-d211-806d-ae9d-c51e58a83381" class="">Example 1:</p><p id="1a858fd8-d211-8001-9838-f9bc8efe540d" class="">Input:<br/>internationalization<br/>i12iz4n<br/></p><p id="1a858fd8-d211-8007-a69d-ead282f73b6d" class="">Output:<br/>true<br/></p><p id="1a858fd8-d211-802f-b46e-deb99ccc45cd" class="">Explanation: &quot;internationalization&quot; can be encoded as &quot;i12iz4n&quot; by keeping &#x27;i&#x27;,<br/>replacing 12 letters, keeping &quot;iz&quot;, replacing 4 letters, and then ending with &#x27;n&#x27;.<br/></p><p id="1a858fd8-d211-80f8-87c8-ed34eb435e92" class="">Example 2:</p><p id="1a858fd8-d211-80f2-b83c-ed5647bb5a9e" class="">Input:<br/>apple<br/>a2e<br/></p><p id="1a858fd8-d211-8047-92c1-c2db9c6fc871" class="">Output:<br/>false<br/></p><p id="1a858fd8-d211-808f-9fcb-f30312e55efd" class="">Explanation: The encoding &quot;a2e&quot; does not correctly represent &quot;apple&quot;.</p><p id="1a858fd8-d211-8099-bb6d-c859beb64323" class="">Time Complexity: O(n) where n=max(len(word),len(abbr))<br/>Auxiliary Space:  O(1).<br/></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1a858fd8-d211-80c9-80e8-db47e9963e3b" class="code"><code class="language-Java">import java.util.*;
+
+class Solution{
+    
+    static boolean validate(String s , String abb)
+    {
+        int i=0;
+        int j=0;
+        while(i&lt;s.length() &amp;&amp; j&lt;abb.length())
+        {
+            if(abb.charAt(j)==&#x27;0&#x27;)
+            {
+                return false;
+            }
+            else if(Character.isDigit(abb.charAt(j)))
+            {
+                int k=j;
+                while(k&lt;abb.length() &amp;&amp; Character.isDigit(abb.charAt(k)))
+                {
+                    k++;
+                }
+                int num = Integer.parseInt(abb.substring(j,k));
+                j=k;
+                i+=num;
+                continue;
+            }
+            else
+            {
+                if(s.charAt(i)!=abb.charAt(j))
+                {
+                    return false;
+                }
+            }
+            i++;
+            j++;
+        }
+        return i==s.length() &amp;&amp; j==abb.length();
+    }
+    public static void main (String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String s = sc.next();
+        String abb = sc.next();
+        System.out.println(validate(s,abb));
+    }
+}</code></pre><h2 id="1a858fd8-d211-8053-94e7-cd197de11373" class="">Program3 - Two Sum</h2><p id="1a858fd8-d211-80ec-878c-fb5c80a93b10" class="">Two brothers want to play a game,<br/>The rules of the game are: one player gives two sorted lists of<br/>numerical elements and a number (sum).<br/>The opponent has to find the closest pair of elements<br/>to the given sum.<br/>-&gt; pair consists of elements from each list<br/></p><p id="1a858fd8-d211-8062-92a3-d5e97fb89cfb" class="">Please help those brothers to develop a program, that takes<br/>two sorted lists as input and return a pair as output.<br/></p><h2 id="1a858fd8-d211-8082-86cb-c8779434c332" class="">Input Format:</h2><p id="1a858fd8-d211-807e-97f3-e783a9e36bad" class="">size of list_1<br/>list_1 values<br/>size of list_2<br/>list_2 values<br/>closest number<br/></p><h2 id="1a858fd8-d211-8087-a185-f37d549a31cd" class="">Output Format:</h2><p id="1a858fd8-d211-805c-9247-e4607e266ee8" class="">comma-separated pair</p><h2 id="1a858fd8-d211-80f1-b997-da0bf6d8d02d" class="">Sample Input-1:</h2><h2 id="1a858fd8-d211-8039-9902-ea974f7b13be" class="">4<br/>1 4 5 7<br/>4<br/>10 20 30 40<br/>32<br/>Sample Output-1<br/></h2><p id="1a858fd8-d211-8061-b834-d2631aa84f77" class="">1, 30</p><h2 id="1a858fd8-d211-8083-8d30-fb63b867217f" class="">Sample Input-2</h2><h2 id="1a858fd8-d211-8081-908f-ee57f7651129" class="">3<br/>2 4 6<br/>4<br/>5 7 11 13<br/>15<br/>sample output-2<br/></h2><p id="1a858fd8-d211-8031-a7dd-cb506c654cc4" class="">2, 13</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1a858fd8-d211-80a1-b0bc-d70a53fa989e" class="code"><code class="language-Java">import java.util.*;
+
+class Solution{
+    
+    static void solve(int[] a, int[] b , int target)
+    {
+         int i=0;
+         int j=b.length-1;
+         int x=i;
+         int y=j;
+         int ans=Math.abs(a[x]+b[y]-target);
+         while(i&lt;a.length &amp;&amp; j&gt;=0)
+         {
+             int curr = Math.abs(a[i]+b[j]-target);
+             if(curr&lt;ans)
+             {
+                 ans=curr;
+                 x=i;
+                 y=j;
+             }
+             if(a[i]+b[j]==target)
+             {
+                 break;
+             }
+             else if(a[i]+b[j]&gt;target)
+             {
+                 j--;
+             }
+             else if(a[i]+b[j]&lt;target)
+             {
+                i++;
+             }
+         }
+         System.out.print(a[x]+&quot;, &quot;+b[y]);
+    }
+    public static void main (String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n=sc.nextInt();
+        int arr[] = new int[n];
+        for(int i=0;i&lt;n;i++) arr[i]=sc.nextInt();
+        
+        int m = sc.nextInt();
+        int arr2[] = new int[m];
+        for(int i=0;i&lt;m;i++) arr2[i]=sc.nextInt();
+        
+        int target = sc.nextInt();
+        solve(arr,arr2,target);
+    }
+}</code></pre><h2 id="1a858fd8-d211-80c4-b7ef-c03c89a3b828" class="">Program4 - Refill</h2><ul id="1a858fd8-d211-8056-8b46-cef3791a20b6" class="bulleted-list"><li style="list-style-type:disc">Now, Trivikram writes Screen-play-2. Finished the screenplays.<br/>So, the total number of times they have to refill is 0 + 0 + 0 = 0.<br/></li></ul><ul id="1a858fd8-d211-8092-b5d2-d5eba9f37091" class="bulleted-list"><li style="list-style-type:disc">Trivikram and Vamshi now have 5 papers each in their boxes respectively.</li></ul><ul id="1a858fd8-d211-806c-849a-c72a26dd17f8" class="bulleted-list"><li style="list-style-type:disc">Trivikram writes Screen-play-1, Vamshi writes Screen-play-3.</li></ul><ul id="1a858fd8-d211-80c8-ac3d-ed67773846c8" class="bulleted-list"><li style="list-style-type:disc">Initially, Trivikram and Vamshi have 9 papers and 7 papers each in their boxes.</li></ul><h2 id="1a858fd8-d211-80e2-932b-efbf5108d845" class="">Explanation:</h2><p id="1a858fd8-d211-8002-8873-ea55d6fb6d78" class="">0</p><h2 id="1a858fd8-d211-8026-9cb6-dec7231c1adc" class="">Sample Output-2:</h2><p id="1a858fd8-d211-802a-9aa4-e6add485600d" class="">3 9 7<br/>4 5 2<br/></p><h2 id="1a858fd8-d211-804d-a26e-ff089c7e6c5b" class="">Sample Input-2:</h2><ul id="1a858fd8-d211-80a1-8dd9-d1bc179e722a" class="bulleted-list"><li style="list-style-type:disc">Trivikram and Vamshi do not have enough number of papers to write screen-play-3<br/>and screen-play-4 , so they refills their boxes and finished the screenplays.<br/>So, the total number of times they have to refill is 0 + 0 + 1 + 1 + 0 + 0 = 2.<br/></li></ul><ul id="1a858fd8-d211-808a-a1e6-f5a7d1cd5a3f" class="bulleted-list"><li style="list-style-type:disc">Trivikram and Vamshi now have 2 and 1 papers in their boxes respectively.</li></ul><ul id="1a858fd8-d211-80ba-b88b-f9dd06692a2e" class="bulleted-list"><li style="list-style-type:disc">Trivikram writes Screen-play-2, Vamshi writes Screen-play-5.</li></ul><ul id="1a858fd8-d211-804c-9011-fa06222538e4" class="bulleted-list"><li style="list-style-type:disc">Trivikram and Vamshi now have 5 and 6 papers in their boxes respectively.</li></ul><ul id="1a858fd8-d211-806c-8949-e9c1f27c4a42" class="bulleted-list"><li style="list-style-type:disc">Trivikram writes Screen-play-1, Vamshi writes Screen-play-6.</li></ul><ul id="1a858fd8-d211-80c7-b012-c5c0b80204b5" class="bulleted-list"><li style="list-style-type:disc">Initially, Trivikram and Vamshi have 10 papers each in their boxes.</li></ul><h2 id="1a858fd8-d211-80ef-bb51-f22a1ad34c77" class="">Explanation:</h2><p id="1a858fd8-d211-80c6-af41-f40d4c802ec8" class="">2</p><h2 id="1a858fd8-d211-8059-8c40-cf1cb9e3cb8a" class="">Sample Output-1:</h2><p id="1a858fd8-d211-80d9-a37b-e8958a5c1ed5" class="">6 10 10<br/>5 3 4 4 5 4<br/></p><h2 id="1a858fd8-d211-80a4-8000-cccfa60f5461" class="">Sample Input-1:</h2><p id="1a858fd8-d211-80c2-860b-dafbae1940be" class="">Print an integer result.</p><h2 id="1a858fd8-d211-8006-a952-d036773d07a2" class="">Output Format:</h2><p id="1a858fd8-d211-8073-a410-eeca1b1a87aa" class="">Line-1: 3 space separated integers, indicates N, T and V.<br/>Line-2: N space separated integers, screen-plays[].<br/></p><h2 id="1a858fd8-d211-800c-b9b2-d8917ff6a2e2" class="">Input Format:</h2><p id="1a858fd8-d211-80e8-931f-c910a90dbea0" class="">max(screen-play) &lt; T,V &lt; 10^9</p><h2 id="1a858fd8-d211-80f6-80b9-f04487a98e47" class="">Constraint:</h2><p id="1a858fd8-d211-808c-b141-f359c8d464ad" class="">You are given 1-indexed integer array screen-play[] of size N, where screen-play[i]<br/>is the number of papers required for ith screen-play, and two integers T and V.<br/>Your task is to return the number of times they have to refill to write all the<br/>screen-plays.<br/></p><p id="1a858fd8-d211-80b6-b664-f46e936ae5ef" class="">Initially, Trivikram has T number of papers in his box and Vamshi has V number of<br/>papers in his box. They have started the screenplay writing in the following way:<br/>- Trivikram starts from screen-play number 1 to N and Vamshi starts from N to 1.<br/>- They begin writing the screen-plays at same time.<br/>- Each screen-play takes same amount of time, irrespective of its size.<br/>- Trivikram or Vamshi must write the screen-play, if they have enough number<br/>of papers in their respective boxes. Otherwise, they first have to refill<br/>their boxes (instantly) and then write the screen-play.<br/>- In case, Trivikram and Vamshi reach the same screen-play, the one with more<br/>number of papers currently in their box should write the screen-play. If<br/>they have the same number of papers, then Trivikram should write the<br/>screen-play.<br/></p><p id="1a858fd8-d211-80fc-b1c7-c12179a434fe" class="">Trivikram and Vamshi are friends. They need to write N screen-plays, numbered<br/>from 1 to N. Each screen-play requires specific number of papers to write.<br/></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1a858fd8-d211-8067-a921-dba7c440a7c6" class="code"><code class="language-Java">import java.util.*;
+
+class Solution{
+    static void solve(int[] arr, int t, int v){
+        int i=0;
+        int j=arr.length-1;
+        int ans=0;
+        int tt=t;
+        int tv=v;
+        
+        while(i&lt;=j)
+        {
+            if(arr[i]&gt;t)
+            {
+               ans++;
+               t=tt;
+            }
+            t-=arr[i];
+            i++;
+            if(arr[j]&gt;v)
+            {
+                ans++;
+                v=tv;
+            }
+            v-=arr[j];
+            j--;
+        }
+        System.out.print(ans);
+    }
+    public static void main (String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n=sc.nextInt();
+        int t=sc.nextInt();
+        int v=sc.nextInt();
+        int[] arr = new int[n];
+        for(int i=0;i&lt;n;i++) arr[i]=sc.nextInt();
+        
+        solve(arr,t,v);
+    }
+}</code></pre><h2 id="1b258fd8-d211-8004-95af-fda07bf8b04c" class="">Program5</h2><p id="1b258fd8-d211-809e-9a8e-f821bf03fc61" class="">&quot;Emphatic Pronunciation&quot; of a given word is where we take the word and<br/>replicate some of the letter to emphasize their impact.<br/></p><p id="1b258fd8-d211-80cd-b051-d8e5949c4efd" class="">Instead of saying &#x27;oh my god&#x27;, someone may say &quot;ohhh myyy goddd&quot;,<br/>We define emphatic pronunciation of a word, which is derived by replicating<br/>a group (or single) of letters in the original word.<br/></p><p id="1b258fd8-d211-8099-9d6a-ec3543dc0e65" class="">So that the replicated group is atleast 3 characters or more and<br/>greater than or equal to size of original group.<br/>For example Good -&gt; Goood is an emphatic pronunciation,<br/>but Goodd is not because in Goodd the &#x27;d&#x27; are only occuring twice consecutively.<br/></p><p id="1b258fd8-d211-8063-aef0-cee16baa31cd" class="">In the question you are given the &quot;Emphatic pronunciation&quot; word,<br/>you have to findout how many words can legal result in the<br/>&quot;emphatic pronunciation&quot; word.<br/></p><h2 id="1b258fd8-d211-8060-b9d1-d21dcffa8a1f" class="">Input Format:</h2><p id="1b258fd8-d211-8078-93b8-d2f58d178165" class="">Line-1 -&gt; A String contains a single word, Emphatic Pronunciation word<br/>Line-2 -&gt; Space seperated word/s<br/></p><h2 id="1b258fd8-d211-8028-8d36-e8989f2692cf" class="">Output Format:</h2><p id="1b258fd8-d211-804e-af27-c46e3c16dcdd" class="">Print an integer as your result</p><h2 id="1b258fd8-d211-80db-8472-f30e37a10fae" class="">Sample Input-1:</h2><p id="1b258fd8-d211-802d-8525-fe3f2f517f19" class="">goood<br/>good goodd<br/></p><h2 id="1b258fd8-d211-804d-845d-f423d39d5db7" class="">Sample Output-1:</h2><p id="1b258fd8-d211-80fd-b6b0-f1630decb8e2" class="">1</p><h2 id="1b258fd8-d211-8061-b791-fcfb091ac133" class="">Sample Input-2:</h2><p id="1b258fd8-d211-80a3-9c98-c2e9aa124067" class="">heeelllooo<br/>hello hi helo<br/></p><h2 id="1b258fd8-d211-80ac-8c90-ed77706c1bfa" class="">Sample Output-2:</h2><p id="1b258fd8-d211-801f-b433-ebe550dae61a" class="">2</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b258fd8-d211-809f-9b90-dc18cc9c1f99" class="code"><code class="language-Java">import java.util.*;
+
+
+class Solution {
+    
+    static int c = 0;
+    
+    static boolean valid(String em, String x) {
+        int i = 0, j = 0;
+        
+        while (i &lt; em.length() &amp;&amp; j &lt; x.length()) {
+            if (em.charAt(i) != x.charAt(j)) return false;
+            int count1 = 0;
+            char cur1 = em.charAt(i);
+            while (i &lt; em.length() &amp;&amp; em.charAt(i) == cur1) {
+                i++;
+                count1++;
+            }
+
+            int count2 = 0;
+            char cur2 = x.charAt(j);
+            while (j &lt; x.length() &amp;&amp; x.charAt(j) == cur2) {
+                j++;
+                count2++;
+            }
+
+            if ((count1 &lt; 3 &amp;&amp; count1 != count2) || count1 &lt; count2) {
+                return false;
+            }
+        }
+        
+        return i == em.length() &amp;&amp; j == x.length();
+    }
+    
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String em = sc.next();  
+        sc.nextLine();         
+        String[] s = sc.nextLine().split(&quot; &quot;);  
+        
+        for (String word : s) {
+            if (valid(em, word)) c++;
+        }
+        
+        System.out.println(c);
+    }
+}
+
+</code></pre><p id="1b258fd8-d211-801c-9cb2-ce608b775bf5" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
