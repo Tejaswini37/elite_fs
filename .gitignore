@@ -1,0 +1,6 @@
+*.class
+*node_modules
+Practice
+*.env
+*.jar
+*Dotenv.java
